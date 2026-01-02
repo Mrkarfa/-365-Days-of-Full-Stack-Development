@@ -1,0 +1,289 @@
+/* =========================================
+   1. GLOBAL RESET & TYPOGRAPHY
+   ========================================= */
+:root {
+  --primary-color: #1b5e20; /* Forest Green */
+  --secondary-color: #ffd700; /* Gold */
+  --text-color: #333333;
+  --bg-color: #f9f9f9;
+  --surface-color: #ffffff;
+  --accent-color: #e0e0e0;
+  --font-heading: "Georgia", serif;
+  --font-body: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  color: var(--primary-color);
+  margin-bottom: 0.5em;
+}
+
+p {
+  margin-bottom: 1em;
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  text-decoration: underline;
+  color: #0d3b10;
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background: var(--accent-color);
+  margin: 2rem 0;
+}
+
+/* =========================================
+   2. HEADER & NAVIGATION
+   ========================================= */
+header {
+  background-color: var(--surface-color);
+  padding: 1rem 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  text-align: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+}
+
+header p {
+  color: #666;
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+header hr {
+  margin: 1rem auto;
+  width: 80%;
+}
+
+nav {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 1rem;
+  border-radius: 4px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+nav strong {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--secondary-color);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+nav a {
+  color: white;
+  margin: 0 10px;
+  font-weight: 500;
+}
+
+nav a:hover {
+  color: var(--secondary-color);
+  text-decoration: none;
+}
+
+/* =========================================
+   3. MAIN CONTENT
+   ========================================= */
+main {
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 0 20px;
+  background: var(--surface-color);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+}
+
+section {
+  padding: 3rem 2rem;
+}
+
+section h2 {
+  font-size: 2rem;
+  border-bottom: 3px solid var(--secondary-color);
+  display: inline-block;
+  margin-bottom: 1.5rem;
+}
+
+/* About Section Highlight */
+#about p:first-of-type {
+  font-size: 1.2rem;
+  color: #555;
+}
+
+/* Sub-sections styling (Academics, Events, etc.) */
+h3 {
+  font-size: 1.5rem;
+  margin-top: 2rem;
+  color: #444;
+  border-left: 5px solid var(--primary-color);
+  padding-left: 10px;
+}
+
+h4 {
+  font-size: 1.25rem;
+  color: var(--primary-color);
+  margin-top: 1.5rem;
+}
+
+/* Cards for Academics/Alumni */
+#academics h4 + p,
+#alumni h4 + p {
+  background: #f4f4f4;
+  padding: 1.5rem;
+  border-radius: 6px;
+  border-left: 3px solid var(--secondary-color);
+}
+
+/* Button-like Links */
+a[href^="http"][target="_blank"] {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-weight: bold;
+}
+
+/* Lists styling */
+section ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+section ul li {
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed #eee;
+}
+
+/* =========================================
+   4. SECTIONS SPECIFICS
+   ========================================= */
+
+/* Events Section */
+#events h4 {
+  background: var(--primary-color);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+/* Contact Section */
+#contact p {
+  background: #f9fff9;
+  border: 1px solid #e0ffe0;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+/* Back to Top Links */
+a[href="#top"] {
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 0.5rem 1rem;
+  background: #eee;
+  color: #555;
+  border-radius: 20px;
+  font-size: 0.9rem;
+}
+
+a[href="#top"]:hover {
+  background: var(--primary-color);
+  color: white;
+  text-decoration: none;
+}
+
+/* =========================================
+   5. FOOTER
+   ========================================= */
+footer {
+  background-color: #222;
+  color: #ccc;
+  padding: 3rem 0;
+  text-align: center;
+  margin-top: 3rem;
+}
+
+footer nav p {
+  margin-bottom: 2rem;
+}
+
+footer a {
+  color: #ddd;
+}
+
+footer a:hover {
+  color: var(--secondary-color);
+}
+
+footer hr {
+  background: #444;
+  margin: 2rem auto;
+  width: 50%;
+}
+
+footer small {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+/* =========================================
+   6. RESPONSIVE DESIGN
+   ========================================= */
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 2rem;
+  }
+
+  nav a {
+    display: block;
+    margin: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 5px;
+  }
+
+  main {
+    margin: 1rem;
+    padding: 0;
+  }
+
+  section {
+    padding: 2rem 1rem;
+  }
+}
