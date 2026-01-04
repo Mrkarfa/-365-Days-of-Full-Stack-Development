@@ -1,0 +1,374 @@
+/* =========================================
+   RESET & VARIABLES
+   ========================================= */
+:root {
+  --primary-color: #d32f2f; /* Warm Red/Orange */
+  --secondary-color: #ffccbc;
+  --bg-color: #fafafa;
+  --text-color: #333333;
+  --text-light: #666666;
+  --link-color: #e65100;
+  --white: #ffffff;
+  --border-color: #e0e0e0;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  --radius: 12px;
+
+  --font-heading: "Georgia", "Times New Roman", serif;
+  --font-body: "Segoe UI", "Roboto", "Helvetica Neue", sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+a {
+  color: var(--link-color);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+a:hover {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* =========================================
+   LAYOUT UTILITIES
+   ========================================= */
+header,
+main,
+footer {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+section,
+article {
+  margin-bottom: 3rem;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--border-color);
+  width: 100%;
+  margin: 3rem 0;
+}
+
+/* =========================================
+   TYPOGRAPHY
+   ========================================= */
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading);
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+h2 {
+  font-size: 2.2rem;
+  border-bottom: 2px solid var(--secondary-color);
+  padding-bottom: 0.5rem;
+  display: inline-block;
+}
+
+h3 {
+  font-size: 1.5rem;
+  margin-top: 2rem;
+  color: #c62828;
+}
+
+p {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+/* =========================================
+   HEADER
+   ========================================= */
+header {
+  text-align: center;
+  padding-top: 3rem;
+  padding-bottom: 1rem;
+}
+
+header p {
+  font-size: 1.2rem;
+  color: var(--text-light);
+}
+
+nav {
+  text-align: center;
+  background: var(--white);
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-top: 2rem;
+}
+
+nav a {
+  margin: 0 0.8rem;
+  font-weight: 600;
+  color: var(--text-color);
+  display: inline-block;
+}
+
+nav a:hover {
+  color: var(--primary-color);
+}
+
+/* =========================================
+   RECIPE ARTICLES
+   ========================================= */
+article {
+  background: var(--white);
+  padding: 2.5rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border-color);
+}
+
+article figure {
+  margin: 2rem 0;
+}
+
+article img {
+  width: 100%;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+article figcaption {
+  text-align: center;
+  margin-top: 0.5rem;
+  font-style: italic;
+  color: var(--text-light);
+}
+
+/* Prep Time Meta Data */
+article > p:first-of-type {
+  background: var(--secondary-color);
+  color: #5d4037;
+  padding: 1rem;
+  border-radius: 8px;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* Ingredients List */
+/* Using unstyled list for ingredients but with custom bullets */
+h3 + ul {
+  list-style: none;
+  background: #fbe9e7; /* Very light orange bg */
+  padding: 2rem;
+  border-radius: var(--radius);
+}
+
+h3 + ul li {
+  margin-bottom: 0.8rem;
+  padding-left: 1.5em;
+  position: relative;
+}
+
+h3 + ul li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+/* Steps List */
+ol {
+  counter-reset: steps;
+  list-style: none;
+}
+
+ol li {
+  margin-bottom: 1.5rem;
+  position: relative;
+  padding-left: 3rem;
+}
+
+ol li::before {
+  counter-increment: steps;
+  content: counter(steps);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2rem;
+  height: 2rem;
+  background: var(--primary-color);
+  color: white;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 2rem;
+  font-weight: bold;
+  font-family: var(--font-heading);
+}
+
+/* Pro Tips */
+h3:last-of-type,
+h3:last-of-type + ul {
+  background: none;
+  padding: 0;
+}
+
+h3:nth-last-of-type(1) {
+  /* Targeting 'Pro Tips' explicitly if structure holds */
+  color: #f57f17;
+}
+
+article ul:last-of-type li {
+  /* Typical bullets for pro tips */
+  list-style-type: disc;
+  margin-left: 1.5rem;
+  padding-left: 0;
+}
+article ul:last-of-type li::before {
+  content: none;
+}
+
+/* Buttons */
+button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+  margin-right: 1rem;
+  margin-top: 1rem;
+}
+
+button:hover {
+  background-color: #b71c1c;
+}
+
+/* =========================================
+   NEWSLETTER
+   ========================================= */
+#newsletter {
+  background: #fff3e0;
+  padding: 3rem;
+  border-radius: var(--radius);
+  text-align: center;
+  border: 2px dashed #ffb74d;
+}
+
+form {
+  max-width: 500px;
+  margin: 2rem auto 0;
+  text-align: left;
+}
+
+label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+input[type="text"],
+input[type="email"] {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #ffb74d;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+input[type="checkbox"] {
+  transform: scale(1.2);
+  margin-right: 0.5rem;
+}
+
+form button {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+/* =========================================
+   FOOTER
+   ========================================= */
+footer {
+  text-align: center;
+  padding: 4rem 0;
+  color: var(--text-light);
+  font-size: 0.95rem;
+}
+
+footer nav a {
+  margin: 0 0.5rem;
+  color: var(--text-light);
+}
+
+footer hr {
+  width: 50%;
+  margin: 2rem auto;
+  opacity: 0.5;
+}
+
+#top {
+  margin-top: 2rem;
+}
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.2rem;
+  }
+  h2 {
+    font-size: 1.8rem;
+  }
+
+  article {
+    padding: 1.5rem;
+  }
+
+  nav a {
+    display: block;
+    margin: 0.5rem 0;
+  }
+
+  ol li {
+    padding-left: 0;
+  }
+
+  ol li::before {
+    position: static;
+    display: inline-block;
+    margin-right: 0.5rem;
+    width: 1.8rem;
+    height: 1.8rem;
+    line-height: 1.8rem;
+  }
+}
