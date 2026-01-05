@@ -1,40 +1,37 @@
 <![CDATA[<div align="center">
 
 # 🚀 JavaScript Complete Cheat Sheet
-### From Beginner to Advanced 🎯
 
-<img src="https://media.giphy.com/media/ln7z2eWriiQAllfVcn/giphy.gif" width="100">
+### From Beginner to Advanced
 
 [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![ES6+](https://img.shields.io/badge/ES6+-00599C?style=for-the-badge&logo=javascript&logoColor=white)](https://www.ecma-international.org/)
+[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
 
 *A comprehensive guide to mastering JavaScript* ✨
 
-</div>
-
 ---
+
+</div>
 
 ## 📑 Table of Contents
 
-| Section | Topics |
-|---------|--------|
-| [🎯 Basics](#-javascript-basics) | Variables, Data Types, Operators |
-| [🔀 Control Flow](#-control-flow) | Conditionals, Loops |
-| [⚡ Functions](#-functions) | Declaration, Arrow, IIFE, Closures |
-| [📦 Arrays](#-arrays) | Methods, Iteration, Destructuring |
-| [🏗️ Objects](#️-objects) | Properties, Methods, This keyword |
-| [🌐 DOM](#-dom-manipulation) | Selectors, Events, Manipulation |
-| [✨ ES6+ Features](#-es6-features) | Modern JavaScript |
-| [⏳ Async JS](#-asynchronous-javascript) | Promises, Async/Await |
-| [🛡️ Error Handling](#️-error-handling) | Try/Catch, Custom Errors |
-| [🎨 OOP](#-object-oriented-programming) | Classes, Inheritance, Encapsulation |
-| [🚀 Advanced](#-advanced-concepts) | Closures, Prototypes, Modules |
+- [🎯 JavaScript Basics](#-javascript-basics)
+- [🔀 Control Flow](#-control-flow)
+- [⚡ Functions](#-functions)
+- [📦 Arrays](#-arrays)
+- [🏗️ Objects](#️-objects)
+- [🌐 DOM Manipulation](#-dom-manipulation)
+- [✨ ES6+ Features](#-es6-features)
+- [⏳ Asynchronous JavaScript](#-asynchronous-javascript)
+- [🛡️ Error Handling](#️-error-handling)
+- [🎨 Object-Oriented Programming](#-object-oriented-programming)
+- [🚀 Advanced Concepts](#-advanced-concepts)
+- [📚 Quick Reference](#-quick-reference)
 
 ---
 
 ## 🎯 JavaScript Basics
-
-<img src="https://media.giphy.com/media/fsEaZldNC8A1PJ3mwp/giphy.gif" width="50" align="right">
 
 ### 📝 Variables
 
@@ -51,6 +48,8 @@ let age = 25;
 const PI = 3.14159;
 ```
 
+#### Variable Comparison
+
 | Keyword | Scope | Redeclare | Reassign | Hoisted |
 |---------|-------|-----------|----------|---------|
 | `var` | Function | ✅ Yes | ✅ Yes | ✅ Yes (undefined) |
@@ -63,9 +62,7 @@ const PI = 3.14159;
 
 ### 📊 Data Types
 
-<img src="https://media.giphy.com/media/26tn33aiTi1jkl6H6/giphy.gif" width="60" align="right">
-
-JavaScript has 8 data types divided into **Primitive** and **Non-Primitive**:
+JavaScript has **8 data types** divided into Primitive and Non-Primitive:
 
 #### Primitive Types (Immutable)
 
@@ -144,8 +141,6 @@ Array.isArray({})       // false
 
 ### ➕ Operators
 
-<img src="https://media.giphy.com/media/3oKIPnAiaMCws8nOsE/giphy.gif" width="60" align="right">
-
 #### Arithmetic Operators
 
 ```javascript
@@ -219,7 +214,7 @@ let age = 25;
 let hasLicense = true;
 
 if (age >= 18 && hasLicense) {
-    console.log("Can drive"); ✅
+    console.log("Can drive");
 }
 
 // Short-circuit evaluation
@@ -235,7 +230,6 @@ let zero = 0 ?? "default";          // 0 (only null/undefined trigger default)
 
 ```javascript
 // Syntax: condition ? valueIfTrue : valueIfFalse
-
 let age = 20;
 let status = age >= 18 ? "Adult" : "Minor";
 console.log(status); // "Adult"
@@ -252,9 +246,7 @@ let grade = score >= 90 ? "A"
 
 ## 🔀 Control Flow
 
-<img src="https://media.giphy.com/media/l0HlNQ03J5JxX6lva/giphy.gif" width="60" align="right">
-
-### 🔹 Conditional Statements
+### Conditional Statements
 
 #### if...else Statement
 
@@ -299,8 +291,6 @@ switch (day) {
 
 ### 🔄 Loops
 
-<img src="https://media.giphy.com/media/xT9IgzoKnwFNmISR8I/giphy.gif" width="60" align="right">
-
 #### for Loop
 
 ```javascript
@@ -325,12 +315,6 @@ let count = 0;
 while (count < 3) {
     console.log(`Count: ${count}`);
     count++;
-}
-
-// Useful when iterations are unknown
-let input;
-while (input !== "quit") {
-    input = prompt("Enter command:");
 }
 ```
 
@@ -395,9 +379,7 @@ for (let i = 0; i < 5; i++) {
 
 ## ⚡ Functions
 
-<img src="https://media.giphy.com/media/RbDKaczqWovIugyJmW/giphy.gif" width="60" align="right">
-
-### 📌 Function Declaration
+### Function Declaration
 
 ```javascript
 // Named function - Hoisted
@@ -408,15 +390,15 @@ function greet(name) {
 console.log(greet("World")); // "Hello, World!"
 
 // With default parameters
-function greet(name = "Guest") {
+function greetUser(name = "Guest") {
     return `Hello, ${name}!`;
 }
 
-greet();      // "Hello, Guest!"
-greet("Bob"); // "Hello, Bob!"
+greetUser();      // "Hello, Guest!"
+greetUser("Bob"); // "Hello, Bob!"
 ```
 
-### 📌 Function Expression
+### Function Expression
 
 ```javascript
 // Anonymous function assigned to variable - Not hoisted
@@ -427,7 +409,7 @@ const add = function(a, b) {
 console.log(add(5, 3)); // 8
 ```
 
-### 📌 Arrow Functions (ES6)
+### Arrow Functions (ES6)
 
 ```javascript
 // Basic syntax
@@ -436,7 +418,7 @@ const multiply = (a, b) => {
 };
 
 // Single expression - Implicit return
-const multiply = (a, b) => a * b;
+const multiplyShort = (a, b) => a * b;
 
 // Single parameter - Parentheses optional
 const square = x => x * x;
@@ -448,6 +430,8 @@ const sayHello = () => "Hello!";
 const createUser = (name, age) => ({ name, age });
 ```
 
+#### Regular vs Arrow Functions
+
 | Feature | Regular Function | Arrow Function |
 |---------|-----------------|----------------|
 | `this` binding | Dynamic | Lexical (inherits) |
@@ -455,7 +439,7 @@ const createUser = (name, age) => ({ name, age });
 | Constructor | ✅ Can use `new` | ❌ Cannot use `new` |
 | Hoisting | ✅ Yes | ❌ No |
 
-### 📌 IIFE (Immediately Invoked Function Expression)
+### IIFE (Immediately Invoked Function Expression)
 
 ```javascript
 // Executes immediately after creation
@@ -473,6 +457,7 @@ const counter = (function() {
     let count = 0;
     return {
         increment: () => ++count,
+        decrement: () => --count,
         getCount: () => count
     };
 })();
@@ -482,14 +467,13 @@ counter.increment(); // 2
 counter.getCount();  // 2
 ```
 
-### 📌 Rest Parameters & Spread Operator
+### Rest Parameters & Spread Operator
 
 ```javascript
 // Rest Parameters - Collect multiple arguments
 function sum(...numbers) {
     return numbers.reduce((total, num) => total + num, 0);
 }
-
 sum(1, 2, 3, 4); // 10
 
 // Spread Operator - Expand arrays/objects
@@ -504,8 +488,6 @@ const obj2 = { ...obj1, c: 3 }; // { a: 1, b: 2, c: 3 }
 
 ## 📦 Arrays
 
-<img src="https://media.giphy.com/media/3oriO04qxVReM5rJEA/giphy.gif" width="60" align="right">
-
 ### Creating Arrays
 
 ```javascript
@@ -514,7 +496,6 @@ let fruits = ["apple", "banana", "orange"];
 
 // Array constructor
 let numbers = new Array(1, 2, 3);
-let empty = new Array(5); // Creates array with 5 empty slots
 
 // Array.from()
 Array.from("Hello");     // ["H", "e", "l", "l", "o"]
@@ -536,9 +517,7 @@ arr.at(-2)  // "d" (second last)
 arr.length  // 5
 ```
 
-### 🔧 Array Methods
-
-#### Mutating Methods (Modify Original Array)
+### Mutating Methods (Modify Original Array)
 
 ```javascript
 let arr = [1, 2, 3];
@@ -558,11 +537,11 @@ arr.splice(1, 1, 5);   // Replace → [1, 5, 3]
 
 // Others
 arr.reverse();         // Reverses in place
-arr.sort();            // Sorts in place (alphabetically by default)
+arr.sort();            // Sorts in place
 arr.fill(0);           // Fills all with 0
 ```
 
-#### Non-Mutating Methods (Return New Array)
+### Non-Mutating Methods (Return New Array)
 
 ```javascript
 let arr = [1, 2, 3, 4, 5];
@@ -585,7 +564,7 @@ arr.indexOf(3);        // 2
 arr.lastIndexOf(3);    // 2
 ```
 
-### 🔄 Iteration Methods
+### Iteration Methods
 
 ```javascript
 let numbers = [1, 2, 3, 4, 5];
@@ -656,8 +635,6 @@ let m = 1, n = 2;
 ---
 
 ## 🏗️ Objects
-
-<img src="https://media.giphy.com/media/VbnUQpnihPSIgIXuZv/giphy.gif" width="60" align="right">
 
 ### Creating Objects
 
@@ -730,7 +707,7 @@ console.log(name, age); // "Alice" 25
 const { name: userName, age: userAge } = user;
 
 // Default values
-const { name, country = "Unknown" } = user;
+const { name: n, country = "Unknown" } = user;
 
 // Nested destructuring
 const data = {
@@ -739,34 +716,8 @@ const data = {
 const { user: { profile: { avatar } } } = data;
 
 // Rest pattern
-const { name, ...rest } = user;
+const { name: userName2, ...rest } = user;
 // rest = { age: 25, email: "alice@example.com" }
-```
-
-### Shorthand Properties & Methods
-
-```javascript
-const name = "John";
-const age = 30;
-
-// Shorthand properties
-const person = { name, age };
-// Same as: { name: name, age: age }
-
-// Shorthand methods
-const calculator = {
-    add(a, b) { return a + b; },
-    subtract(a, b) { return a - b; }
-};
-// Same as: add: function(a, b) {...}
-
-// Computed property names
-const key = "dynamicKey";
-const obj = {
-    [key]: "value",
-    [`${key}_2`]: "another value"
-};
-// { dynamicKey: "value", dynamicKey_2: "another value" }
 ```
 
 ### The `this` Keyword
@@ -797,19 +748,17 @@ function greet() {
     console.log(`Hello, ${this.name}`);
 }
 
-const user = { name: "Alice" };
+const userObj = { name: "Alice" };
 
-greet.call(user);           // "Hello, Alice"
-greet.apply(user);          // "Hello, Alice"
-const boundGreet = greet.bind(user);
-boundGreet();               // "Hello, Alice"
+greet.call(userObj);           // "Hello, Alice"
+greet.apply(userObj);          // "Hello, Alice"
+const boundGreet = greet.bind(userObj);
+boundGreet();                  // "Hello, Alice"
 ```
 
 ---
 
 ## 🌐 DOM Manipulation
-
-<img src="https://media.giphy.com/media/dWesBcTLavkZuG35MI/giphy.gif" width="60" align="right">
 
 ### Selecting Elements
 
@@ -819,12 +768,12 @@ document.getElementById("myId");
 document.querySelector(".myClass");    // First match
 document.querySelector("#id .class");  // CSS selector
 
-// Multiple elements selectors (returns NodeList/HTMLCollection)
+// Multiple elements selectors
 document.getElementsByClassName("myClass");
 document.getElementsByTagName("div");
-document.querySelectorAll(".myClass"); // All matches (NodeList)
+document.querySelectorAll(".myClass"); // All matches
 
-// Convert NodeList to Array for array methods
+// Convert NodeList to Array
 const elements = [...document.querySelectorAll("div")];
 ```
 
@@ -847,7 +796,7 @@ div.hasAttribute("data-id");      // false
 // Classes
 div.classList.add("active", "visible");
 div.classList.remove("visible");
-div.classList.toggle("active");   // Add if missing, remove if present
+div.classList.toggle("active");
 div.classList.contains("active"); // true/false
 div.classList.replace("old", "new");
 
@@ -865,11 +814,11 @@ const element = document.querySelector("#myElement");
 // Parent
 element.parentElement;
 element.parentNode;
-element.closest(".ancestor"); // Closest ancestor matching selector
+element.closest(".ancestor");
 
 // Children
-element.children;             // HTMLCollection of child elements
-element.childNodes;           // NodeList including text nodes
+element.children;
+element.childNodes;
 element.firstElementChild;
 element.lastElementChild;
 
@@ -885,28 +834,26 @@ const parent = document.querySelector("#parent");
 const child = document.createElement("div");
 
 // Append
-parent.appendChild(child);           // Add to end
-parent.append(child, "text", child2); // Multiple items
-parent.prepend(child);               // Add to beginning
+parent.appendChild(child);
+parent.append(child, "text");
+parent.prepend(child);
 
 // Insert relative to element
 parent.insertBefore(newChild, referenceChild);
 element.insertAdjacentHTML("beforebegin", "<div>Before</div>");
-element.insertAdjacentHTML("afterbegin", "<div>First child</div>");
-element.insertAdjacentHTML("beforeend", "<div>Last child</div>");
 element.insertAdjacentHTML("afterend", "<div>After</div>");
 
 // Remove
-child.remove();                      // Remove self
-parent.removeChild(child);           // Remove child
+child.remove();
+parent.removeChild(child);
 
 // Replace
 parent.replaceChild(newChild, oldChild);
 oldChild.replaceWith(newChild);
 
 // Clone
-element.cloneNode(false);            // Shallow clone
-element.cloneNode(true);             // Deep clone (with children)
+element.cloneNode(false);  // Shallow
+element.cloneNode(true);   // Deep
 ```
 
 ### Event Handling
@@ -934,7 +881,7 @@ button.removeEventListener("click", handleClick);
 // Event options
 button.addEventListener("click", handler, {
     once: true,      // Remove after first trigger
-    capture: true,   // Capture phase instead of bubble
+    capture: true,   // Capture phase
     passive: true    // Won't call preventDefault()
 });
 ```
@@ -947,23 +894,18 @@ element.addEventListener("click", handler);
 element.addEventListener("dblclick", handler);
 element.addEventListener("mouseenter", handler);
 element.addEventListener("mouseleave", handler);
-element.addEventListener("mousedown", handler);
-element.addEventListener("mouseup", handler);
-element.addEventListener("mousemove", handler);
 
 // Keyboard events
 document.addEventListener("keydown", (e) => {
     console.log(e.key, e.code, e.ctrlKey);
 });
-document.addEventListener("keyup", handler);
 
 // Form events
 form.addEventListener("submit", (e) => {
-    e.preventDefault(); // Prevent form submission
-    // Handle form data
+    e.preventDefault();
 });
-input.addEventListener("input", handler);    // On every change
-input.addEventListener("change", handler);   // On blur after change
+input.addEventListener("input", handler);
+input.addEventListener("change", handler);
 input.addEventListener("focus", handler);
 input.addEventListener("blur", handler);
 
@@ -974,35 +916,31 @@ window.addEventListener("scroll", handler);
 document.addEventListener("DOMContentLoaded", handler);
 ```
 
-### Event Object
+### Event Object Properties
 
 ```javascript
 element.addEventListener("click", (e) => {
     e.target;           // Element that triggered event
     e.currentTarget;    // Element listener is attached to
     e.type;             // Event type ("click")
-    e.timeStamp;        // When event occurred
     
     e.preventDefault();  // Prevent default behavior
     e.stopPropagation(); // Stop event bubbling
     
     // Mouse position
-    e.clientX, e.clientY; // Relative to viewport
-    e.pageX, e.pageY;     // Relative to document
+    e.clientX; e.clientY; // Relative to viewport
+    e.pageX; e.pageY;     // Relative to document
     
     // Keyboard
     e.key;               // "Enter", "a", "ArrowUp"
-    e.code;              // "Enter", "KeyA", "ArrowUp"
-    e.altKey, e.ctrlKey, e.shiftKey; // Modifier keys
+    e.altKey; e.ctrlKey; e.shiftKey; // Modifier keys
 });
 ```
 
 ### Event Delegation
 
 ```javascript
-// Instead of adding listeners to each item...
-// Add one listener to parent and check target
-
+// Add one listener to parent instead of each child
 document.querySelector("#todo-list").addEventListener("click", (e) => {
     if (e.target.matches(".delete-btn")) {
         e.target.closest("li").remove();
@@ -1016,8 +954,6 @@ document.querySelector("#todo-list").addEventListener("click", (e) => {
 ---
 
 ## ✨ ES6+ Features
-
-<img src="https://media.giphy.com/media/SvFocn0wNMx0iv2rYz/giphy.gif" width="60" align="right">
 
 ### Template Literals
 
@@ -1039,65 +975,6 @@ const html = `
 // Expressions
 console.log(`Sum: ${2 + 2}`);
 console.log(`Status: ${age >= 18 ? "Adult" : "Minor"}`);
-
-// Tagged templates
-function highlight(strings, ...values) {
-    return strings.reduce((result, str, i) => 
-        `${result}${str}<mark>${values[i] || ""}</mark>`, "");
-}
-const message = highlight`Hello ${name}, you are ${age}!`;
-```
-
-### Destructuring (Summary)
-
-```javascript
-// Arrays
-const [a, b, ...rest] = [1, 2, 3, 4, 5];
-
-// Objects
-const { name, age, city = "Unknown" } = person;
-
-// Function parameters
-function greet({ name, age }) {
-    return `${name} is ${age}`;
-}
-
-// Swapping
-[a, b] = [b, a];
-```
-
-### Spread & Rest
-
-```javascript
-// Spread - Expand
-const arr1 = [1, 2, 3];
-const arr2 = [...arr1, 4, 5];    // [1, 2, 3, 4, 5]
-
-const obj1 = { a: 1 };
-const obj2 = { ...obj1, b: 2 }; // { a: 1, b: 2 }
-
-Math.max(...[1, 2, 3]);          // 3
-
-// Rest - Collect
-function sum(...nums) {
-    return nums.reduce((a, b) => a + b, 0);
-}
-```
-
-### Enhanced Object Literals
-
-```javascript
-const name = "John";
-const age = 30;
-
-const person = {
-    name,                    // Shorthand property
-    age,
-    greet() {                // Shorthand method
-        return `Hi, I'm ${this.name}`;
-    },
-    ["key" + 1]: "value"     // Computed property
-};
 ```
 
 ### Optional Chaining (?.)
@@ -1114,31 +991,30 @@ const user = {
 const city = user && user.address && user.address.city;
 
 // Optional chaining
-const city = user?.address?.city;        // "NYC"
+const cityNew = user?.address?.city;        // "NYC"
 const zip = user?.address?.zip;          // undefined (no error)
-const country = user?.address?.country?.name; // undefined
 
 // With arrays and functions
 const first = arr?.[0];
 const result = obj?.method?.();
 
 // Nullish coalescing combo
-const city = user?.address?.city ?? "Unknown";
+const cityOrDefault = user?.address?.city ?? "Unknown";
 ```
 
 ### Nullish Coalescing (??)
 
 ```javascript
 // Only triggers for null/undefined (not 0, "", false)
-const value = null ?? "default";     // "default"
-const value = undefined ?? "default"; // "default"
-const value = 0 ?? "default";        // 0
-const value = "" ?? "default";       // ""
-const value = false ?? "default";    // false
+const value1 = null ?? "default";     // "default"
+const value2 = undefined ?? "default"; // "default"
+const value3 = 0 ?? "default";        // 0
+const value4 = "" ?? "default";       // ""
+const value5 = false ?? "default";    // false
 
 // Comparison with ||
-const value = 0 || "default";        // "default" (0 is falsy)
-const value = 0 ?? "default";        // 0 (only null/undefined)
+const orValue = 0 || "default";  // "default" (0 is falsy)
+const nullValue = 0 ?? "default"; // 0 (only null/undefined)
 ```
 
 ### Map & Set
@@ -1174,35 +1050,9 @@ set.size;             // 4
 const unique = [...new Set([1, 1, 2, 2, 3])]; // [1, 2, 3]
 ```
 
-### Symbol
-
-```javascript
-// Create unique identifiers
-const id1 = Symbol("id");
-const id2 = Symbol("id");
-console.log(id1 === id2); // false (always unique)
-
-// Use as object keys
-const user = {
-    [id1]: 12345,
-    name: "John"
-};
-
-// Not enumerable in for...in
-for (let key in user) {
-    console.log(key); // Only "name"
-}
-
-// Well-known symbols
-Symbol.iterator   // Define iteration behavior
-Symbol.toStringTag // Customize Object.prototype.toString
-```
-
 ---
 
 ## ⏳ Asynchronous JavaScript
-
-<img src="https://media.giphy.com/media/3o7btNhMBytxAM6YBa/giphy.gif" width="60" align="right">
 
 ### Callbacks
 
@@ -1217,15 +1067,6 @@ function fetchData(callback) {
 fetchData((data) => {
     console.log(data); // After 1 second: "Data received!"
 });
-
-// Callback hell (avoid this!)
-fetchUser(userId, (user) => {
-    fetchPosts(user.id, (posts) => {
-        fetchComments(posts[0].id, (comments) => {
-            // Deep nesting - hard to read and maintain
-        });
-    });
-});
 ```
 
 ### Promises
@@ -1233,7 +1074,6 @@ fetchUser(userId, (user) => {
 ```javascript
 // Creating a Promise
 const promise = new Promise((resolve, reject) => {
-    // Async operation
     setTimeout(() => {
         const success = true;
         if (success) {
@@ -1264,32 +1104,25 @@ promise
 ### Promise Methods
 
 ```javascript
-// Promise.all - Wait for all to resolve
 const p1 = Promise.resolve(1);
 const p2 = Promise.resolve(2);
 const p3 = Promise.resolve(3);
 
+// Promise.all - Wait for all to resolve
 Promise.all([p1, p2, p3])
-    .then(([r1, r2, r3]) => {
-        console.log(r1, r2, r3); // 1 2 3
-    })
-    .catch(err => console.error(err)); // Fails if ANY fails
+    .then(([r1, r2, r3]) => console.log(r1, r2, r3));
 
 // Promise.allSettled - Wait for all, regardless of outcome
-Promise.allSettled([p1, p2, Promise.reject("Error")])
-    .then(results => {
-        // [{status: "fulfilled", value: 1}, 
-        //  {status: "fulfilled", value: 2}, 
-        //  {status: "rejected", reason: "Error"}]
-    });
+Promise.allSettled([p1, Promise.reject("Error")])
+    .then(results => console.log(results));
 
 // Promise.race - First to settle wins
 Promise.race([p1, p2, p3])
-    .then(first => console.log(first)); // 1 (whichever resolves first)
+    .then(first => console.log(first));
 
-// Promise.any - First to resolve wins (ignores rejections)
+// Promise.any - First to resolve wins
 Promise.any([Promise.reject(1), p2, p3])
-    .then(first => console.log(first)); // 2
+    .then(first => console.log(first));
 ```
 
 ### Async/Await
@@ -1297,16 +1130,10 @@ Promise.any([Promise.reject(1), p2, p3])
 ```javascript
 // Async function always returns a Promise
 async function fetchUserData() {
-    // await pauses execution until promise resolves
     const response = await fetch("/api/user");
     const data = await response.json();
     return data;
 }
-
-// Using async/await
-fetchUserData()
-    .then(data => console.log(data))
-    .catch(error => console.error(error));
 
 // Error handling with try/catch
 async function fetchData() {
@@ -1319,32 +1146,30 @@ async function fetchData() {
         return data;
     } catch (error) {
         console.error("Fetch error:", error);
-        throw error; // Re-throw to propagate
+        throw error;
     } finally {
         console.log("Fetch completed");
     }
 }
 ```
 
-### Parallel vs Sequential Async
+### Parallel vs Sequential
 
 ```javascript
 // Sequential - One after another (slower)
 async function sequential() {
-    const user = await fetchUser();      // Wait
-    const posts = await fetchPosts();    // Then wait
-    const comments = await fetchComments(); // Then wait
-    return { user, posts, comments };
+    const user = await fetchUser();
+    const posts = await fetchPosts();
+    return { user, posts };
 }
 
 // Parallel - All at once (faster)
 async function parallel() {
-    const [user, posts, comments] = await Promise.all([
+    const [user, posts] = await Promise.all([
         fetchUser(),
-        fetchPosts(),
-        fetchComments()
+        fetchPosts()
     ]);
-    return { user, posts, comments };
+    return { user, posts };
 }
 ```
 
@@ -1363,35 +1188,12 @@ async function postData(data) {
     const response = await fetch("https://api.example.com/data", {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization": "Bearer token123"
         },
         body: JSON.stringify(data)
     });
     return response.json();
-}
-
-// Full example with error handling
-async function fetchWithOptions() {
-    try {
-        const response = await fetch("/api/endpoint", {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer token123"
-            },
-            body: JSON.stringify({ key: "value" }),
-            credentials: "include" // Include cookies
-        });
-        
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        return await response.json();
-    } catch (error) {
-        console.error("Error:", error);
-        throw error;
-    }
 }
 ```
 
@@ -1399,21 +1201,16 @@ async function fetchWithOptions() {
 
 ## 🛡️ Error Handling
 
-<img src="https://media.giphy.com/media/gw3IWyGkC0rsazTi/giphy.gif" width="60" align="right">
-
 ### Try...Catch...Finally
 
 ```javascript
 try {
-    // Code that might throw an error
     const result = riskyOperation();
     console.log(result);
 } catch (error) {
-    // Handle the error
-    console.error("Error caught:", error.message);
-    console.error("Stack trace:", error.stack);
+    console.error("Error:", error.message);
+    console.error("Stack:", error.stack);
 } finally {
-    // Always runs, regardless of error
     cleanup();
 }
 
@@ -1426,33 +1223,8 @@ try {
     } else if (error instanceof TypeError) {
         console.log("Type error occurred");
     } else {
-        throw error; // Re-throw unknown errors
+        throw error;
     }
-}
-```
-
-### Throwing Errors
-
-```javascript
-// Throw built-in errors
-throw new Error("Something went wrong!");
-throw new TypeError("Expected a number");
-throw new RangeError("Value out of range");
-throw new ReferenceError("Variable not found");
-throw new SyntaxError("Invalid syntax");
-
-// Throw in functions
-function divide(a, b) {
-    if (b === 0) {
-        throw new Error("Division by zero!");
-    }
-    return a / b;
-}
-
-try {
-    divide(10, 0);
-} catch (e) {
-    console.error(e.message); // "Division by zero!"
 }
 ```
 
@@ -1467,18 +1239,9 @@ class ValidationError extends Error {
     }
 }
 
-class NetworkError extends Error {
-    constructor(message, statusCode) {
-        super(message);
-        this.name = "NetworkError";
-        this.statusCode = statusCode;
-    }
-}
-
-// Usage
 function validateEmail(email) {
     if (!email.includes("@")) {
-        throw new ValidationError("Invalid email format", "email");
+        throw new ValidationError("Invalid email", "email");
     }
 }
 
@@ -1491,81 +1254,39 @@ try {
 }
 ```
 
-### Async Error Handling
-
-```javascript
-// With Promises
-fetchData()
-    .then(data => processData(data))
-    .catch(error => {
-        console.error("Error in promise chain:", error);
-    });
-
-// With async/await
-async function handleAsync() {
-    try {
-        const data = await fetchData();
-        const result = await processData(data);
-        return result;
-    } catch (error) {
-        console.error("Async error:", error);
-        // Optionally re-throw or return default value
-        return null;
-    }
-}
-
-// Global unhandled promise rejection
-window.addEventListener("unhandledrejection", (event) => {
-    console.error("Unhandled rejection:", event.reason);
-    event.preventDefault(); // Prevent default logging
-});
-```
-
 ---
 
 ## 🎨 Object-Oriented Programming
-
-<img src="https://media.giphy.com/media/KAq5w47R9rmTuvWOWa/giphy.gif" width="60" align="right">
 
 ### Classes (ES6)
 
 ```javascript
 class Person {
-    // Constructor
     constructor(name, age) {
         this.name = name;
         this.age = age;
     }
     
-    // Instance method
     greet() {
         return `Hello, I'm ${this.name}!`;
     }
     
-    // Getter
     get info() {
         return `${this.name}, ${this.age} years old`;
     }
     
-    // Setter
     set setAge(value) {
-        if (value > 0) {
-            this.age = value;
-        }
+        if (value > 0) this.age = value;
     }
     
-    // Static method (called on class, not instances)
     static isAdult(age) {
         return age >= 18;
     }
 }
 
-// Usage
 const person = new Person("John", 30);
 person.greet();           // "Hello, I'm John!"
-person.info;              // "John, 30 years old"
-person.setAge = 31;
-Person.isAdult(20);       // true (static method)
+Person.isAdult(20);       // true
 ```
 
 ### Inheritance
@@ -1583,16 +1304,14 @@ class Animal {
 
 class Dog extends Animal {
     constructor(name, breed) {
-        super(name); // Call parent constructor
+        super(name);
         this.breed = breed;
     }
     
-    // Override parent method
     speak() {
         return `${this.name} barks! 🐕`;
     }
     
-    // New method
     fetch() {
         return `${this.name} fetches the ball!`;
     }
@@ -1600,11 +1319,6 @@ class Dog extends Animal {
 
 const dog = new Dog("Buddy", "Golden Retriever");
 dog.speak();  // "Buddy barks! 🐕"
-dog.fetch();  // "Buddy fetches the ball!"
-
-// Check inheritance
-dog instanceof Dog;     // true
-dog instanceof Animal;  // true
 ```
 
 ### Private Fields (ES2022)
@@ -1618,9 +1332,7 @@ class BankAccount {
     }
     
     deposit(amount) {
-        if (amount > 0) {
-            this.#balance += amount;
-        }
+        if (amount > 0) this.#balance += amount;
     }
     
     withdraw(amount) {
@@ -1634,57 +1346,24 @@ class BankAccount {
     get balance() {
         return this.#balance;
     }
-    
-    // Private method
-    #validateAmount(amount) {
-        return amount > 0;
-    }
 }
 
 const account = new BankAccount(100);
 account.deposit(50);
 console.log(account.balance);  // 150
-// account.#balance;           // SyntaxError - private!
-```
-
-### Static Class Fields & Methods
-
-```javascript
-class Counter {
-    static count = 0;        // Static field
-    static #privateStatic = 0; // Private static field
-    
-    constructor() {
-        Counter.count++;
-    }
-    
-    static getCount() {
-        return Counter.count;
-    }
-    
-    static reset() {
-        Counter.count = 0;
-    }
-}
-
-new Counter();
-new Counter();
-Counter.getCount(); // 2
-Counter.count;      // 2
+// account.#balance;           // SyntaxError!
 ```
 
 ---
 
 ## 🚀 Advanced Concepts
 
-<img src="https://media.giphy.com/media/xT9IgzoKnwFNmISR8I/giphy.gif" width="60" align="right">
-
 ### Closures
 
 ```javascript
-// A closure is a function that remembers its outer variables
+// A closure remembers its outer variables
 function outer() {
-    let count = 0;  // Enclosed variable
+    let count = 0;
     
     return function inner() {
         count++;
@@ -1697,7 +1376,7 @@ counter(); // 1
 counter(); // 2
 counter(); // 3
 
-// Practical example: Private variables
+// Practical: Private variables
 function createCounter() {
     let count = 0;
     
@@ -1707,122 +1386,46 @@ function createCounter() {
         getCount: () => count
     };
 }
-
-const myCounter = createCounter();
-myCounter.increment(); // 1
-myCounter.increment(); // 2
-myCounter.getCount();  // 2
-// count is private - can't access directly
 ```
 
 ### Prototypes
 
 ```javascript
-// All objects inherit from a prototype
 function Person(name) {
     this.name = name;
 }
 
-// Add method to prototype (shared across all instances)
 Person.prototype.greet = function() {
     return `Hello, I'm ${this.name}`;
 };
 
 const john = new Person("John");
-const jane = new Person("Jane");
-
 john.greet(); // "Hello, I'm John"
-jane.greet(); // "Hello, I'm Jane"
 
 // Prototype chain
 john.__proto__ === Person.prototype;       // true
 Person.prototype.__proto__ === Object.prototype; // true
-Object.prototype.__proto__ === null;       // true
-
-// Check prototype
-Object.getPrototypeOf(john) === Person.prototype; // true
-Person.prototype.isPrototypeOf(john);      // true
 ```
 
 ### Modules (ES6)
 
 ```javascript
-// math.js - Named exports
+// math.js - Exports
 export const PI = 3.14159;
+export function add(a, b) { return a + b; }
+export default class Calculator { }
 
-export function add(a, b) {
-    return a + b;
-}
-
-export function subtract(a, b) {
-    return a - b;
-}
-
-// Default export
-export default class Calculator {
-    // ...
-}
-
-// main.js - Importing
-import Calculator, { PI, add, subtract } from "./math.js";
+// main.js - Imports
+import Calculator, { PI, add } from "./math.js";
 import * as MathUtils from "./math.js";
 
-console.log(PI);              // 3.14159
-console.log(add(2, 3));       // 5
-console.log(MathUtils.PI);    // 3.14159
-
-// Dynamic imports (code splitting)
-async function loadModule() {
-    const module = await import("./math.js");
-    console.log(module.PI);
-}
-
-// Re-exporting
-export { add, subtract } from "./math.js";
-export * from "./helpers.js";
+// Dynamic imports
+const module = await import("./math.js");
 ```
 
-### Proxy & Reflect
+### Generators
 
 ```javascript
-// Proxy - Intercept and customize operations
-const target = {
-    name: "John",
-    age: 30
-};
-
-const handler = {
-    get(target, prop) {
-        console.log(`Getting "${prop}"`);
-        return prop in target ? target[prop] : "Property not found";
-    },
-    set(target, prop, value) {
-        console.log(`Setting "${prop}" to "${value}"`);
-        if (prop === "age" && typeof value !== "number") {
-            throw new TypeError("Age must be a number");
-        }
-        target[prop] = value;
-        return true;
-    }
-};
-
-const proxy = new Proxy(target, handler);
-
-proxy.name;         // Logs: Getting "name", Returns: "John"
-proxy.age = 31;     // Logs: Setting "age" to "31"
-proxy.unknown;      // Returns: "Property not found"
-
-// Reflect - Provides methods for interceptable operations
-Reflect.get(target, "name");
-Reflect.set(target, "age", 25);
-Reflect.has(target, "name");    // true
-Reflect.deleteProperty(target, "age");
-```
-
-### Generators & Iterators
-
-```javascript
-// Generator function
 function* numberGenerator() {
     yield 1;
     yield 2;
@@ -1835,72 +1438,9 @@ gen.next(); // { value: 2, done: false }
 gen.next(); // { value: 3, done: false }
 gen.next(); // { value: undefined, done: true }
 
-// Iterate with for...of
 for (const num of numberGenerator()) {
     console.log(num); // 1, 2, 3
 }
-
-// Infinite sequence
-function* infiniteSequence() {
-    let i = 0;
-    while (true) {
-        yield i++;
-    }
-}
-
-// Custom iterator
-const range = {
-    start: 1,
-    end: 5,
-    [Symbol.iterator]() {
-        let current = this.start;
-        const end = this.end;
-        return {
-            next() {
-                if (current <= end) {
-                    return { value: current++, done: false };
-                }
-                return { done: true };
-            }
-        };
-    }
-};
-
-for (const num of range) {
-    console.log(num); // 1, 2, 3, 4, 5
-}
-```
-
-### WeakMap & WeakSet
-
-```javascript
-// WeakMap - Keys must be objects, garbage collected when no other references
-const weakMap = new WeakMap();
-
-let obj = { name: "John" };
-weakMap.set(obj, "metadata");
-weakMap.get(obj);    // "metadata"
-
-obj = null; // Object can now be garbage collected
-
-// Use case: Private data
-const privateData = new WeakMap();
-
-class Person {
-    constructor(name) {
-        privateData.set(this, { name });
-    }
-    
-    getName() {
-        return privateData.get(this).name;
-    }
-}
-
-// WeakSet - Values must be objects
-const weakSet = new WeakSet();
-let element = { id: 1 };
-weakSet.add(element);
-weakSet.has(element); // true
 ```
 
 ---
@@ -1912,24 +1452,20 @@ weakSet.has(element); // true
 ```javascript
 const str = "Hello, World!";
 
-str.length;                    // 13
-str.toUpperCase();             // "HELLO, WORLD!"
-str.toLowerCase();             // "hello, world!"
-str.charAt(0);                 // "H"
-str.indexOf("o");              // 4
-str.lastIndexOf("o");          // 8
-str.includes("World");         // true
-str.startsWith("Hello");       // true
-str.endsWith("!");             // true
-str.slice(0, 5);               // "Hello"
-str.substring(7, 12);          // "World"
-str.split(", ");               // ["Hello", "World!"]
-str.replace("World", "JS");    // "Hello, JS!"
-str.replaceAll("l", "L");      // "HeLLo, WorLd!"
-str.trim();                    // Remove whitespace
-str.padStart(15, "*");         // "**Hello, World!"
-str.padEnd(15, "*");           // "Hello, World!**"
-str.repeat(2);                 // "Hello, World!Hello, World!"
+str.length                     // 13
+str.toUpperCase()              // "HELLO, WORLD!"
+str.toLowerCase()              // "hello, world!"
+str.charAt(0)                  // "H"
+str.indexOf("o")               // 4
+str.includes("World")          // true
+str.startsWith("Hello")        // true
+str.endsWith("!")              // true
+str.slice(0, 5)                // "Hello"
+str.split(", ")                // ["Hello", "World!"]
+str.replace("World", "JS")     // "Hello, JS!"
+str.trim()                     // Remove whitespace
+str.padStart(15, "*")          // "**Hello, World!"
+str.repeat(2)                  // "Hello, World!Hello, World!"
 ```
 
 ### Number Methods
@@ -1937,30 +1473,23 @@ str.repeat(2);                 // "Hello, World!Hello, World!"
 ```javascript
 const num = 3.14159;
 
-num.toFixed(2);                // "3.14"
-num.toPrecision(4);            // "3.142"
-num.toString();                // "3.14159"
+num.toFixed(2)                 // "3.14"
+num.toString()                 // "3.14159"
 
-Number.isInteger(5);           // true
-Number.isNaN(NaN);             // true
-Number.isFinite(100);          // true
-Number.parseFloat("3.14");     // 3.14
-Number.parseInt("42px");       // 42
+Number.isInteger(5)            // true
+Number.isNaN(NaN)              // true
+Number.parseFloat("3.14")      // 3.14
+Number.parseInt("42px")        // 42
 
-Math.round(4.5);               // 5
-Math.floor(4.9);               // 4
-Math.ceil(4.1);                // 5
-Math.trunc(4.9);               // 4
-Math.abs(-5);                  // 5
-Math.max(1, 2, 3);             // 3
-Math.min(1, 2, 3);             // 1
-Math.pow(2, 3);                // 8
-Math.sqrt(16);                 // 4
-Math.random();                 // 0 to 0.999...
-
-// Random integer between min and max
-const randomInt = (min, max) => 
-    Math.floor(Math.random() * (max - min + 1)) + min;
+Math.round(4.5)                // 5
+Math.floor(4.9)                // 4
+Math.ceil(4.1)                 // 5
+Math.abs(-5)                   // 5
+Math.max(1, 2, 3)              // 3
+Math.min(1, 2, 3)              // 1
+Math.pow(2, 3)                 // 8
+Math.sqrt(16)                  // 4
+Math.random()                  // 0 to 0.999...
 ```
 
 ### Date Methods
@@ -1968,53 +1497,43 @@ const randomInt = (min, max) =>
 ```javascript
 const now = new Date();
 
-now.getFullYear();             // 2024
-now.getMonth();                // 0-11 (January = 0)
-now.getDate();                 // 1-31
-now.getDay();                  // 0-6 (Sunday = 0)
-now.getHours();                // 0-23
-now.getMinutes();              // 0-59
-now.getSeconds();              // 0-59
-now.getTime();                 // Milliseconds since 1970
+now.getFullYear()              // 2024
+now.getMonth()                 // 0-11 (Jan = 0)
+now.getDate()                  // 1-31
+now.getDay()                   // 0-6 (Sun = 0)
+now.getHours()                 // 0-23
+now.getMinutes()               // 0-59
+now.getTime()                  // Milliseconds since 1970
 
-now.toISOString();             // "2024-01-15T10:30:00.000Z"
-now.toLocaleDateString();      // "1/15/2024"
-now.toLocaleTimeString();      // "10:30:00 AM"
-
-// Create specific dates
-new Date(2024, 0, 15);         // January 15, 2024
-new Date("2024-01-15");
-new Date(1705312200000);       // From timestamp
+now.toISOString()              // "2024-01-15T10:30:00.000Z"
+now.toLocaleDateString()       // "1/15/2024"
+now.toLocaleTimeString()       // "10:30:00 AM"
 ```
 
 ---
 
 <div align="center">
 
-## 🎉 You Made It!
+## 🎉 Congratulations!
 
-<img src="https://media.giphy.com/media/3oz8xAFtqoOUUrsh7W/giphy.gif" width="150">
+**You've completed the JavaScript Cheat Sheet!** 
 
-**Congratulations on completing the JavaScript Cheat Sheet!** 🚀
-
-Keep practicing and building amazing things with JavaScript!
+Keep practicing and building amazing things! 🚀
 
 ---
 
 ### 📖 Resources
 
-| Resource | Description |
-|----------|-------------|
-| [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript) | Comprehensive JS documentation |
-| [JavaScript.info](https://javascript.info/) | Modern JavaScript tutorial |
-| [ES6 Features](https://es6-features.org/) | ES6+ feature overview |
-| [Can I Use](https://caniuse.com/) | Browser compatibility |
+| Resource | Link |
+|----------|------|
+| MDN Web Docs | [developer.mozilla.org](https://developer.mozilla.org/en-US/docs/Web/JavaScript) |
+| JavaScript.info | [javascript.info](https://javascript.info/) |
+| ES6 Features | [es6-features.org](https://es6-features.org/) |
+| Can I Use | [caniuse.com](https://caniuse.com/) |
 
 ---
 
 Made with ❤️ for the JavaScript Community
-
-<img src="https://media.giphy.com/media/ln7z2eWriiQAllfVcn/giphy.gif" width="50">
 
 </div>
 ]]>
