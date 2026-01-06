@@ -1,0 +1,118 @@
+/* ===== DESIGN TOKENS ===== */
+:root {
+  /* Colors - Background */
+  --bg-primary: #0d0d0d;
+  --bg-secondary: #151515;
+  --bg-sidebar: #141414;
+  --bg-card: #1a1a1a;
+  --bg-card-hover: #222222;
+  --bg-input: #1a1a1a;
+  --bg-column: transparent;
+
+  /* Colors - Accent */
+  --accent-primary: #a3e635;
+  --accent-secondary: #84cc16;
+  --accent-hover: #bef264;
+
+  /* Colors - Text */
+  --text-primary: #ffffff;
+  --text-secondary: #a1a1aa;
+  --text-muted: #71717a;
+  --text-placeholder: #52525b;
+
+  /* Colors - Borders */
+  --border-primary: #27272a;
+  --border-secondary: #3f3f46;
+  --border-hover: #52525b;
+
+  /* Tag Colors */
+  --tag-important-bg: transparent;
+  --tag-important-border: #22c55e;
+  --tag-important-text: #22c55e;
+
+  --tag-visualization-bg: transparent;
+  --tag-visualization-border: #a855f7;
+  --tag-visualization-text: #a855f7;
+
+  --tag-conceptualization-bg: transparent;
+  --tag-conceptualization-border: #f97316;
+  --tag-conceptualization-text: #f97316;
+
+  --tag-finance-bg: transparent;
+  --tag-finance-border: #6b7280;
+  --tag-finance-text: #9ca3af;
+
+  --tag-budget-bg: transparent;
+  --tag-budget-border: #6b7280;
+  --tag-budget-text: #9ca3af;
+
+  --tag-ui-design-bg: transparent;
+  --tag-ui-design-border: #3b82f6;
+  --tag-ui-design-text: #3b82f6;
+
+  /* Priority Tag Colors */
+  --priority-high-bg: #166534;
+  --priority-high-text: #ffffff;
+
+  --priority-medium-bg: #854d0e;
+  --priority-medium-text: #ffffff;
+
+  --priority-low-bg: #1e40af;
+  --priority-low-text: #ffffff;
+
+  --priority-off-track-bg: #991b1b;
+  --priority-off-track-text: #ffffff;
+
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 20px;
+  --spacing-2xl: 24px;
+  --spacing-3xl: 32px;
+
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+
+  /* Typography */
+  --font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  --font-size-xs: 11px;
+  --font-size-sm: 12px;
+  --font-size-md: 14px;
+  --font-size-lg: 16px;
+  --font-size-xl: 18px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 28px;
+
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow: 350ms ease;
+
+  /* Layout */
+  --sidebar-width: 260px;
+  --sidebar-collapsed-width: 72px;
+  --header-height: 64px;
+  --column-width: 280px;
+  --column-gap: 16px;
+}

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Modern Kanban Todo</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="app">
+      <!-- Main Spatial Window -->
+      <main class="spatial-window">
+        <header class="window-header">
+          <div class="header-left">
+            <h1>Design Board</h1>
+            <span class="meta-text">16 cards</span>
+          </div>
+          <div class="header-right">
+            <div class="avatar-stack">
+              <span class="avatar" style="background: #2dd4bf">U</span>
+              <span class="avatar" style="background: #818cf8">I</span>
+              <span class="avatar" style="background: #f472b6">J</span>
+            </div>
+          </div>
+        </header>
+
+        <div class="board-grid">
+          <div class="column" id="inprogress-column" data-status="inprogress">
+            <div class="column-header">
+              <h2>
+                In Progress <span class="count" id="inprogress-count">0</span>
+              </h2>
+            </div>
+            <div class="task-list" id="inprogress-list">
+              <!-- Tasks -->
+            </div>
+          </div>
+
+          <div class="column" id="done-column" data-status="done">
+            <div class="column-header">
+              <h2>Done <span class="count" id="done-count">0</span></h2>
+            </div>
+            <div class="task-list" id="done-list">
+              <!-- Tasks -->
+            </div>
+          </div>
+
+          <div class="column" id="impeded-column" data-status="impeded">
+            <div class="column-header">
+              <h2>Impeded <span class="count" id="impeded-count">0</span></h2>
+            </div>
+            <div class="task-list" id="impeded-list">
+              <!-- Tasks -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Floating Add Button (if needed) or keep header add -->
+        <button id="add-task-btn" class="floating-add">+</button>
+      </main>
+    </div>
+
+    <!-- Modal -->
+    <div id="task-modal" class="modal hidden">
+      <div class="modal-content glass-panel">
+        <span class="close-modal">&times;</span>
+        <h2 id="modal-title">Add New Task</h2>
+        <form id="task-form">
+          <input type="hidden" id="task-id" />
+          <div class="form-group">
+            <label for="task-title">Title</label>
+            <input
+              type="text"
+              id="task-title"
+              required
+              placeholder="What needs to be done?"
+            />
+          </div>
+          <div class="form-group">
+            <label for="task-desc">Description</label>
+            <textarea
+              id="task-desc"
+              rows="3"
+              placeholder="Add details..."
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="task-status">Status</label>
+            <select id="task-status">
+              <option value="inprogress">In Progress</option>
+              <option value="done">Done</option>
+              <option value="impeded">Impeded</option>
+            </select>
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn-secondary" id="cancel-btn">
+              Cancel
+            </button>
+            <button type="submit" class="btn-primary">Save Task</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
