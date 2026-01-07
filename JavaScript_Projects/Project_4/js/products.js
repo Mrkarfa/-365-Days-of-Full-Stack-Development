@@ -30,7 +30,7 @@ const products = [
     category: CATEGORIES.SMARTPHONES,
     price: 1199.99,
     originalPrice: 1399.99,
-    image: "public/images/smartphone-1.jpg",
+    image: "public/images/smartphone-1.png",
     rating: 4.8,
     reviews: 2847,
     specs: {
@@ -52,7 +52,7 @@ const products = [
     category: CATEGORIES.SMARTPHONES,
     price: 1299.99,
     originalPrice: 1499.99,
-    image: "public/images/smartphone-2.jpg",
+    image: "public/images/smartphone-2.png",
     rating: 4.9,
     reviews: 5621,
     specs: {
@@ -74,7 +74,7 @@ const products = [
     category: CATEGORIES.SMARTPHONES,
     price: 899.99,
     originalPrice: 999.99,
-    image: "public/images/smartphone-3.jpg",
+    image: "public/images/smartphone-3.png",
     rating: 4.7,
     reviews: 1893,
     specs: {
@@ -100,7 +100,7 @@ const products = [
     category: CATEGORIES.LAPTOPS,
     price: 2499.99,
     originalPrice: 2799.99,
-    image: "public/images/laptop-1.jpg",
+    image: "public/images/laptop-1.png",
     rating: 4.9,
     reviews: 3456,
     specs: {
@@ -122,7 +122,7 @@ const products = [
     category: CATEGORIES.LAPTOPS,
     price: 1899.99,
     originalPrice: 2199.99,
-    image: "public/images/laptop-2.jpg",
+    image: "public/images/laptop-2.png",
     rating: 4.7,
     reviews: 2134,
     specs: {
@@ -144,7 +144,7 @@ const products = [
     category: CATEGORIES.LAPTOPS,
     price: 1749.99,
     originalPrice: 1999.99,
-    image: "public/images/laptop-3.jpg",
+    image: "public/images/laptop-3.png",
     rating: 4.8,
     reviews: 1876,
     specs: {
@@ -170,7 +170,7 @@ const products = [
     category: CATEGORIES.HEADPHONES,
     price: 549.99,
     originalPrice: 599.99,
-    image: "public/images/headphones-1.jpg",
+    image: "public/images/headphones-1.png",
     rating: 4.8,
     reviews: 4532,
     specs: {
@@ -192,7 +192,7 @@ const products = [
     category: CATEGORIES.HEADPHONES,
     price: 399.99,
     originalPrice: 449.99,
-    image: "public/images/headphones-2.jpg",
+    image: "public/images/headphones-2.png",
     rating: 4.9,
     reviews: 6721,
     specs: {
@@ -214,7 +214,7 @@ const products = [
     category: CATEGORIES.HEADPHONES,
     price: 429.99,
     originalPrice: 479.99,
-    image: "public/images/headphones-3.jpg",
+    image: "public/images/headphones-3.png",
     rating: 4.7,
     reviews: 3298,
     specs: {
@@ -240,7 +240,7 @@ const products = [
     category: CATEGORIES.TABLETS,
     price: 1099.99,
     originalPrice: 1299.99,
-    image: "public/images/tablet-1.jpg",
+    image: "public/images/tablet-1.png",
     rating: 4.9,
     reviews: 4123,
     specs: {
@@ -261,7 +261,7 @@ const products = [
     category: CATEGORIES.TABLETS,
     price: 1199.99,
     originalPrice: 1399.99,
-    image: "public/images/tablet-2.jpg",
+    image: "public/images/tablet-2.png",
     rating: 4.7,
     reviews: 2341,
     specs: {
@@ -286,7 +286,7 @@ const products = [
     category: CATEGORIES.WEARABLES,
     price: 799.99,
     originalPrice: 899.99,
-    image: "public/images/watch-1.jpg",
+    image: "public/images/watch-1.png",
     rating: 4.8,
     reviews: 3876,
     specs: {
@@ -307,7 +307,7 @@ const products = [
     category: CATEGORIES.WEARABLES,
     price: 429.99,
     originalPrice: 499.99,
-    image: "public/images/watch-2.jpg",
+    image: "public/images/watch-2.png",
     rating: 4.6,
     reviews: 2154,
     specs: {
@@ -332,7 +332,7 @@ const products = [
     category: CATEGORIES.ACCESSORIES,
     price: 39.99,
     originalPrice: 49.99,
-    image: "public/images/charger-1.jpg",
+    image: "public/images/charger-1.png",
     rating: 4.5,
     reviews: 8765,
     specs: {
@@ -351,7 +351,7 @@ const products = [
     category: CATEGORIES.ACCESSORIES,
     price: 79.99,
     originalPrice: 99.99,
-    image: "public/images/hub-1.jpg",
+    image: "public/images/hub-1.png",
     rating: 4.6,
     reviews: 3421,
     specs: {
@@ -371,7 +371,7 @@ const products = [
     category: CATEGORIES.ACCESSORIES,
     price: 99.99,
     originalPrice: 119.99,
-    image: "public/images/airtag-1.jpg",
+    image: "public/images/airtag-1.png",
     rating: 4.7,
     reviews: 12543,
     specs: {
