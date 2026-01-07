@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shopping Cart - ElectroMart</title>
+    <meta name="description" content="View and manage your shopping cart" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link rel="stylesheet" href="../css/styles.css" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: [
+                "-apple-system",
+                "BlinkMacSystemFont",
+                "Segoe UI",
+                "system-ui",
+                "sans-serif",
+              ],
+            },
+            colors: {
+              dark: {
+                primary: "#0a0a0a",
+                secondary: "#141414",
+                card: "#1a1a1a",
+                hover: "#222222",
+                border: "#2a2a2a",
+              },
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-dark-primary text-white min-h-screen">
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <a href="../index.html" class="flex items-center gap-2">
+            <i data-lucide="zap" class="w-8 h-8 text-blue-500"></i>
+            <span class="text-xl font-bold">ElectroMart</span>
+          </a>
+          <nav class="hidden md:flex items-center gap-8">
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="../index.html?category=smartphones" class="nav-link"
+              >Smartphones</a
+            >
+            <a href="../index.html?category=laptops" class="nav-link"
+              >Laptops</a
+            >
+          </nav>
+          <a
+            href="cart.html"
+            class="relative p-2 hover:bg-dark-hover rounded-lg transition-colors"
+          >
+            <i data-lucide="shopping-cart" class="w-6 h-6"></i>
+            <span
+              class="cart-badge absolute -top-1 -right-1 badge badge-primary hidden"
+              >0</span
+            >
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="pt-24 pb-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Order Steps -->
+        <div class="order-steps mb-12">
+          <div class="step active">
+            <div class="step-number">1</div>
+            <span class="hidden sm:inline">Cart</span>
+          </div>
+          <div class="w-12 h-0.5 bg-dark-border"></div>
+          <div class="step">
+            <div class="step-number">2</div>
+            <span class="hidden sm:inline">Shipping</span>
+          </div>
+          <div class="w-12 h-0.5 bg-dark-border"></div>
+          <div class="step">
+            <div class="step-number">3</div>
+            <span class="hidden sm:inline">Payment</span>
+          </div>
+          <div class="w-12 h-0.5 bg-dark-border"></div>
+          <div class="step">
+            <div class="step-number">4</div>
+            <span class="hidden sm:inline">Confirm</span>
+          </div>
+        </div>
+
+        <h1 class="text-3xl font-bold mb-8">Shopping Cart</h1>
+
+        <div id="cartContent" class="grid lg:grid-cols-3 gap-8">
+          <!-- Cart items will be rendered here -->
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark-secondary border-t border-dark-border py-8">
+      <div class="max-w-7xl mx-auto px-4 text-center text-sm text-gray-500">
+        <p>&copy; 2026 ElectroMart. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script src="../js/products.js"></script>
+    <script src="../js/cart.js"></script>
+    <script src="../js/main.js"></script>
+
+    <script>
+      // Render cart page
+      function renderCartPage() {
+        const cartContent = document.getElementById("cartContent");
+        const cart = getCart();
+
+        if (cart.length === 0) {
+          cartContent.innerHTML = `
+                    <div class="lg:col-span-3 text-center py-16">
+                        <i data-lucide="shopping-cart" class="w-24 h-24 mx-auto text-gray-600 mb-6"></i>
+                        <h2 class="text-2xl font-semibold text-gray-400 mb-4">Your cart is empty</h2>
+                        <p class="text-gray-500 mb-8">Looks like you haven't added anything to your cart yet.</p>
+                        <a href="../index.html" class="btn btn-primary">
+                            <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                            Continue Shopping
+                        </a>
+                    </div>
+                `;
+          lucide.createIcons();
+          return;
+        }
+
+        // Render cart items
+        const cartItemsHtml = cart.map((item) => renderCartItem(item)).join("");
+
+        // Get totals
+        const totals = getCartTotal();
+        const savings = getCartSavings();
+
+        cartContent.innerHTML = `
+                <div class="lg:col-span-2 space-y-4">
+                    ${cartItemsHtml}
+                    
+                    <div class="flex justify-between items-center pt-4">
+                        <button onclick="clearCart(); renderCartPage();" class="text-red-400 hover:text-red-300 flex items-center gap-2">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            Clear Cart
+                        </button>
+                        <a href="../index.html" class="text-blue-400 hover:text-blue-300 flex items-center gap-2">
+                            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                            Continue Shopping
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="lg:col-span-1">
+                    <div class="bg-dark-card rounded-xl p-6 border border-dark-border sticky top-24">
+                        <h2 class="text-xl font-semibold mb-6">Order Summary</h2>
+                        
+                        <div class="space-y-4 mb-6">
+                            <div class="flex justify-between text-gray-400">
+                                <span>Subtotal (${getCartItemCount()} items)</span>
+                                <span>${formatPrice(totals.subtotal)}</span>
+                            </div>
+                            ${
+                              savings > 0
+                                ? `
+                            <div class="flex justify-between text-green-400">
+                                <span>You Save</span>
+                                <span>-${formatPrice(savings)}</span>
+                            </div>
+                            `
+                                : ""
+                            }
+                            <div class="flex justify-between text-gray-400">
+                                <span>Shipping</span>
+                                <span class="text-green-400">Free</span>
+                            </div>
+                            <div class="flex justify-between text-gray-400">
+                                <span>Tax (8%)</span>
+                                <span>${formatPrice(totals.tax)}</span>
+                            </div>
+                            <div class="border-t border-dark-border pt-4">
+                                <div class="flex justify-between text-xl font-bold">
+                                    <span>Total</span>
+                                    <span>${formatPrice(totals.total)}</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <a href="checkout.html" class="btn btn-primary w-full py-4 text-lg">
+                            Proceed to Checkout
+                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        </a>
+                        
+                        <div class="mt-6 flex items-center justify-center gap-4 text-gray-500 text-sm">
+                            <i data-lucide="shield-check" class="w-4 h-4"></i>
+                            <span>Secure Checkout</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+        lucide.createIcons();
+      }
+
+      // Make renderCartPage available globally
+      window.renderCartPage = renderCartPage;
+
+      document.addEventListener("DOMContentLoaded", renderCartPage);
+    </script>
+  </body>
+</html>

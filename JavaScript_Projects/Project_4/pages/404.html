@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page Not Found - ElectroMart</title>
+    <meta
+      name="description"
+      content="The page you're looking for doesn't exist"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link rel="stylesheet" href="../css/styles.css" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: [
+                "-apple-system",
+                "BlinkMacSystemFont",
+                "Segoe UI",
+                "system-ui",
+                "sans-serif",
+              ],
+            },
+            colors: {
+              dark: {
+                primary: "#0a0a0a",
+                secondary: "#141414",
+                card: "#1a1a1a",
+                hover: "#222222",
+                border: "#2a2a2a",
+              },
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-dark-primary text-white min-h-screen">
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <a href="../index.html" class="flex items-center gap-2">
+            <i data-lucide="zap" class="w-8 h-8 text-blue-500"></i>
+            <span class="text-xl font-bold">ElectroMart</span>
+          </a>
+          <nav class="hidden md:flex items-center gap-8">
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="../index.html?category=smartphones" class="nav-link"
+              >Smartphones</a
+            >
+            <a href="../index.html?category=laptops" class="nav-link"
+              >Laptops</a
+            >
+          </nav>
+          <a
+            href="cart.html"
+            class="relative p-2 hover:bg-dark-hover rounded-lg"
+          >
+            <i data-lucide="shopping-cart" class="w-6 h-6"></i>
+            <span
+              class="cart-badge absolute -top-1 -right-1 badge badge-primary hidden"
+              >0</span
+            >
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="pt-16 flex items-center justify-center min-h-screen">
+      <div class="text-center px-4">
+        <!-- 404 Number -->
+        <div class="error-404 mb-8">404</div>
+
+        <!-- Error Content -->
+        <div class="error-content">
+          <h1 class="text-3xl md:text-4xl font-bold mb-4">
+            Oops! Page Not Found
+          </h1>
+          <p class="text-xl text-gray-400 mb-8 max-w-md mx-auto">
+            The page you're looking for seems to have wandered off into the
+            digital void.
+          </p>
+
+          <!-- Illustration -->
+          <div class="mb-8">
+            <div
+              class="w-32 h-32 mx-auto rounded-full bg-dark-card border border-dark-border flex items-center justify-center"
+            >
+              <i data-lucide="search-x" class="w-16 h-16 text-gray-600"></i>
+            </div>
+          </div>
+
+          <!-- Search Box -->
+          <div class="max-w-md mx-auto mb-8">
+            <form onsubmit="handleSearch(event)" class="flex gap-2">
+              <input
+                type="text"
+                id="searchInput"
+                placeholder="Search for products..."
+                class="flex-1 form-input"
+              />
+              <button type="submit" class="btn btn-primary">
+                <i data-lucide="search" class="w-5 h-5"></i>
+              </button>
+            </form>
+          </div>
+
+          <!-- Actions -->
+          <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="../index.html" class="btn btn-primary px-8 py-4">
+              <i data-lucide="home" class="w-5 h-5"></i>
+              Back to Home
+            </a>
+            <button
+              onclick="history.back()"
+              class="btn btn-secondary px-8 py-4"
+            >
+              <i data-lucide="arrow-left" class="w-5 h-5"></i>
+              Go Back
+            </button>
+          </div>
+
+          <!-- Helpful Links -->
+          <div class="mt-12">
+            <p class="text-gray-500 mb-4">
+              Or check out these popular categories:
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+              <a
+                href="../index.html?category=smartphones"
+                class="px-4 py-2 bg-dark-card border border-dark-border rounded-lg hover:border-blue-500 transition-colors"
+              >
+                Smartphones
+              </a>
+              <a
+                href="../index.html?category=laptops"
+                class="px-4 py-2 bg-dark-card border border-dark-border rounded-lg hover:border-blue-500 transition-colors"
+              >
+                Laptops
+              </a>
+              <a
+                href="../index.html?category=headphones"
+                class="px-4 py-2 bg-dark-card border border-dark-border rounded-lg hover:border-blue-500 transition-colors"
+              >
+                Headphones
+              </a>
+              <a
+                href="../index.html?category=wearables"
+                class="px-4 py-2 bg-dark-card border border-dark-border rounded-lg hover:border-blue-500 transition-colors"
+              >
+                Wearables
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="../js/products.js"></script>
+    <script src="../js/cart.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/animations.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        lucide.createIcons();
+
+        // Trigger 404 animation
+        if (typeof animate404 === "function") {
+          animate404();
+        }
+      });
+
+      // Override search to go to home page
+      function handleSearch(e) {
+        e.preventDefault();
+        const query = document.getElementById("searchInput").value.trim();
+        if (query) {
+          window.location.href = `../index.html?search=${encodeURIComponent(
+            query
+          )}`;
+        }
+      }
+    </script>
+  </body>
+</html>

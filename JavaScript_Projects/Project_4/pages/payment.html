@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment - ElectroMart</title>
+    <meta name="description" content="Complete your payment" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="../css/styles.css" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: [
+                "-apple-system",
+                "BlinkMacSystemFont",
+                "Segoe UI",
+                "system-ui",
+                "sans-serif",
+              ],
+            },
+            colors: {
+              dark: {
+                primary: "#0a0a0a",
+                secondary: "#141414",
+                card: "#1a1a1a",
+                hover: "#222222",
+                border: "#2a2a2a",
+              },
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-dark-primary text-white min-h-screen">
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <a href="../index.html" class="flex items-center gap-2">
+            <i data-lucide="zap" class="w-8 h-8 text-blue-500"></i>
+            <span class="text-xl font-bold">ElectroMart</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="pt-24 pb-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Order Steps -->
+        <div class="order-steps mb-12">
+          <div class="step completed">
+            <div class="step-number">
+              <i data-lucide="check" class="w-4 h-4"></i>
+            </div>
+            <span class="hidden sm:inline">Cart</span>
+          </div>
+          <div class="w-12 h-0.5 bg-green-500"></div>
+          <div class="step completed">
+            <div class="step-number">
+              <i data-lucide="check" class="w-4 h-4"></i>
+            </div>
+            <span class="hidden sm:inline">Shipping</span>
+          </div>
+          <div class="w-12 h-0.5 bg-green-500"></div>
+          <div class="step active">
+            <div class="step-number">3</div>
+            <span class="hidden sm:inline">Payment</span>
+          </div>
+          <div class="w-12 h-0.5 bg-dark-border"></div>
+          <div class="step">
+            <div class="step-number">4</div>
+            <span class="hidden sm:inline">Confirm</span>
+          </div>
+        </div>
+
+        <h1 class="text-3xl font-bold mb-8">Payment Method</h1>
+
+        <div class="grid lg:grid-cols-3 gap-8">
+          <!-- Payment Form -->
+          <div class="lg:col-span-2">
+            <form
+              id="paymentForm"
+              onsubmit="processPayment(event)"
+              class="space-y-6"
+            >
+              <!-- Payment Methods -->
+              <div
+                class="bg-dark-card rounded-xl p-6 border border-dark-border"
+              >
+                <h3 class="text-lg font-semibold mb-4">
+                  Select Payment Method
+                </h3>
+                <div class="space-y-3">
+                  <label
+                    class="flex items-center gap-4 p-4 bg-dark-secondary rounded-lg cursor-pointer border-2 border-transparent has-[:checked]:border-blue-500"
+                  >
+                    <input
+                      type="radio"
+                      name="paymentMethod"
+                      value="card"
+                      checked
+                      class="w-5 h-5 text-blue-500"
+                    />
+                    <i
+                      data-lucide="credit-card"
+                      class="w-6 h-6 text-blue-400"
+                    ></i>
+                    <span class="font-medium">Credit / Debit Card</span>
+                  </label>
+                  <label
+                    class="flex items-center gap-4 p-4 bg-dark-secondary rounded-lg cursor-pointer border-2 border-transparent has-[:checked]:border-blue-500"
+                  >
+                    <input
+                      type="radio"
+                      name="paymentMethod"
+                      value="upi"
+                      class="w-5 h-5 text-blue-500"
+                    />
+                    <i
+                      data-lucide="smartphone"
+                      class="w-6 h-6 text-green-400"
+                    ></i>
+                    <span class="font-medium">UPI Payment</span>
+                  </label>
+                  <label
+                    class="flex items-center gap-4 p-4 bg-dark-secondary rounded-lg cursor-pointer border-2 border-transparent has-[:checked]:border-blue-500"
+                  >
+                    <input
+                      type="radio"
+                      name="paymentMethod"
+                      value="cod"
+                      class="w-5 h-5 text-blue-500"
+                    />
+                    <i
+                      data-lucide="banknote"
+                      class="w-6 h-6 text-yellow-400"
+                    ></i>
+                    <span class="font-medium">Cash on Delivery</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Card Details -->
+              <div
+                id="cardDetails"
+                class="bg-dark-card rounded-xl p-6 border border-dark-border"
+              >
+                <h3 class="text-lg font-semibold mb-4">Card Details</h3>
+                <div class="space-y-4">
+                  <div>
+                    <label for="cardNumber" class="form-label"
+                      >Card Number *</label
+                    >
+                    <input
+                      type="text"
+                      id="cardNumber"
+                      class="form-input"
+                      placeholder="1234 5678 9012 3456"
+                      oninput="formatCardNumber(this)"
+                      maxlength="19"
+                    />
+                    <p
+                      id="cardNumber-error"
+                      class="text-red-400 text-sm mt-1 hidden"
+                    ></p>
+                  </div>
+                  <div class="grid grid-cols-2 gap-4">
+                    <div>
+                      <label for="expiry" class="form-label"
+                        >Expiry Date *</label
+                      >
+                      <input
+                        type="text"
+                        id="expiry"
+                        class="form-input"
+                        placeholder="MM/YY"
+                        oninput="formatExpiry(this)"
+                        maxlength="5"
+                      />
+                      <p
+                        id="expiry-error"
+                        class="text-red-400 text-sm mt-1 hidden"
+                      ></p>
+                    </div>
+                    <div>
+                      <label for="cvv" class="form-label">CVV *</label>
+                      <input
+                        type="password"
+                        id="cvv"
+                        class="form-input"
+                        placeholder="•••"
+                        maxlength="4"
+                      />
+                      <p
+                        id="cvv-error"
+                        class="text-red-400 text-sm mt-1 hidden"
+                      ></p>
+                    </div>
+                  </div>
+                  <div>
+                    <label for="cardName" class="form-label"
+                      >Name on Card</label
+                    >
+                    <input
+                      type="text"
+                      id="cardName"
+                      class="form-input"
+                      placeholder="JOHN DOE"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex gap-4">
+                <a href="checkout.html" class="btn btn-secondary">
+                  <i data-lucide="arrow-left" class="w-4 h-4"></i> Back
+                </a>
+                <button type="submit" class="btn btn-primary flex-1">
+                  <i data-lucide="lock" class="w-4 h-4"></i> Place Order
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Order Summary -->
+          <div class="lg:col-span-1">
+            <div
+              class="bg-dark-card rounded-xl p-6 border border-dark-border sticky top-24"
+            >
+              <h2 class="text-xl font-semibold mb-6">Order Summary</h2>
+              <div
+                id="orderItems"
+                class="space-y-4 mb-6 max-h-48 overflow-y-auto"
+              ></div>
+              <div
+                id="orderTotals"
+                class="space-y-3 border-t border-dark-border pt-4"
+              ></div>
+              <div class="mt-6 pt-4 border-t border-dark-border">
+                <p class="text-sm text-gray-400 flex items-center gap-2">
+                  <i
+                    data-lucide="shield-check"
+                    class="w-4 h-4 text-green-400"
+                  ></i>
+                  Your payment is secure and encrypted
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="../js/products.js"></script>
+    <script src="../js/cart.js"></script>
+    <script src="../js/checkout.js"></script>
+    <script src="../js/main.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        if (isCartEmpty()) {
+          window.location.href = "cart.html";
+          return;
+        }
+
+        // Toggle card details visibility
+        document
+          .querySelectorAll('input[name="paymentMethod"]')
+          .forEach((radio) => {
+            radio.addEventListener("change", (e) => {
+              document.getElementById("cardDetails").style.display =
+                e.target.value === "card" ? "block" : "none";
+            });
+          });
+
+        // Render order items
+        const items = getCartItemsWithDetails();
+        document.getElementById("orderItems").innerHTML = items
+          .map(
+            (item) => `
+                <div class="flex gap-3">
+                    <img src="../${item.product.image}" alt="${
+              item.product.name
+            }" class="w-12 h-12 object-cover rounded-lg"
+                         onerror="this.src='https://placehold.co/48x48/1a1a1a/666?text=Item'">
+                    <div class="flex-1 min-w-0">
+                        <p class="font-medium truncate text-sm">${
+                          item.product.name
+                        }</p>
+                        <p class="text-xs text-gray-400">Qty: ${
+                          item.quantity
+                        }</p>
+                    </div>
+                    <p class="font-semibold text-sm">${formatPrice(
+                      item.product.price * item.quantity
+                    )}</p>
+                </div>
+            `
+          )
+          .join("");
+
+        const totals = getCartTotal();
+        document.getElementById("orderTotals").innerHTML = `
+                <div class="flex justify-between text-gray-400"><span>Subtotal</span><span>${formatPrice(
+                  totals.subtotal
+                )}</span></div>
+                <div class="flex justify-between text-gray-400"><span>Shipping</span><span class="text-green-400">Free</span></div>
+                <div class="flex justify-between text-gray-400"><span>Tax</span><span>${formatPrice(
+                  totals.tax
+                )}</span></div>
+                <div class="flex justify-between text-xl font-bold pt-3 border-t border-dark-border"><span>Total</span><span>${formatPrice(
+                  totals.total
+                )}</span></div>
+            `;
+
+        lucide.createIcons();
+      });
+    </script>
+  </body>
+</html>

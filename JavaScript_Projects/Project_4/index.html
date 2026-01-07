@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ElectroMart - Premium Electronics Store</title>
+    <meta
+      name="description"
+      content="Shop the latest electronics - smartphones, laptops, headphones, and more at ElectroMart."
+    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <!-- Tailwind Config -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: [
+                "-apple-system",
+                "BlinkMacSystemFont",
+                "Segoe UI",
+                "system-ui",
+                "sans-serif",
+              ],
+            },
+            colors: {
+              dark: {
+                primary: "#0a0a0a",
+                secondary: "#141414",
+                card: "#1a1a1a",
+                hover: "#222222",
+                border: "#2a2a2a",
+              },
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-dark-primary text-white min-h-screen">
+    <!-- Header / Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <!-- Logo -->
+          <a href="index.html" class="flex items-center gap-2">
+            <i data-lucide="zap" class="w-8 h-8 text-blue-500"></i>
+            <span class="text-xl font-bold">ElectroMart</span>
+          </a>
+
+          <!-- Desktop Navigation -->
+          <nav class="hidden md:flex items-center gap-8">
+            <a href="index.html" class="nav-link text-white">Home</a>
+            <a href="index.html?category=smartphones" class="nav-link"
+              >Smartphones</a
+            >
+            <a href="index.html?category=laptops" class="nav-link">Laptops</a>
+            <a href="index.html?category=headphones" class="nav-link"
+              >Headphones</a
+            >
+            <a href="index.html?category=wearables" class="nav-link"
+              >Wearables</a
+            >
+          </nav>
+
+          <!-- Actions -->
+          <div class="flex items-center gap-4">
+            <!-- Search -->
+            <form
+              onsubmit="handleSearch(event)"
+              class="hidden sm:flex items-center"
+            >
+              <div class="relative">
+                <input
+                  type="text"
+                  id="searchInput"
+                  placeholder="Search..."
+                  class="w-48 lg:w-64 px-4 py-2 pl-10 bg-dark-secondary border border-dark-border rounded-lg text-sm focus:outline-none focus:border-blue-500"
+                />
+                <i
+                  data-lucide="search"
+                  class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"
+                ></i>
+              </div>
+            </form>
+
+            <!-- Cart -->
+            <a
+              href="pages/cart.html"
+              class="relative p-2 hover:bg-dark-hover rounded-lg transition-colors"
+            >
+              <i data-lucide="shopping-cart" class="w-6 h-6"></i>
+              <span
+                class="cart-badge absolute -top-1 -right-1 badge badge-primary hidden"
+                >0</span
+              >
+            </a>
+
+            <!-- Mobile Menu Toggle -->
+            <button
+              onclick="toggleMobileMenu()"
+              class="md:hidden p-2 hover:bg-dark-hover rounded-lg"
+            >
+              <i data-lucide="menu" id="menuIcon" class="w-6 h-6"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <nav id="mobileMenu" class="md:hidden hidden pb-4">
+          <div class="flex flex-col gap-2">
+            <a
+              href="index.html"
+              class="px-4 py-2 hover:bg-dark-hover rounded-lg"
+              >Home</a
+            >
+            <a
+              href="index.html?category=smartphones"
+              class="px-4 py-2 hover:bg-dark-hover rounded-lg"
+              >Smartphones</a
+            >
+            <a
+              href="index.html?category=laptops"
+              class="px-4 py-2 hover:bg-dark-hover rounded-lg"
+              >Laptops</a
+            >
+            <a
+              href="index.html?category=headphones"
+              class="px-4 py-2 hover:bg-dark-hover rounded-lg"
+              >Headphones</a
+            >
+            <a
+              href="index.html?category=wearables"
+              class="px-4 py-2 hover:bg-dark-hover rounded-lg"
+              >Wearables</a
+            >
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main class="pt-16">
+      <!-- Hero Section -->
+      <section class="relative min-h-[80vh] flex items-center overflow-hidden">
+        <div
+          class="absolute inset-0 bg-gradient-to-br from-blue-900/20 via-transparent to-purple-900/20"
+        ></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
+          <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+              <span
+                class="inline-block px-4 py-1 bg-blue-500/10 text-blue-400 rounded-full text-sm font-medium mb-6"
+              >
+                New Arrivals 2026
+              </span>
+              <h1
+                class="hero-title text-4xl md:text-6xl font-bold leading-tight mb-6"
+              >
+                Experience the
+                <span class="gradient-text">Future</span>
+                of Tech
+              </h1>
+              <p class="hero-subtitle text-lg text-gray-400 mb-8 max-w-lg">
+                Discover cutting-edge electronics with premium quality and
+                unbeatable prices. Free shipping on orders over $99.
+              </p>
+              <div class="hero-cta flex flex-wrap gap-4">
+                <a href="#featured" class="btn btn-primary text-lg px-8 py-4">
+                  <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                  Shop Now
+                </a>
+                <a
+                  href="#categories"
+                  class="btn btn-secondary text-lg px-8 py-4"
+                >
+                  Browse Categories
+                </a>
+              </div>
+            </div>
+            <div class="hero-image relative">
+              <div
+                class="absolute inset-0 bg-gradient-to-r from-blue-500/30 to-purple-500/30 rounded-3xl blur-3xl"
+              ></div>
+              <img
+                src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&h=500&fit=crop"
+                alt="Premium Headphones"
+                class="relative rounded-3xl shadow-2xl w-full object-cover"
+                onerror="this.src='https://placehold.co/600x500/1a1a1a/3b82f6?text=Premium+Electronics'"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Categories Section -->
+      <section id="categories" class="py-20 bg-dark-secondary">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 class="section-heading text-3xl font-bold mb-12 text-center">
+            Shop by Category
+          </h2>
+          <div
+            class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4"
+            id="categoriesGrid"
+          >
+            <!-- Categories will be rendered here -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Featured Products Section -->
+      <section id="featured" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between mb-12">
+            <h2 class="section-heading text-3xl font-bold" id="pageTitle">
+              Featured Products
+            </h2>
+            <a
+              href="index.html"
+              class="text-blue-400 hover:text-blue-300 flex items-center gap-2"
+            >
+              View All <i data-lucide="arrow-right" class="w-4 h-4"></i>
+            </a>
+          </div>
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+            id="productsGrid"
+          >
+            <!-- Products will be rendered here -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Special Offer Banner -->
+      <section class="py-16 relative overflow-hidden">
+        <div class="absolute inset-0 gradient-bg opacity-10"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div class="glass rounded-2xl p-8 md:p-12 text-center">
+            <span
+              class="inline-block px-4 py-1 bg-yellow-500/20 text-yellow-400 rounded-full text-sm font-medium mb-4"
+            >
+              Limited Time Offer
+            </span>
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">
+              Get 20% Off Your First Order
+            </h2>
+            <p class="text-gray-400 mb-6 max-w-2xl mx-auto">
+              Sign up for our newsletter and receive an exclusive discount code
+              for your first purchase.
+            </p>
+            <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+              <input
+                type="email"
+                placeholder="Enter your email"
+                class="flex-1 form-input"
+              />
+              <button type="submit" class="btn btn-primary whitespace-nowrap">
+                Get Discount
+              </button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- Why Choose Us -->
+      <section class="py-20 bg-dark-secondary">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 class="section-heading text-3xl font-bold mb-12 text-center">
+            Why Choose ElectroMart
+          </h2>
+          <div class="grid md:grid-cols-4 gap-8">
+            <div class="text-center fade-on-scroll">
+              <div
+                class="w-16 h-16 mx-auto mb-4 rounded-full bg-blue-500/10 flex items-center justify-center"
+              >
+                <i data-lucide="truck" class="w-8 h-8 text-blue-400"></i>
+              </div>
+              <h3 class="text-lg font-semibold mb-2">Free Shipping</h3>
+              <p class="text-gray-400 text-sm">
+                Free delivery on orders over $99
+              </p>
+            </div>
+            <div class="text-center fade-on-scroll">
+              <div
+                class="w-16 h-16 mx-auto mb-4 rounded-full bg-green-500/10 flex items-center justify-center"
+              >
+                <i
+                  data-lucide="shield-check"
+                  class="w-8 h-8 text-green-400"
+                ></i>
+              </div>
+              <h3 class="text-lg font-semibold mb-2">Secure Payment</h3>
+              <p class="text-gray-400 text-sm">100% secure payment methods</p>
+            </div>
+            <div class="text-center fade-on-scroll">
+              <div
+                class="w-16 h-16 mx-auto mb-4 rounded-full bg-purple-500/10 flex items-center justify-center"
+              >
+                <i data-lucide="refresh-cw" class="w-8 h-8 text-purple-400"></i>
+              </div>
+              <h3 class="text-lg font-semibold mb-2">Easy Returns</h3>
+              <p class="text-gray-400 text-sm">30-day money back guarantee</p>
+            </div>
+            <div class="text-center fade-on-scroll">
+              <div
+                class="w-16 h-16 mx-auto mb-4 rounded-full bg-orange-500/10 flex items-center justify-center"
+              >
+                <i data-lucide="headphones" class="w-8 h-8 text-orange-400"></i>
+              </div>
+              <h3 class="text-lg font-semibold mb-2">24/7 Support</h3>
+              <p class="text-gray-400 text-sm">Dedicated customer support</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark-secondary border-t border-dark-border">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid md:grid-cols-4 gap-8">
+          <div>
+            <a href="index.html" class="flex items-center gap-2 mb-4">
+              <i data-lucide="zap" class="w-6 h-6 text-blue-500"></i>
+              <span class="text-lg font-bold">ElectroMart</span>
+            </a>
+            <p class="text-gray-400 text-sm">
+              Your one-stop shop for premium electronics at unbeatable prices.
+            </p>
+          </div>
+          <div>
+            <h4 class="font-semibold mb-4">Quick Links</h4>
+            <ul class="space-y-2 text-sm text-gray-400">
+              <li><a href="index.html" class="hover:text-white">Home</a></li>
+              <li>
+                <a
+                  href="index.html?category=smartphones"
+                  class="hover:text-white"
+                  >Smartphones</a
+                >
+              </li>
+              <li>
+                <a href="index.html?category=laptops" class="hover:text-white"
+                  >Laptops</a
+                >
+              </li>
+              <li>
+                <a
+                  href="index.html?category=headphones"
+                  class="hover:text-white"
+                  >Headphones</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-semibold mb-4">Customer Service</h4>
+            <ul class="space-y-2 text-sm text-gray-400">
+              <li><a href="#" class="hover:text-white">Contact Us</a></li>
+              <li><a href="#" class="hover:text-white">FAQs</a></li>
+              <li><a href="#" class="hover:text-white">Shipping Info</a></li>
+              <li><a href="#" class="hover:text-white">Returns</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-semibold mb-4">Connect</h4>
+            <div class="flex gap-4">
+              <a
+                href="#"
+                class="w-10 h-10 rounded-full bg-dark-hover flex items-center justify-center hover:bg-blue-500 transition-colors"
+              >
+                <i data-lucide="facebook" class="w-5 h-5"></i>
+              </a>
+              <a
+                href="#"
+                class="w-10 h-10 rounded-full bg-dark-hover flex items-center justify-center hover:bg-blue-400 transition-colors"
+              >
+                <i data-lucide="twitter" class="w-5 h-5"></i>
+              </a>
+              <a
+                href="#"
+                class="w-10 h-10 rounded-full bg-dark-hover flex items-center justify-center hover:bg-pink-500 transition-colors"
+              >
+                <i data-lucide="instagram" class="w-5 h-5"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div
+          class="border-t border-dark-border mt-8 pt-8 text-center text-sm text-gray-500"
+        >
+          <p>&copy; 2026 ElectroMart. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button
+      id="scrollToTop"
+      onclick="scrollToTop()"
+      class="fixed bottom-8 right-8 w-12 h-12 rounded-full bg-blue-500 text-white shadow-lg hidden items-center justify-center hover:bg-blue-600 transition-colors"
+    >
+      <i data-lucide="arrow-up" class="w-5 h-5"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/animations.js"></script>
+
+    <script>
+      // Initialize page content
+      document.addEventListener("DOMContentLoaded", () => {
+        // Render categories
+        const categoriesGrid = document.getElementById("categoriesGrid");
+        const categories = [
+          {
+            id: "smartphones",
+            name: "Smartphones",
+            icon: "smartphone",
+            color: "blue",
+          },
+          { id: "laptops", name: "Laptops", icon: "laptop", color: "purple" },
+          {
+            id: "headphones",
+            name: "Headphones",
+            icon: "headphones",
+            color: "pink",
+          },
+          { id: "tablets", name: "Tablets", icon: "tablet", color: "green" },
+          {
+            id: "wearables",
+            name: "Wearables",
+            icon: "watch",
+            color: "orange",
+          },
+          {
+            id: "accessories",
+            name: "Accessories",
+            icon: "usb",
+            color: "cyan",
+          },
+        ];
+
+        categoriesGrid.innerHTML = categories
+          .map(
+            (cat) => `
+                <a href="index.html?category=${cat.id}" 
+                   class="category-card p-6 bg-dark-card border border-dark-border rounded-xl text-center hover:border-${cat.color}-500 transition-colors group">
+                    <div class="w-12 h-12 mx-auto mb-3 rounded-full bg-${cat.color}-500/10 flex items-center justify-center group-hover:bg-${cat.color}-500/20 transition-colors">
+                        <i data-lucide="${cat.icon}" class="w-6 h-6 text-${cat.color}-400"></i>
+                    </div>
+                    <span class="text-sm font-medium">${cat.name}</span>
+                </a>
+            `
+          )
+          .join("");
+
+        // Render featured products
+        const productsGrid = document.getElementById("productsGrid");
+        const urlParams = new URLSearchParams(window.location.search);
+        const category = urlParams.get("category");
+        const search = urlParams.get("search");
+
+        let displayProducts;
+        if (category) {
+          displayProducts = getProductsByCategory(category);
+          document.getElementById("pageTitle").textContent =
+            category.charAt(0).toUpperCase() + category.slice(1);
+        } else if (search) {
+          displayProducts = searchProducts(search);
+          document.getElementById(
+            "pageTitle"
+          ).textContent = `Search: "${search}"`;
+        } else {
+          displayProducts = getFeaturedProducts();
+        }
+
+        if (displayProducts.length > 0) {
+          productsGrid.innerHTML = displayProducts
+            .map(renderProductCard)
+            .join("");
+        } else {
+          productsGrid.innerHTML = `
+                    <div class="col-span-full text-center py-12">
+                        <i data-lucide="package-x" class="w-16 h-16 mx-auto text-gray-600 mb-4"></i>
+                        <h3 class="text-xl font-semibold text-gray-400">No products found</h3>
+                        <p class="text-gray-500 mt-2">Try a different category or search term</p>
+                    </div>
+                `;
+        }
+
+        // Initialize Lucide icons
+        lucide.createIcons();
+      });
+    </script>
+  </body>
+</html>

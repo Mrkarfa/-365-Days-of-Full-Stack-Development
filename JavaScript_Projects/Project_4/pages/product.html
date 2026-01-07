@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Details - ElectroMart</title>
+    <meta
+      name="description"
+      content="View product details and specifications"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <link rel="stylesheet" href="../css/styles.css" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: [
+                "-apple-system",
+                "BlinkMacSystemFont",
+                "Segoe UI",
+                "system-ui",
+                "sans-serif",
+              ],
+            },
+            colors: {
+              dark: {
+                primary: "#0a0a0a",
+                secondary: "#141414",
+                card: "#1a1a1a",
+                hover: "#222222",
+                border: "#2a2a2a",
+              },
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-dark-primary text-white min-h-screen">
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <a href="../index.html" class="flex items-center gap-2">
+            <i data-lucide="zap" class="w-8 h-8 text-blue-500"></i>
+            <span class="text-xl font-bold">ElectroMart</span>
+          </a>
+          <nav class="hidden md:flex items-center gap-8">
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="../index.html?category=smartphones" class="nav-link"
+              >Smartphones</a
+            >
+            <a href="../index.html?category=laptops" class="nav-link"
+              >Laptops</a
+            >
+            <a href="../index.html?category=headphones" class="nav-link"
+              >Headphones</a
+            >
+          </nav>
+          <div class="flex items-center gap-4">
+            <a
+              href="cart.html"
+              class="relative p-2 hover:bg-dark-hover rounded-lg transition-colors"
+            >
+              <i data-lucide="shopping-cart" class="w-6 h-6"></i>
+              <span
+                class="cart-badge absolute -top-1 -right-1 badge badge-primary hidden"
+                >0</span
+              >
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="pt-24 pb-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Breadcrumb -->
+        <nav class="mb-8">
+          <ol class="flex items-center gap-2 text-sm text-gray-400">
+            <li><a href="../index.html" class="hover:text-white">Home</a></li>
+            <li><i data-lucide="chevron-right" class="w-4 h-4"></i></li>
+            <li>
+              <a href="../index.html" class="hover:text-white" id="categoryLink"
+                >Products</a
+              >
+            </li>
+            <li><i data-lucide="chevron-right" class="w-4 h-4"></i></li>
+            <li class="text-white" id="productName">Product</li>
+          </ol>
+        </nav>
+
+        <!-- Product Content -->
+        <div id="productContent" class="grid lg:grid-cols-2 gap-12">
+          <!-- Loading skeleton shown initially -->
+          <div class="skeleton h-96 rounded-2xl"></div>
+          <div class="space-y-4">
+            <div class="skeleton h-8 w-3/4 rounded"></div>
+            <div class="skeleton h-4 w-1/4 rounded"></div>
+            <div class="skeleton h-24 rounded"></div>
+            <div class="skeleton h-12 rounded"></div>
+          </div>
+        </div>
+
+        <!-- Related Products -->
+        <section class="mt-20">
+          <h2 class="text-2xl font-bold mb-8">You May Also Like</h2>
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+            id="relatedProducts"
+          ></div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark-secondary border-t border-dark-border py-8">
+      <div class="max-w-7xl mx-auto px-4 text-center text-sm text-gray-500">
+        <p>&copy; 2026 ElectroMart. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script src="../js/products.js"></script>
+    <script src="../js/cart.js"></script>
+    <script src="../js/main.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // Get product ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get("id");
+
+        if (!productId) {
+          window.location.href = "../index.html";
+          return;
+        }
+
+        const product = getProductById(productId);
+
+        if (!product) {
+          window.location.href = "404.html";
+          return;
+        }
+
+        // Update page title and breadcrumb
+        document.title = `${product.name} - ElectroMart`;
+        document.getElementById("productName").textContent = product.name;
+        document.getElementById("categoryLink").textContent =
+          product.category.charAt(0).toUpperCase() + product.category.slice(1);
+        document.getElementById(
+          "categoryLink"
+        ).href = `../index.html?category=${product.category}`;
+
+        // Render product details
+        const discount = calculateDiscount(
+          product.originalPrice,
+          product.price
+        );
+        const specsHtml = Object.entries(product.specs)
+          .map(
+            ([key, value]) => `
+                <div class="flex justify-between py-3 border-b border-dark-border">
+                    <span class="text-gray-400 capitalize">${key.replace(
+                      /([A-Z])/g,
+                      " $1"
+                    )}</span>
+                    <span class="font-medium">${value}</span>
+                </div>
+            `
+          )
+          .join("");
+
+        document.getElementById("productContent").innerHTML = `
+                <div class="relative">
+                    <div class="aspect-square bg-dark-card rounded-2xl overflow-hidden">
+                        <img src="../${product.image}" alt="${product.name}" 
+                             class="w-full h-full object-cover"
+                             onerror="this.src='https://placehold.co/600x600/1a1a1a/3b82f6?text=${encodeURIComponent(
+                               product.name
+                             )}'">
+                    </div>
+                    ${
+                      discount > 0
+                        ? `<span class="absolute top-4 left-4 bg-red-500 text-white text-sm font-bold px-3 py-1 rounded-lg">-${discount}% OFF</span>`
+                        : ""
+                    }
+                </div>
+                
+                <div class="space-y-6">
+                    <div>
+                        <span class="text-blue-400 text-sm uppercase tracking-wider">${
+                          product.category
+                        }</span>
+                        <h1 class="text-3xl md:text-4xl font-bold mt-2">${
+                          product.name
+                        }</h1>
+                    </div>
+                    
+                    <div class="flex items-center gap-4">
+                        <div class="flex items-center gap-1">${generateStarRating(
+                          product.rating
+                        )}</div>
+                        <span class="text-gray-400">${
+                          product.rating
+                        } (${product.reviews.toLocaleString()} reviews)</span>
+                    </div>
+                    
+                    <div class="flex items-baseline gap-4">
+                        <span class="text-4xl font-bold">${formatPrice(
+                          product.price
+                        )}</span>
+                        ${
+                          product.originalPrice > product.price
+                            ? `<span class="text-xl text-gray-500 line-through">${formatPrice(
+                                product.originalPrice
+                              )}</span>`
+                            : ""
+                        }
+                        ${
+                          discount > 0
+                            ? `<span class="text-green-400">You save ${formatPrice(
+                                product.originalPrice - product.price
+                              )}</span>`
+                            : ""
+                        }
+                    </div>
+                    
+                    <p class="text-gray-400 text-lg">${product.description}</p>
+                    
+                    <div class="flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full ${
+                          product.inStock ? "bg-green-500" : "bg-red-500"
+                        }"></span>
+                        <span class="${
+                          product.inStock ? "text-green-400" : "text-red-400"
+                        }">${
+          product.inStock ? "In Stock" : "Out of Stock"
+        }</span>
+                    </div>
+                    
+                    <div class="flex gap-4">
+                        <button onclick="addToCart('${
+                          product.id
+                        }')" class="btn btn-primary flex-1 py-4 text-lg">
+                            <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+                            Add to Cart
+                        </button>
+                        <button onclick="addToCart('${
+                          product.id
+                        }'); window.location.href='checkout.html'" class="btn btn-secondary flex-1 py-4 text-lg">
+                            <i data-lucide="zap" class="w-5 h-5"></i>
+                            Buy Now
+                        </button>
+                    </div>
+                    
+                    <div class="bg-dark-card rounded-xl p-6">
+                        <h3 class="text-lg font-semibold mb-4">Specifications</h3>
+                        ${specsHtml}
+                    </div>
+                </div>
+            `;
+
+        // Render related products
+        const relatedProducts = getProductsByCategory(product.category)
+          .filter((p) => p.id !== product.id)
+          .slice(0, 4);
+
+        document.getElementById("relatedProducts").innerHTML =
+          relatedProducts.length > 0
+            ? relatedProducts.map(renderProductCard).join("")
+            : '<p class="col-span-full text-gray-500 text-center">No related products found</p>';
+
+        lucide.createIcons();
+      });
+    </script>
+  </body>
+</html>
