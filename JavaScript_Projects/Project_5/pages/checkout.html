@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout - Foodie Express</title>
+    <meta
+      name="description"
+      content="Enter your delivery details to complete your order."
+    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="../css/styles.css" />
+
+    <!-- Tailwind Config -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: [
+                "system-ui",
+                "-apple-system",
+                "BlinkMacSystemFont",
+                "Segoe UI",
+                "sans-serif",
+              ],
+            },
+            colors: {
+              dark: {
+                primary: "#0a0a0a",
+                secondary: "#141414",
+                card: "#1a1a1a",
+                hover: "#222222",
+                border: "#2a2a2a",
+              },
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-dark-primary text-white min-h-screen">
+    <!-- ================================================
+         HEADER / NAVIGATION
+         ================================================ -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <!-- Logo -->
+          <a href="../index.html" class="flex items-center gap-2">
+            <div
+              class="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center"
+            >
+              <i data-lucide="utensils" class="w-5 h-5 text-white"></i>
+            </div>
+            <span class="text-xl font-bold">
+              Foodie<span class="text-orange-400">Express</span>
+            </span>
+          </a>
+
+          <!-- Order Steps -->
+          <div class="hidden md:flex items-center gap-2">
+            <div class="step completed">
+              <span class="step-number">
+                <i data-lucide="check" class="w-4 h-4"></i>
+              </span>
+              <span class="text-sm text-gray-400">Cart</span>
+            </div>
+            <div class="step-line bg-orange-500"></div>
+            <div class="step active">
+              <span class="step-number">2</span>
+              <span class="text-sm">Delivery</span>
+            </div>
+            <div class="step-line"></div>
+            <div class="step">
+              <span class="step-number">3</span>
+              <span class="text-sm text-gray-500">Payment</span>
+            </div>
+          </div>
+
+          <!-- Back to Cart -->
+          <a
+            href="cart.html"
+            class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
+          >
+            <i data-lucide="arrow-left" class="w-5 h-5"></i>
+            <span class="hidden sm:inline">Back to Cart</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="pt-24 pb-20 min-h-screen">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- ================================================
+             PAGE HEADER
+             ================================================ -->
+        <div class="mb-8">
+          <h1 class="text-3xl md:text-4xl font-bold mb-2">Delivery Details</h1>
+          <p class="text-gray-400">Enter your address for fast delivery</p>
+        </div>
+
+        <!-- ================================================
+             CHECKOUT FORM & ORDER SUMMARY
+             ================================================ -->
+        <div class="grid lg:grid-cols-3 gap-8">
+          <!-- Delivery Form -->
+          <div class="lg:col-span-2">
+            <form id="checkoutForm" class="space-y-6">
+              <!-- Contact Information -->
+              <div
+                class="bg-dark-card border border-dark-border rounded-xl p-6"
+              >
+                <h2 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                  <i data-lucide="user" class="w-5 h-5 text-orange-400"></i>
+                  Contact Information
+                </h2>
+
+                <div class="grid md:grid-cols-2 gap-4">
+                  <div class="form-group">
+                    <label for="fullName" class="form-label">Full Name *</label>
+                    <input
+                      type="text"
+                      id="fullName"
+                      name="fullName"
+                      class="form-input"
+                      placeholder="John Doe"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="phone" class="form-label">Phone Number *</label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      class="form-input"
+                      placeholder="+1 (234) 567-8900"
+                      required
+                    />
+                  </div>
+                  <div class="form-group md:col-span-2">
+                    <label for="email" class="form-label"
+                      >Email (Optional)</label
+                    >
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      class="form-input"
+                      placeholder="john@example.com"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Delivery Address -->
+              <div
+                class="bg-dark-card border border-dark-border rounded-xl p-6"
+              >
+                <h2 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                  <i data-lucide="map-pin" class="w-5 h-5 text-orange-400"></i>
+                  Delivery Address
+                </h2>
+
+                <div class="space-y-4">
+                  <div class="form-group">
+                    <label for="address" class="form-label"
+                      >Street Address *</label
+                    >
+                    <input
+                      type="text"
+                      id="address"
+                      name="address"
+                      class="form-input"
+                      placeholder="123 Main Street, Apt 4B"
+                      required
+                    />
+                  </div>
+
+                  <div class="grid md:grid-cols-2 gap-4">
+                    <div class="form-group">
+                      <label for="city" class="form-label">City *</label>
+                      <input
+                        type="text"
+                        id="city"
+                        name="city"
+                        class="form-input"
+                        placeholder="New York"
+                        required
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="pincode" class="form-label">Pincode *</label>
+                      <input
+                        type="text"
+                        id="pincode"
+                        name="pincode"
+                        class="form-input"
+                        placeholder="123456"
+                        maxlength="6"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="instructions" class="form-label"
+                      >Delivery Instructions (Optional)</label
+                    >
+                    <textarea
+                      id="instructions"
+                      name="instructions"
+                      rows="3"
+                      class="form-input resize-none"
+                      placeholder="Leave at door, call when you arrive, etc."
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Delivery Time -->
+              <div
+                class="bg-dark-card border border-dark-border rounded-xl p-6"
+              >
+                <h2 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                  <i data-lucide="clock" class="w-5 h-5 text-orange-400"></i>
+                  Delivery Time
+                </h2>
+
+                <div class="grid sm:grid-cols-3 gap-4">
+                  <label
+                    class="delivery-slot selected border-orange-500 cursor-pointer"
+                  >
+                    <input
+                      type="radio"
+                      name="deliverySlot"
+                      value="asap"
+                      class="hidden"
+                      checked
+                    />
+                    <div
+                      class="p-4 border border-dark-border rounded-xl hover:border-orange-500 transition-colors text-center"
+                    >
+                      <i
+                        data-lucide="zap"
+                        class="w-8 h-8 mx-auto mb-2 text-orange-400"
+                      ></i>
+                      <p class="font-semibold">ASAP</p>
+                      <p class="text-sm text-gray-500">30-45 min</p>
+                    </div>
+                  </label>
+
+                  <label class="delivery-slot cursor-pointer">
+                    <input
+                      type="radio"
+                      name="deliverySlot"
+                      value="scheduled-1"
+                      class="hidden"
+                    />
+                    <div
+                      class="p-4 border border-dark-border rounded-xl hover:border-orange-500 transition-colors text-center"
+                    >
+                      <i
+                        data-lucide="calendar"
+                        class="w-8 h-8 mx-auto mb-2 text-gray-500"
+                      ></i>
+                      <p class="font-semibold">12:00 PM</p>
+                      <p class="text-sm text-gray-500">Today</p>
+                    </div>
+                  </label>
+
+                  <label class="delivery-slot cursor-pointer">
+                    <input
+                      type="radio"
+                      name="deliverySlot"
+                      value="scheduled-2"
+                      class="hidden"
+                    />
+                    <div
+                      class="p-4 border border-dark-border rounded-xl hover:border-orange-500 transition-colors text-center"
+                    >
+                      <i
+                        data-lucide="calendar"
+                        class="w-8 h-8 mx-auto mb-2 text-gray-500"
+                      ></i>
+                      <p class="font-semibold">6:00 PM</p>
+                      <p class="text-sm text-gray-500">Today</p>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Submit Button (Mobile) -->
+              <button
+                type="submit"
+                class="btn btn-primary btn-lg w-full lg:hidden"
+              >
+                <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                Continue to Payment
+              </button>
+            </form>
+          </div>
+
+          <!-- Order Summary -->
+          <div class="lg:col-span-1">
+            <div
+              class="bg-dark-card border border-dark-border rounded-xl p-6 sticky top-24"
+            >
+              <h3 class="text-lg font-semibold mb-4">Order Summary</h3>
+
+              <!-- Cart Items Preview -->
+              <div
+                class="space-y-3 mb-4 max-h-64 overflow-y-auto"
+                id="checkoutCartItems"
+              >
+                <!-- Items will be rendered here -->
+              </div>
+
+              <!-- Price Breakdown -->
+              <div
+                class="space-y-3 mb-4 border-t border-dark-border pt-4"
+                id="checkoutPriceBreakdown"
+              >
+                <!-- Price breakdown will be rendered here -->
+              </div>
+
+              <!-- Submit Button (Desktop) -->
+              <button
+                type="submit"
+                form="checkoutForm"
+                class="hidden lg:flex btn btn-primary w-full"
+              >
+                <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                Continue to Payment
+              </button>
+
+              <!-- Security Badge -->
+              <div class="mt-4 text-center">
+                <div
+                  class="flex items-center justify-center gap-2 text-sm text-gray-500"
+                >
+                  <i
+                    data-lucide="shield-check"
+                    class="w-4 h-4 text-green-400"
+                  ></i>
+                  <span>Secure checkout</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- ================================================
+         FOOTER
+         ================================================ -->
+    <footer class="bg-dark-secondary border-t border-dark-border">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div
+          class="flex flex-col md:flex-row items-center justify-between gap-4"
+        >
+          <a href="../index.html" class="flex items-center gap-2">
+            <div
+              class="w-8 h-8 rounded-lg bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center"
+            >
+              <i data-lucide="utensils" class="w-4 h-4 text-white"></i>
+            </div>
+            <span class="font-bold"
+              >Foodie<span class="text-orange-400">Express</span></span
+            >
+          </a>
+          <p class="text-sm text-gray-500">
+            &copy; 2026 Foodie Express. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../js/products.js"></script>
+    <script src="../js/cart.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/checkout.js"></script>
+
+    <script>
+      // ================================================
+      // CHECKOUT PAGE INITIALIZATION
+      // ================================================
+
+      /**
+       * Render cart items preview in checkout
+       */
+      function renderCheckoutCartPreview() {
+        const container = document.getElementById("checkoutCartItems");
+        if (!container) return;
+
+        const items = getCartWithDetails();
+
+        if (items.length === 0) {
+          // Empty cart - redirect to cart
+          showToast("Your cart is empty", "error");
+          setTimeout(() => {
+            window.location.href = "cart.html";
+          }, 2000);
+          return;
+        }
+
+        container.innerHTML = items
+          .map(
+            (item) => `
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0">
+              <img 
+                src="../${item.image}" 
+                alt="${item.name}" 
+                class="w-full h-full object-cover"
+                onerror="this.src='https://placehold.co/48x48/1a1a1a/f97316?text=Food'"
+              />
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="font-medium truncate text-sm">${item.name}</p>
+              <p class="text-xs text-gray-500">Qty: ${item.quantity}</p>
+            </div>
+            <span class="text-sm font-medium">$${item.itemTotal.toFixed(
+              2
+            )}</span>
+          </div>
+        `
+          )
+          .join("");
+      }
+
+      /**
+       * Render price breakdown in checkout
+       */
+      function renderCheckoutPriceBreakdown() {
+        const container = document.getElementById("checkoutPriceBreakdown");
+        if (!container) return;
+
+        const subtotal = getCartSubtotal();
+        const deliveryFee = getDeliveryFee();
+        const total = getCartTotal();
+
+        container.innerHTML = `
+          <div class="flex justify-between text-gray-400">
+            <span>Subtotal</span>
+            <span>$${subtotal.toFixed(2)}</span>
+          </div>
+          <div class="flex justify-between text-gray-400">
+            <span>Delivery Fee</span>
+            <span>${
+              deliveryFee === 0
+                ? '<span class="text-green-400">FREE</span>'
+                : `$${deliveryFee.toFixed(2)}`
+            }</span>
+          </div>
+          <div class="flex justify-between text-lg font-semibold pt-3 border-t border-dark-border">
+            <span>Total</span>
+            <span class="text-orange-400">$${total.toFixed(2)}</span>
+          </div>
+        `;
+      }
+
+      /**
+       * Handle delivery slot selection
+       */
+      function initDeliverySlots() {
+        const slots = document.querySelectorAll(".delivery-slot");
+
+        slots.forEach((slot) => {
+          slot.addEventListener("click", () => {
+            // Remove selection from all slots
+            slots.forEach((s) => {
+              s.classList.remove("selected");
+              s.querySelector("div").classList.remove("border-orange-500");
+              s.querySelector("div").classList.add("border-dark-border");
+            });
+
+            // Add selection to clicked slot
+            slot.classList.add("selected");
+            slot.querySelector("div").classList.remove("border-dark-border");
+            slot.querySelector("div").classList.add("border-orange-500");
+            slot.querySelector("input").checked = true;
+          });
+        });
+      }
+
+      // ================================================
+      // PAGE INITIALIZATION
+      // ================================================
+      document.addEventListener("DOMContentLoaded", () => {
+        // Check if cart has items
+        if (isCartEmpty()) {
+          showToast("Your cart is empty", "error");
+          setTimeout(() => {
+            window.location.href = "cart.html";
+          }, 2000);
+          return;
+        }
+
+        // Render cart preview
+        renderCheckoutCartPreview();
+
+        // Render price breakdown
+        renderCheckoutPriceBreakdown();
+
+        // Initialize delivery slot selection
+        initDeliverySlots();
+
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Animate form sections
+        if (typeof gsap !== "undefined") {
+          gsap.from(".bg-dark-card", {
+            opacity: 0,
+            y: 20,
+            duration: 0.5,
+            stagger: 0.1,
+            ease: "power2.out",
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

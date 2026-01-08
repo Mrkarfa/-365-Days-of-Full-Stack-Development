@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Order Confirmed! - Foodie Express</title>
+    <meta
+      name="description"
+      content="Your order has been placed successfully!"
+    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="../css/styles.css" />
+
+    <!-- Tailwind Config -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: [
+                "system-ui",
+                "-apple-system",
+                "BlinkMacSystemFont",
+                "Segoe UI",
+                "sans-serif",
+              ],
+            },
+            colors: {
+              dark: {
+                primary: "#0a0a0a",
+                secondary: "#141414",
+                card: "#1a1a1a",
+                hover: "#222222",
+                border: "#2a2a2a",
+              },
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-dark-primary text-white min-h-screen">
+    <!-- ================================================
+         HEADER
+         ================================================ -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <!-- Logo -->
+          <a href="../index.html" class="flex items-center gap-2">
+            <div
+              class="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center"
+            >
+              <i data-lucide="utensils" class="w-5 h-5 text-white"></i>
+            </div>
+            <span class="text-xl font-bold">
+              Foodie<span class="text-orange-400">Express</span>
+            </span>
+          </a>
+
+          <!-- Home Link -->
+          <a
+            href="../index.html"
+            class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
+          >
+            <i data-lucide="home" class="w-5 h-5"></i>
+            <span class="hidden sm:inline">Back to Home</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="pt-24 pb-20 min-h-screen">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <!-- ================================================
+             SUCCESS ANIMATION
+             ================================================ -->
+        <div class="success-checkmark mb-8">
+          <i data-lucide="check" class="w-12 h-12 text-white"></i>
+        </div>
+
+        <!-- ================================================
+             SUCCESS MESSAGE
+             ================================================ -->
+        <h1 class="success-title text-3xl md:text-4xl font-bold mb-4">
+          Order Confirmed! 🎉
+        </h1>
+        <p class="text-gray-400 text-lg mb-8">
+          Thank you for your order. Your delicious food is being prepared!
+        </p>
+
+        <!-- ================================================
+             ORDER DETAILS
+             ================================================ -->
+        <div
+          class="order-details bg-dark-card border border-dark-border rounded-2xl p-6 md:p-8 text-left mb-8"
+        >
+          <!-- Order ID & Status -->
+          <div
+            class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 pb-6 border-b border-dark-border"
+          >
+            <div>
+              <p class="text-sm text-gray-500 mb-1">Order ID</p>
+              <p class="text-xl font-bold text-orange-400" id="displayOrderId">
+                FE-XXXXXX
+              </p>
+            </div>
+            <div
+              class="flex items-center gap-2 px-4 py-2 bg-green-500/10 border border-green-500/20 rounded-full"
+            >
+              <span
+                class="w-2 h-2 rounded-full bg-green-500 animate-pulse"
+              ></span>
+              <span class="text-green-400 font-medium">Preparing</span>
+            </div>
+          </div>
+
+          <!-- Estimated Delivery -->
+          <div
+            class="flex items-center gap-4 p-4 bg-dark-secondary rounded-xl mb-6"
+          >
+            <div
+              class="w-14 h-14 rounded-full bg-orange-500/10 flex items-center justify-center"
+            >
+              <i data-lucide="clock" class="w-7 h-7 text-orange-400"></i>
+            </div>
+            <div>
+              <p class="text-sm text-gray-500">Estimated Delivery</p>
+              <p class="text-xl font-bold" id="estimatedDelivery">30-45 min</p>
+            </div>
+          </div>
+
+          <!-- Delivery Address -->
+          <div class="mb-6">
+            <h3 class="font-semibold mb-3 flex items-center gap-2">
+              <i data-lucide="map-pin" class="w-5 h-5 text-orange-400"></i>
+              Delivery Address
+            </h3>
+            <div id="deliveryAddress" class="text-gray-400">
+              <!-- Address will be rendered here -->
+            </div>
+          </div>
+
+          <!-- Order Items -->
+          <div class="mb-6">
+            <h3 class="font-semibold mb-3 flex items-center gap-2">
+              <i data-lucide="shopping-bag" class="w-5 h-5 text-orange-400"></i>
+              Order Items
+            </h3>
+            <div id="orderItems" class="space-y-2">
+              <!-- Items will be rendered here -->
+            </div>
+          </div>
+
+          <!-- Payment Summary -->
+          <div class="pt-4 border-t border-dark-border">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-gray-400">Payment Method</span>
+              <span id="paymentMethod">-</span>
+            </div>
+            <div class="flex items-center justify-between text-lg font-bold">
+              <span>Total Paid</span>
+              <span class="text-orange-400" id="orderTotal">$0.00</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================================================
+             ACTION BUTTONS
+             ================================================ -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="../index.html" class="btn btn-primary btn-lg">
+            <i data-lucide="home" class="w-5 h-5"></i>
+            Continue Shopping
+          </a>
+          <button onclick="trackOrder()" class="btn btn-secondary btn-lg">
+            <i data-lucide="map" class="w-5 h-5"></i>
+            Track Order
+          </button>
+        </div>
+
+        <!-- ================================================
+             ADDITIONAL INFO
+             ================================================ -->
+        <div class="mt-12 grid sm:grid-cols-3 gap-6">
+          <div class="text-center p-4">
+            <div
+              class="w-12 h-12 mx-auto mb-3 rounded-full bg-orange-500/10 flex items-center justify-center"
+            >
+              <i data-lucide="bell" class="w-6 h-6 text-orange-400"></i>
+            </div>
+            <p class="font-semibold mb-1">Get Notified</p>
+            <p class="text-sm text-gray-500">
+              We'll send you updates about your order
+            </p>
+          </div>
+          <div class="text-center p-4">
+            <div
+              class="w-12 h-12 mx-auto mb-3 rounded-full bg-green-500/10 flex items-center justify-center"
+            >
+              <i data-lucide="headphones" class="w-6 h-6 text-green-400"></i>
+            </div>
+            <p class="font-semibold mb-1">Need Help?</p>
+            <p class="text-sm text-gray-500">Contact our 24/7 support team</p>
+          </div>
+          <div class="text-center p-4">
+            <div
+              class="w-12 h-12 mx-auto mb-3 rounded-full bg-blue-500/10 flex items-center justify-center"
+            >
+              <i data-lucide="star" class="w-6 h-6 text-blue-400"></i>
+            </div>
+            <p class="font-semibold mb-1">Rate Us</p>
+            <p class="text-sm text-gray-500">
+              Share your experience after delivery
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- ================================================
+         FOOTER
+         ================================================ -->
+    <footer class="bg-dark-secondary border-t border-dark-border">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div
+          class="flex flex-col md:flex-row items-center justify-between gap-4"
+        >
+          <a href="../index.html" class="flex items-center gap-2">
+            <div
+              class="w-8 h-8 rounded-lg bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center"
+            >
+              <i data-lucide="utensils" class="w-4 h-4 text-white"></i>
+            </div>
+            <span class="font-bold"
+              >Foodie<span class="text-orange-400">Express</span></span
+            >
+          </a>
+          <p class="text-sm text-gray-500">
+            &copy; 2026 Foodie Express. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../js/products.js"></script>
+    <script src="../js/cart.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/animations.js"></script>
+    <script src="../js/checkout.js"></script>
+
+    <script>
+      // ================================================
+      // ORDER CONFIRMED PAGE FUNCTIONS
+      // ================================================
+
+      /**
+       * Track order (mock functionality)
+       */
+      function trackOrder() {
+        showToast("Order tracking feature coming soon!", "info");
+      }
+
+      /**
+       * Render order confirmation details
+       */
+      function renderOrderDetails() {
+        const order = getOrderDetails();
+
+        if (!order) {
+          // No order found, show message and redirect
+          document.querySelector(".success-checkmark").innerHTML =
+            '<i data-lucide="x" class="w-12 h-12 text-white"></i>';
+          document
+            .querySelector(".success-checkmark")
+            .classList.remove("bg-green-500");
+          document.querySelector(".success-checkmark").style.background =
+            "var(--color-error)";
+
+          document.querySelector(".success-title").textContent =
+            "Order Not Found";
+          document.querySelector(".order-details").innerHTML = `
+            <div class="text-center py-8">
+              <p class="text-gray-400 mb-4">We couldn't find your order details.</p>
+              <a href="../index.html" class="btn btn-primary">
+                <i data-lucide="home" class="w-5 h-5"></i>
+                Go to Home
+              </a>
+            </div>
+          `;
+
+          lucide.createIcons();
+          return;
+        }
+
+        // Order ID
+        const orderIdEl = document.getElementById("displayOrderId");
+        if (orderIdEl) {
+          orderIdEl.textContent = order.orderId;
+        }
+
+        // Estimated delivery
+        const deliveryTimeEl = document.getElementById("estimatedDelivery");
+        if (deliveryTimeEl) {
+          deliveryTimeEl.textContent = order.estimatedDelivery;
+        }
+
+        // Delivery address
+        const addressEl = document.getElementById("deliveryAddress");
+        if (addressEl && order.deliveryDetails) {
+          const d = order.deliveryDetails;
+          addressEl.innerHTML = `
+            <p class="font-medium text-white">${d.fullName}</p>
+            <p>${d.address}</p>
+            <p>${d.city} - ${d.pincode}</p>
+            <p class="text-orange-400">${d.phone}</p>
+          `;
+        }
+
+        // Order items
+        const itemsEl = document.getElementById("orderItems");
+        if (itemsEl && order.items) {
+          itemsEl.innerHTML = order.items
+            .map(
+              (item) => `
+            <div class="flex items-center gap-3 py-3 border-b border-dark-border last:border-0">
+              <div class="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0">
+                <img 
+                  src="../${item.image}" 
+                  alt="${item.name}" 
+                  class="w-full h-full object-cover"
+                  onerror="this.src='https://placehold.co/48x48/1a1a1a/f97316?text=Food'"
+                />
+              </div>
+              <div class="flex-1">
+                <p class="font-medium">${item.name}</p>
+                <p class="text-sm text-gray-500">x${item.quantity}</p>
+              </div>
+              <span class="font-medium">$${item.itemTotal.toFixed(2)}</span>
+            </div>
+          `
+            )
+            .join("");
+        }
+
+        // Total
+        const totalEl = document.getElementById("orderTotal");
+        if (totalEl) {
+          totalEl.textContent = `$${order.total.toFixed(2)}`;
+        }
+
+        // Payment method
+        const paymentEl = document.getElementById("paymentMethod");
+        if (paymentEl) {
+          const methodNames = {
+            card: "Credit/Debit Card",
+            upi: "UPI",
+            cod: "Cash on Delivery",
+          };
+          paymentEl.textContent =
+            methodNames[order.paymentMethod] || order.paymentMethod;
+        }
+      }
+
+      /**
+       * Create celebration confetti
+       */
+      function createCelebration() {
+        if (typeof gsap === "undefined") return;
+
+        const colors = [
+          "#f97316",
+          "#fb923c",
+          "#fbbf24",
+          "#22c55e",
+          "#3b82f6",
+          "#a855f7",
+        ];
+        const container = document.body;
+
+        for (let i = 0; i < 60; i++) {
+          const confetti = document.createElement("div");
+          confetti.style.cssText = `
+            position: fixed;
+            width: ${Math.random() * 12 + 6}px;
+            height: ${Math.random() * 12 + 6}px;
+            background: ${colors[Math.floor(Math.random() * colors.length)]};
+            left: ${Math.random() * 100}vw;
+            top: -30px;
+            border-radius: ${Math.random() > 0.5 ? "50%" : "2px"};
+            pointer-events: none;
+            z-index: 9999;
+          `;
+          container.appendChild(confetti);
+
+          gsap.to(confetti, {
+            y: `${Math.random() * 100 + 100}vh`,
+            x: `${(Math.random() - 0.5) * 300}px`,
+            rotation: Math.random() * 1080,
+            duration: Math.random() * 3 + 2,
+            ease: "power1.out",
+            delay: Math.random() * 0.5,
+            onComplete: () => confetti.remove(),
+          });
+        }
+      }
+
+      /**
+       * Animate success elements
+       */
+      function animateSuccess() {
+        if (typeof gsap === "undefined") return;
+
+        // Timeline for sequenced animations
+        const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
+
+        // Checkmark scaling
+        tl.fromTo(
+          ".success-checkmark",
+          { scale: 0, rotation: -180 },
+          { scale: 1, rotation: 0, duration: 0.8, ease: "elastic.out(1, 0.5)" }
+        );
+
+        // Title fade in
+        tl.fromTo(
+          ".success-title",
+          { opacity: 0, y: 30 },
+          { opacity: 1, y: 0, duration: 0.5 },
+          "-=0.3"
+        );
+
+        // Subtitle fade in
+        tl.fromTo(
+          ".success-title + p",
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.4 },
+          "-=0.2"
+        );
+
+        // Order details card
+        tl.fromTo(
+          ".order-details",
+          { opacity: 0, y: 40 },
+          { opacity: 1, y: 0, duration: 0.6 },
+          "-=0.1"
+        );
+
+        // Buttons
+        tl.fromTo(
+          ".btn",
+          { opacity: 0, scale: 0.9 },
+          { opacity: 1, scale: 1, duration: 0.4, stagger: 0.1 },
+          "-=0.2"
+        );
+
+        // Trigger confetti after checkmark appears
+        setTimeout(createCelebration, 400);
+      }
+
+      // ================================================
+      // PAGE INITIALIZATION
+      // ================================================
+      document.addEventListener("DOMContentLoaded", () => {
+        // Render order details
+        renderOrderDetails();
+
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Animate success
+        animateSuccess();
+
+        // Clear order from session after 5 minutes (so user can refresh)
+        setTimeout(() => {
+          sessionStorage.removeItem("orderDetails");
+          sessionStorage.removeItem("deliveryDetails");
+        }, 300000);
+      });
+    </script>
+  </body>
+</html>

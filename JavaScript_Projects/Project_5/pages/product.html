@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Details - Foodie Express</title>
+    <meta
+      name="description"
+      content="View product details and add to your order."
+    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="../css/styles.css" />
+
+    <!-- Tailwind Config -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: [
+                "system-ui",
+                "-apple-system",
+                "BlinkMacSystemFont",
+                "Segoe UI",
+                "sans-serif",
+              ],
+            },
+            colors: {
+              dark: {
+                primary: "#0a0a0a",
+                secondary: "#141414",
+                card: "#1a1a1a",
+                hover: "#222222",
+                border: "#2a2a2a",
+              },
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-dark-primary text-white min-h-screen">
+    <!-- ================================================
+         HEADER / NAVIGATION
+         ================================================ -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <!-- Logo -->
+          <a href="../index.html" class="flex items-center gap-2">
+            <div
+              class="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center"
+            >
+              <i data-lucide="utensils" class="w-5 h-5 text-white"></i>
+            </div>
+            <span class="text-xl font-bold">
+              Foodie<span class="text-orange-400">Express</span>
+            </span>
+          </a>
+
+          <!-- Desktop Navigation -->
+          <nav class="hidden md:flex items-center gap-8">
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="../index.html?category=burgers" class="nav-link"
+              >Burgers</a
+            >
+            <a href="../index.html?category=pizza" class="nav-link">Pizza</a>
+            <a href="../index.html?category=sushi" class="nav-link">Sushi</a>
+          </nav>
+
+          <!-- Actions -->
+          <div class="flex items-center gap-4">
+            <a
+              href="cart.html"
+              class="relative p-2 hover:bg-dark-hover rounded-lg transition-colors"
+            >
+              <i data-lucide="shopping-cart" class="w-6 h-6"></i>
+              <span
+                class="cart-badge absolute -top-1 -right-1 badge badge-primary hidden"
+                >0</span
+              >
+            </a>
+
+            <button
+              onclick="toggleMobileMenu()"
+              class="md:hidden p-2 hover:bg-dark-hover rounded-lg"
+            >
+              <i data-lucide="menu" id="menuIcon" class="w-6 h-6"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <nav id="mobileMenu" class="md:hidden hidden pb-4">
+          <div class="flex flex-col gap-2">
+            <a
+              href="../index.html"
+              class="px-4 py-2 hover:bg-dark-hover rounded-lg"
+              >Home</a
+            >
+            <a
+              href="../index.html?category=burgers"
+              class="px-4 py-2 hover:bg-dark-hover rounded-lg"
+              >Burgers</a
+            >
+            <a
+              href="../index.html?category=pizza"
+              class="px-4 py-2 hover:bg-dark-hover rounded-lg"
+              >Pizza</a
+            >
+            <a
+              href="../index.html?category=sushi"
+              class="px-4 py-2 hover:bg-dark-hover rounded-lg"
+              >Sushi</a
+            >
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main class="pt-20 pb-20">
+      <!-- ================================================
+           BREADCRUMB
+           ================================================ -->
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+        <nav class="flex items-center gap-2 text-sm text-gray-500">
+          <a
+            href="../index.html"
+            class="hover:text-orange-400 transition-colors"
+            >Home</a
+          >
+          <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          <a
+            href="../index.html"
+            class="hover:text-orange-400 transition-colors"
+            id="breadcrumbCategory"
+            >Menu</a
+          >
+          <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          <span class="text-white" id="breadcrumbProduct">Product</span>
+        </nav>
+      </div>
+
+      <!-- ================================================
+           PRODUCT DETAILS
+           ================================================ -->
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-12" id="productContent">
+          <!-- Loading State -->
+          <div class="col-span-full flex items-center justify-center py-20">
+            <div class="spinner"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================================================
+           RELATED PRODUCTS
+           ================================================ -->
+      <section class="mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 class="section-heading text-2xl font-bold mb-8">
+            You May Also Like
+          </h2>
+          <div
+            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+            id="relatedProducts"
+          >
+            <!-- Related products will be rendered here -->
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ================================================
+         FOOTER
+         ================================================ -->
+    <footer class="bg-dark-secondary border-t border-dark-border">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div
+          class="flex flex-col md:flex-row items-center justify-between gap-4"
+        >
+          <a href="../index.html" class="flex items-center gap-2">
+            <div
+              class="w-8 h-8 rounded-lg bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center"
+            >
+              <i data-lucide="utensils" class="w-4 h-4 text-white"></i>
+            </div>
+            <span class="font-bold"
+              >Foodie<span class="text-orange-400">Express</span></span
+            >
+          </a>
+          <p class="text-sm text-gray-500">
+            &copy; 2026 Foodie Express. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button
+      id="scrollToTop"
+      onclick="scrollToTop()"
+      class="fixed bottom-8 right-8 w-12 h-12 rounded-full bg-orange-500 text-white shadow-lg opacity-0 invisible grid place-items-center hover:bg-orange-600 transition-all duration-300 z-40"
+    >
+      <i data-lucide="arrow-up" class="w-5 h-5"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="../js/products.js"></script>
+    <script src="../js/cart.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/animations.js"></script>
+
+    <script>
+      // ================================================
+      // PRODUCT PAGE INITIALIZATION
+      // Loads product details based on URL parameter
+      // ================================================
+
+      // Track current quantity
+      let currentQuantity = 1;
+
+      /**
+       * Update quantity display and buttons
+       */
+      function updateQuantityDisplay() {
+        const qtyValue = document.getElementById("quantityValue");
+        const decreaseBtn = document.getElementById("decreaseQty");
+
+        if (qtyValue) {
+          qtyValue.textContent = currentQuantity;
+        }
+
+        // Disable decrease button if quantity is 1
+        if (decreaseBtn) {
+          decreaseBtn.disabled = currentQuantity <= 1;
+          decreaseBtn.classList.toggle("opacity-50", currentQuantity <= 1);
+        }
+      }
+
+      /**
+       * Increase product quantity
+       */
+      function increaseProductQty() {
+        currentQuantity++;
+        updateQuantityDisplay();
+      }
+
+      /**
+       * Decrease product quantity
+       */
+      function decreaseProductQty() {
+        if (currentQuantity > 1) {
+          currentQuantity--;
+          updateQuantityDisplay();
+        }
+      }
+
+      /**
+       * Add current product to cart
+       * @param {number} productId - Product ID
+       */
+      function addProductToCart(productId) {
+        addToCart(productId, currentQuantity);
+
+        // Animate button
+        const btn = document.getElementById("addToCartBtn");
+        if (btn && typeof gsap !== "undefined") {
+          gsap.fromTo(
+            btn,
+            { scale: 1 },
+            { scale: 1.05, duration: 0.15, yoyo: true, repeat: 1 }
+          );
+        }
+      }
+
+      /**
+       * Buy now - add to cart and go to checkout
+       * @param {number} productId - Product ID
+       */
+      function buyNow(productId) {
+        addToCart(productId, currentQuantity);
+        window.location.href = "checkout.html";
+      }
+
+      /**
+       * Render the product details
+       * @param {object} product - Product object
+       */
+      function renderProductDetails(product) {
+        const container = document.getElementById("productContent");
+
+        // Update page title
+        document.title = `${product.name} - Foodie Express`;
+
+        // Update breadcrumb
+        const breadcrumbCategory =
+          document.getElementById("breadcrumbCategory");
+        const breadcrumbProduct = document.getElementById("breadcrumbProduct");
+        if (breadcrumbCategory) {
+          breadcrumbCategory.textContent =
+            product.category.charAt(0).toUpperCase() +
+            product.category.slice(1);
+          breadcrumbCategory.href = `../index.html?category=${product.category}`;
+        }
+        if (breadcrumbProduct) {
+          breadcrumbProduct.textContent = product.name;
+        }
+
+        // Discount calculation
+        const discountPercent = product.originalPrice
+          ? Math.round(
+              ((product.originalPrice - product.price) /
+                product.originalPrice) *
+                100
+            )
+          : 0;
+
+        // Generate HTML
+        container.innerHTML = `
+          <!-- Product Image -->
+          <div class="product-image-container">
+            <div class="relative aspect-square rounded-2xl overflow-hidden bg-dark-card border border-dark-border">
+              <img
+                src="../${product.image}"
+                alt="${product.name}"
+                class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                id="productImage"
+                onerror="this.src='https://placehold.co/600x600/1a1a1a/f97316?text=${encodeURIComponent(
+                  product.name
+                )}'"
+              />
+              ${
+                product.originalPrice
+                  ? `
+                <span class="absolute top-4 left-4 badge badge-warning text-sm px-3 py-1">
+                  ${discountPercent}% OFF
+                </span>
+              `
+                  : ""
+              }
+              ${
+                product.isVeg
+                  ? `
+                <span class="absolute top-4 right-4 w-6 h-6 rounded border-2 border-green-500 flex items-center justify-center bg-dark-primary">
+                  <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                </span>
+              `
+                  : `
+                <span class="absolute top-4 right-4 w-6 h-6 rounded border-2 border-red-500 flex items-center justify-center bg-dark-primary">
+                  <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                </span>
+              `
+              }
+            </div>
+          </div>
+
+          <!-- Product Info -->
+          <div class="product-info">
+            <!-- Category & Tags -->
+            <div class="flex flex-wrap items-center gap-2 mb-4">
+              <a href="../index.html?category=${product.category}" 
+                 class="text-sm text-orange-400 hover:text-orange-300 uppercase tracking-wide">
+                ${product.category}
+              </a>
+              ${product.tags
+                .map(
+                  (tag) => `
+                <span class="text-xs bg-dark-card border border-dark-border px-2 py-1 rounded-full text-gray-400">
+                  ${tag}
+                </span>
+              `
+                )
+                .join("")}
+            </div>
+
+            <!-- Name -->
+            <h1 class="text-3xl md:text-4xl font-bold mb-4">${product.name}</h1>
+
+            <!-- Rating -->
+            <div class="flex items-center gap-3 mb-6">
+              <div class="rating">
+                ${generateStarRating(product.rating)}
+              </div>
+              <span class="text-gray-400">${product.rating}</span>
+              <span class="text-gray-500">(${product.reviews} reviews)</span>
+            </div>
+
+            <!-- Description -->
+            <p class="text-gray-400 text-lg mb-6 leading-relaxed">
+              ${product.description}
+            </p>
+
+            <!-- Info Badges -->
+            <div class="flex flex-wrap gap-4 mb-8">
+              <div class="delivery-badge">
+                <i data-lucide="clock" class="w-4 h-4"></i>
+                <span>${product.prepTime}</span>
+              </div>
+              <div class="flex items-center gap-2 px-3 py-2 bg-dark-card border border-dark-border rounded-full text-sm">
+                <i data-lucide="flame" class="w-4 h-4 text-orange-400"></i>
+                <span>${product.calories} cal</span>
+              </div>
+              ${
+                product.isVeg
+                  ? `
+                <div class="flex items-center gap-2 px-3 py-2 bg-green-500/10 border border-green-500/20 rounded-full text-sm text-green-400">
+                  <i data-lucide="leaf" class="w-4 h-4"></i>
+                  <span>Vegetarian</span>
+                </div>
+              `
+                  : ""
+              }
+            </div>
+
+            <!-- Price -->
+            <div class="flex items-end gap-3 mb-8">
+              <span class="text-4xl font-bold text-orange-400">$${product.price.toFixed(
+                2
+              )}</span>
+              ${
+                product.originalPrice
+                  ? `
+                <span class="text-xl text-gray-500 line-through mb-1">$${product.originalPrice.toFixed(
+                  2
+                )}</span>
+                <span class="text-sm text-green-400 mb-1">You save $${(
+                  product.originalPrice - product.price
+                ).toFixed(2)}</span>
+              `
+                  : ""
+              }
+            </div>
+
+            <!-- Quantity Selector -->
+            <div class="mb-6">
+              <label class="block text-sm font-medium text-gray-400 mb-3">Quantity</label>
+              <div class="quantity-selector inline-flex">
+                <button 
+                  id="decreaseQty"
+                  onclick="decreaseProductQty()" 
+                  class="quantity-btn"
+                  aria-label="Decrease quantity"
+                >
+                  <i data-lucide="minus" class="w-5 h-5"></i>
+                </button>
+                <span id="quantityValue" class="quantity-value text-lg px-4">1</span>
+                <button 
+                  onclick="increaseProductQty()" 
+                  class="quantity-btn"
+                  aria-label="Increase quantity"
+                >
+                  <i data-lucide="plus" class="w-5 h-5"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 mb-8">
+              <button 
+                id="addToCartBtn"
+                onclick="addProductToCart(${product.id})" 
+                class="btn btn-primary btn-lg flex-1"
+              >
+                <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+                Add to Cart
+              </button>
+              <button 
+                onclick="buyNow(${product.id})" 
+                class="btn btn-secondary btn-lg flex-1"
+              >
+                <i data-lucide="zap" class="w-5 h-5"></i>
+                Buy Now
+              </button>
+            </div>
+
+            <!-- Trust Badges -->
+            <div class="grid grid-cols-3 gap-4 pt-6 border-t border-dark-border">
+              <div class="text-center">
+                <i data-lucide="truck" class="w-6 h-6 mx-auto mb-2 text-orange-400"></i>
+                <p class="text-xs text-gray-500">Free delivery over $30</p>
+              </div>
+              <div class="text-center">
+                <i data-lucide="shield-check" class="w-6 h-6 mx-auto mb-2 text-green-400"></i>
+                <p class="text-xs text-gray-500">100% Fresh Guaranteed</p>
+              </div>
+              <div class="text-center">
+                <i data-lucide="clock" class="w-6 h-6 mx-auto mb-2 text-blue-400"></i>
+                <p class="text-xs text-gray-500">30-min Delivery</p>
+              </div>
+            </div>
+          </div>
+        `;
+
+        // Reinitialize Lucide icons
+        lucide.createIcons();
+
+        // Animate content
+        if (typeof gsap !== "undefined") {
+          gsap.from(".product-image-container", {
+            opacity: 0,
+            x: -30,
+            duration: 0.6,
+            ease: "power2.out",
+          });
+          gsap.from(".product-info", {
+            opacity: 0,
+            x: 30,
+            duration: 0.6,
+            ease: "power2.out",
+            delay: 0.1,
+          });
+        }
+      }
+
+      /**
+       * Render related products
+       * @param {object} product - Current product
+       */
+      function renderRelatedProducts(product) {
+        const container = document.getElementById("relatedProducts");
+        if (!container) return;
+
+        // Get products from same category, excluding current product
+        const related = getProductsByCategory(product.category)
+          .filter((p) => p.id !== product.id)
+          .slice(0, 4);
+
+        if (related.length === 0) {
+          // If no related products, show featured
+          const featured = getFeaturedProducts()
+            .filter((p) => p.id !== product.id)
+            .slice(0, 4);
+          container.innerHTML = featured.map(renderProductCard).join("");
+        } else {
+          container.innerHTML = related.map(renderProductCard).join("");
+        }
+
+        // Reinitialize Lucide icons
+        lucide.createIcons();
+      }
+
+      // ================================================
+      // PAGE INITIALIZATION
+      // ================================================
+      document.addEventListener("DOMContentLoaded", () => {
+        // Get product ID from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get("id");
+
+        if (!productId) {
+          // No product ID, redirect to home
+          showToast("Product not found", "error");
+          setTimeout(() => {
+            window.location.href = "../index.html";
+          }, 2000);
+          return;
+        }
+
+        // Get product data
+        const product = getProductById(productId);
+
+        if (!product) {
+          // Product not found
+          document.getElementById("productContent").innerHTML = `
+            <div class="col-span-full text-center py-20">
+              <i data-lucide="package-x" class="w-20 h-20 mx-auto text-gray-600 mb-6"></i>
+              <h2 class="text-2xl font-bold mb-2">Product Not Found</h2>
+              <p class="text-gray-400 mb-6">The product you're looking for doesn't exist or has been removed.</p>
+              <a href="../index.html" class="btn btn-primary">
+                <i data-lucide="home" class="w-5 h-5"></i>
+                Back to Home
+              </a>
+            </div>
+          `;
+          lucide.createIcons();
+          return;
+        }
+
+        // Render product details
+        renderProductDetails(product);
+
+        // Render related products
+        renderRelatedProducts(product);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment - Foodie Express</title>
+    <meta
+      name="description"
+      content="Complete your payment securely to place your order."
+    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="../css/styles.css" />
+
+    <!-- Tailwind Config -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: [
+                "system-ui",
+                "-apple-system",
+                "BlinkMacSystemFont",
+                "Segoe UI",
+                "sans-serif",
+              ],
+            },
+            colors: {
+              dark: {
+                primary: "#0a0a0a",
+                secondary: "#141414",
+                card: "#1a1a1a",
+                hover: "#222222",
+                border: "#2a2a2a",
+              },
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-dark-primary text-white min-h-screen">
+    <!-- ================================================
+         HEADER / NAVIGATION
+         ================================================ -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <!-- Logo -->
+          <a href="../index.html" class="flex items-center gap-2">
+            <div
+              class="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center"
+            >
+              <i data-lucide="utensils" class="w-5 h-5 text-white"></i>
+            </div>
+            <span class="text-xl font-bold">
+              Foodie<span class="text-orange-400">Express</span>
+            </span>
+          </a>
+
+          <!-- Order Steps -->
+          <div class="hidden md:flex items-center gap-2">
+            <div class="step completed">
+              <span class="step-number">
+                <i data-lucide="check" class="w-4 h-4"></i>
+              </span>
+              <span class="text-sm text-gray-400">Cart</span>
+            </div>
+            <div class="step-line bg-orange-500"></div>
+            <div class="step completed">
+              <span class="step-number">
+                <i data-lucide="check" class="w-4 h-4"></i>
+              </span>
+              <span class="text-sm text-gray-400">Delivery</span>
+            </div>
+            <div class="step-line bg-orange-500"></div>
+            <div class="step active">
+              <span class="step-number">3</span>
+              <span class="text-sm">Payment</span>
+            </div>
+          </div>
+
+          <!-- Back to Checkout -->
+          <a
+            href="checkout.html"
+            class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
+          >
+            <i data-lucide="arrow-left" class="w-5 h-5"></i>
+            <span class="hidden sm:inline">Back</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="pt-24 pb-20 min-h-screen">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- ================================================
+             PAGE HEADER
+             ================================================ -->
+        <div class="mb-8">
+          <h1 class="text-3xl md:text-4xl font-bold mb-2">Payment</h1>
+          <p class="text-gray-400">
+            Choose your payment method and complete your order
+          </p>
+        </div>
+
+        <!-- ================================================
+             PAYMENT FORM & ORDER SUMMARY
+             ================================================ -->
+        <div class="grid lg:grid-cols-3 gap-8">
+          <!-- Payment Methods -->
+          <div class="lg:col-span-2 space-y-6">
+            <!-- Payment Method Selection -->
+            <div class="bg-dark-card border border-dark-border rounded-xl p-6">
+              <h2 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                <i data-lucide="wallet" class="w-5 h-5 text-orange-400"></i>
+                Select Payment Method
+              </h2>
+
+              <div class="grid sm:grid-cols-3 gap-4">
+                <!-- Credit/Debit Card -->
+                <label
+                  class="payment-method selected border-orange-500 cursor-pointer"
+                >
+                  <input
+                    type="radio"
+                    name="paymentMethod"
+                    value="card"
+                    class="hidden"
+                    checked
+                  />
+                  <div
+                    class="p-4 border border-dark-border rounded-xl hover:border-orange-500 transition-colors text-center h-full"
+                  >
+                    <i
+                      data-lucide="credit-card"
+                      class="w-10 h-10 mx-auto mb-3 text-orange-400"
+                    ></i>
+                    <p class="font-semibold">Card</p>
+                    <p class="text-xs text-gray-500 mt-1">Credit / Debit</p>
+                  </div>
+                </label>
+
+                <!-- UPI -->
+                <label class="payment-method cursor-pointer">
+                  <input
+                    type="radio"
+                    name="paymentMethod"
+                    value="upi"
+                    class="hidden"
+                  />
+                  <div
+                    class="p-4 border border-dark-border rounded-xl hover:border-orange-500 transition-colors text-center h-full"
+                  >
+                    <i
+                      data-lucide="smartphone"
+                      class="w-10 h-10 mx-auto mb-3 text-gray-500"
+                    ></i>
+                    <p class="font-semibold">UPI</p>
+                    <p class="text-xs text-gray-500 mt-1">GPay, PhonePe</p>
+                  </div>
+                </label>
+
+                <!-- Cash on Delivery -->
+                <label class="payment-method cursor-pointer">
+                  <input
+                    type="radio"
+                    name="paymentMethod"
+                    value="cod"
+                    class="hidden"
+                  />
+                  <div
+                    class="p-4 border border-dark-border rounded-xl hover:border-orange-500 transition-colors text-center h-full"
+                  >
+                    <i
+                      data-lucide="banknote"
+                      class="w-10 h-10 mx-auto mb-3 text-gray-500"
+                    ></i>
+                    <p class="font-semibold">Cash</p>
+                    <p class="text-xs text-gray-500 mt-1">Pay on Delivery</p>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            <!-- Card Payment Form -->
+            <div
+              id="cardPaymentForm"
+              class="bg-dark-card border border-dark-border rounded-xl p-6"
+            >
+              <h2 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                <i
+                  data-lucide="credit-card"
+                  class="w-5 h-5 text-orange-400"
+                ></i>
+                Card Details
+              </h2>
+
+              <div class="space-y-4">
+                <div class="form-group">
+                  <label for="cardName" class="form-label"
+                    >Cardholder Name</label
+                  >
+                  <input
+                    type="text"
+                    id="cardName"
+                    class="form-input"
+                    placeholder="John Doe"
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="cardNumber" class="form-label">Card Number</label>
+                  <div class="relative">
+                    <input
+                      type="text"
+                      id="cardNumber"
+                      class="form-input pl-12"
+                      placeholder="1234 5678 9012 3456"
+                      maxlength="19"
+                    />
+                    <i
+                      data-lucide="credit-card"
+                      class="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"
+                    ></i>
+                  </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                  <div class="form-group">
+                    <label for="expiry" class="form-label">Expiry Date</label>
+                    <input
+                      type="text"
+                      id="expiry"
+                      class="form-input"
+                      placeholder="MM/YY"
+                      maxlength="5"
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label for="cvv" class="form-label">CVV</label>
+                    <div class="relative">
+                      <input
+                        type="password"
+                        id="cvv"
+                        class="form-input pr-10"
+                        placeholder="123"
+                        maxlength="4"
+                      />
+                      <i
+                        data-lucide="lock"
+                        class="w-4 h-4 absolute right-4 top-1/2 -translate-y-1/2 text-gray-500"
+                      ></i>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Card Brands -->
+                <div
+                  class="flex items-center gap-4 pt-4 border-t border-dark-border"
+                >
+                  <span class="text-sm text-gray-500">We accept:</span>
+                  <div class="flex gap-2">
+                    <div
+                      class="px-3 py-1 bg-dark-secondary rounded text-xs font-semibold"
+                    >
+                      VISA
+                    </div>
+                    <div
+                      class="px-3 py-1 bg-dark-secondary rounded text-xs font-semibold"
+                    >
+                      Mastercard
+                    </div>
+                    <div
+                      class="px-3 py-1 bg-dark-secondary rounded text-xs font-semibold"
+                    >
+                      Amex
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- UPI Payment Form (Hidden by default) -->
+            <div
+              id="upiPaymentForm"
+              class="bg-dark-card border border-dark-border rounded-xl p-6 hidden"
+            >
+              <h2 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                <i data-lucide="smartphone" class="w-5 h-5 text-orange-400"></i>
+                UPI Payment
+              </h2>
+
+              <div class="form-group">
+                <label for="upiId" class="form-label">UPI ID</label>
+                <input
+                  type="text"
+                  id="upiId"
+                  class="form-input"
+                  placeholder="username@upi"
+                />
+              </div>
+
+              <div class="mt-4 p-4 bg-dark-secondary rounded-lg">
+                <p class="text-sm text-gray-400 mb-2">Popular UPI Apps:</p>
+                <div class="flex gap-3">
+                  <div
+                    class="px-3 py-2 bg-dark-card rounded-lg text-sm font-medium"
+                  >
+                    Google Pay
+                  </div>
+                  <div
+                    class="px-3 py-2 bg-dark-card rounded-lg text-sm font-medium"
+                  >
+                    PhonePe
+                  </div>
+                  <div
+                    class="px-3 py-2 bg-dark-card rounded-lg text-sm font-medium"
+                  >
+                    Paytm
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- COD Info (Hidden by default) -->
+            <div
+              id="codInfo"
+              class="bg-dark-card border border-dark-border rounded-xl p-6 hidden"
+            >
+              <h2 class="text-lg font-semibold mb-4 flex items-center gap-2">
+                <i data-lucide="banknote" class="w-5 h-5 text-orange-400"></i>
+                Cash on Delivery
+              </h2>
+
+              <div
+                class="p-4 bg-green-500/10 border border-green-500/20 rounded-lg"
+              >
+                <div class="flex items-start gap-3">
+                  <i
+                    data-lucide="info"
+                    class="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5"
+                  ></i>
+                  <div>
+                    <p class="text-green-400 font-medium mb-1">
+                      Pay when you receive your order
+                    </p>
+                    <p class="text-sm text-gray-400">
+                      Please keep exact change ready. Our delivery partner will
+                      collect the payment at your doorstep.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-4 text-sm text-gray-500">
+                <p>• No extra charges for COD</p>
+                <p>• Digital payments also accepted at delivery</p>
+              </div>
+            </div>
+
+            <!-- Place Order Button (Mobile) -->
+            <button
+              id="placeOrderBtnMobile"
+              class="btn btn-primary btn-lg w-full lg:hidden"
+            >
+              <i data-lucide="check-circle" class="w-5 h-5"></i>
+              Place Order
+            </button>
+          </div>
+
+          <!-- Order Summary -->
+          <div class="lg:col-span-1">
+            <div
+              id="paymentOrderSummary"
+              class="bg-dark-card border border-dark-border rounded-xl p-6 sticky top-24"
+            >
+              <!-- Summary will be rendered here -->
+            </div>
+
+            <!-- Place Order Button (Desktop) -->
+            <button
+              id="placeOrderBtn"
+              class="hidden lg:flex btn btn-primary btn-lg w-full mt-4"
+            >
+              <i data-lucide="check-circle" class="w-5 h-5"></i>
+              Place Order
+            </button>
+
+            <!-- Security Badges -->
+            <div class="mt-6 space-y-3">
+              <div class="flex items-center gap-3 text-sm text-gray-500">
+                <i
+                  data-lucide="shield-check"
+                  class="w-5 h-5 text-green-400"
+                ></i>
+                <span>256-bit SSL Secure Encryption</span>
+              </div>
+              <div class="flex items-center gap-3 text-sm text-gray-500">
+                <i data-lucide="lock" class="w-5 h-5 text-blue-400"></i>
+                <span>Your card details are never stored</span>
+              </div>
+              <div class="flex items-center gap-3 text-sm text-gray-500">
+                <i data-lucide="rotate-ccw" class="w-5 h-5 text-orange-400"></i>
+                <span>100% Money Back Guarantee</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- ================================================
+         FOOTER
+         ================================================ -->
+    <footer class="bg-dark-secondary border-t border-dark-border">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div
+          class="flex flex-col md:flex-row items-center justify-between gap-4"
+        >
+          <a href="../index.html" class="flex items-center gap-2">
+            <div
+              class="w-8 h-8 rounded-lg bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center"
+            >
+              <i data-lucide="utensils" class="w-4 h-4 text-white"></i>
+            </div>
+            <span class="font-bold"
+              >Foodie<span class="text-orange-400">Express</span></span
+            >
+          </a>
+          <p class="text-sm text-gray-500">
+            &copy; 2026 Foodie Express. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../js/products.js"></script>
+    <script src="../js/cart.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/checkout.js"></script>
+
+    <script>
+      // ================================================
+      // PAYMENT PAGE INITIALIZATION
+      // ================================================
+
+      /**
+       * Initialize payment method selection
+       */
+      function initPaymentMethods() {
+        const methods = document.querySelectorAll(".payment-method");
+        const cardForm = document.getElementById("cardPaymentForm");
+        const upiForm = document.getElementById("upiPaymentForm");
+        const codInfo = document.getElementById("codInfo");
+
+        methods.forEach((method) => {
+          method.addEventListener("click", () => {
+            // Update selection UI
+            methods.forEach((m) => {
+              m.classList.remove("selected");
+              const div = m.querySelector("div");
+              div.classList.remove("border-orange-500");
+              div.classList.add("border-dark-border");
+              const icon = m.querySelector("svg");
+              if (icon) {
+                icon.classList.remove("text-orange-400");
+                icon.classList.add("text-gray-500");
+              }
+            });
+
+            method.classList.add("selected");
+            const selectedDiv = method.querySelector("div");
+            selectedDiv.classList.remove("border-dark-border");
+            selectedDiv.classList.add("border-orange-500");
+            const selectedIcon = method.querySelector("svg");
+            if (selectedIcon) {
+              selectedIcon.classList.remove("text-gray-500");
+              selectedIcon.classList.add("text-orange-400");
+            }
+            method.querySelector("input").checked = true;
+
+            // Toggle forms
+            const value = method.querySelector("input").value;
+
+            cardForm.classList.add("hidden");
+            upiForm.classList.add("hidden");
+            codInfo.classList.add("hidden");
+
+            if (value === "card") {
+              cardForm.classList.remove("hidden");
+            } else if (value === "upi") {
+              upiForm.classList.remove("hidden");
+            } else if (value === "cod") {
+              codInfo.classList.remove("hidden");
+            }
+          });
+        });
+      }
+
+      /**
+       * Bind place order buttons
+       */
+      function initPlaceOrderButtons() {
+        const desktopBtn = document.getElementById("placeOrderBtn");
+        const mobileBtn = document.getElementById("placeOrderBtnMobile");
+
+        if (desktopBtn) {
+          desktopBtn.addEventListener("click", handlePlaceOrder);
+        }
+        if (mobileBtn) {
+          mobileBtn.addEventListener("click", handlePlaceOrder);
+        }
+      }
+
+      // ================================================
+      // PAGE INITIALIZATION
+      // ================================================
+      document.addEventListener("DOMContentLoaded", () => {
+        // Check if cart has items
+        if (isCartEmpty()) {
+          showToast("Your cart is empty", "error");
+          setTimeout(() => {
+            window.location.href = "cart.html";
+          }, 2000);
+          return;
+        }
+
+        // Check if delivery details exist
+        const deliveryDetails = getDeliveryDetails();
+        if (!deliveryDetails) {
+          showToast("Please enter delivery details first", "error");
+          setTimeout(() => {
+            window.location.href = "checkout.html";
+          }, 2000);
+          return;
+        }
+
+        // Initialize payment methods
+        initPaymentMethods();
+
+        // Initialize place order buttons
+        initPlaceOrderButtons();
+
+        // Render order summary
+        renderPaymentOrderSummary();
+
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Animate content
+        if (typeof gsap !== "undefined") {
+          gsap.from(".bg-dark-card", {
+            opacity: 0,
+            y: 20,
+            duration: 0.5,
+            stagger: 0.1,
+            ease: "power2.out",
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

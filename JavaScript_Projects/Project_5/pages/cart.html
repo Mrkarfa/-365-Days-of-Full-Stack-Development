@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Cart - Foodie Express</title>
+    <meta
+      name="description"
+      content="Review your cart and proceed to checkout."
+    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="../css/styles.css" />
+
+    <!-- Tailwind Config -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: [
+                "system-ui",
+                "-apple-system",
+                "BlinkMacSystemFont",
+                "Segoe UI",
+                "sans-serif",
+              ],
+            },
+            colors: {
+              dark: {
+                primary: "#0a0a0a",
+                secondary: "#141414",
+                card: "#1a1a1a",
+                hover: "#222222",
+                border: "#2a2a2a",
+              },
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-dark-primary text-white min-h-screen">
+    <!-- ================================================
+         HEADER / NAVIGATION
+         ================================================ -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <!-- Logo -->
+          <a href="../index.html" class="flex items-center gap-2">
+            <div
+              class="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center"
+            >
+              <i data-lucide="utensils" class="w-5 h-5 text-white"></i>
+            </div>
+            <span class="text-xl font-bold">
+              Foodie<span class="text-orange-400">Express</span>
+            </span>
+          </a>
+
+          <!-- Desktop Navigation -->
+          <nav class="hidden md:flex items-center gap-8">
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="../index.html?category=burgers" class="nav-link"
+              >Burgers</a
+            >
+            <a href="../index.html?category=pizza" class="nav-link">Pizza</a>
+            <a href="../index.html?category=sushi" class="nav-link">Sushi</a>
+          </nav>
+
+          <!-- Actions -->
+          <div class="flex items-center gap-4">
+            <a href="cart.html" class="relative p-2 bg-dark-hover rounded-lg">
+              <i
+                data-lucide="shopping-cart"
+                class="w-6 h-6 text-orange-400"
+              ></i>
+              <span
+                class="cart-badge absolute -top-1 -right-1 badge badge-primary hidden"
+                >0</span
+              >
+            </a>
+
+            <button
+              onclick="toggleMobileMenu()"
+              class="md:hidden p-2 hover:bg-dark-hover rounded-lg"
+            >
+              <i data-lucide="menu" id="menuIcon" class="w-6 h-6"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <nav id="mobileMenu" class="md:hidden hidden pb-4">
+          <div class="flex flex-col gap-2">
+            <a
+              href="../index.html"
+              class="px-4 py-2 hover:bg-dark-hover rounded-lg"
+              >Home</a
+            >
+            <a
+              href="../index.html?category=burgers"
+              class="px-4 py-2 hover:bg-dark-hover rounded-lg"
+              >Burgers</a
+            >
+            <a
+              href="../index.html?category=pizza"
+              class="px-4 py-2 hover:bg-dark-hover rounded-lg"
+              >Pizza</a
+            >
+            <a
+              href="../index.html?category=sushi"
+              class="px-4 py-2 hover:bg-dark-hover rounded-lg"
+              >Sushi</a
+            >
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main class="pt-20 pb-20 min-h-screen">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- ================================================
+             PAGE HEADER
+             ================================================ -->
+        <div class="mb-8">
+          <h1 class="text-3xl md:text-4xl font-bold mb-2">Your Cart</h1>
+          <p class="text-gray-400" id="cartItemCount">0 items in your cart</p>
+        </div>
+
+        <!-- ================================================
+             CART CONTENT
+             ================================================ -->
+        <div class="grid lg:grid-cols-3 gap-8">
+          <!-- Cart Items -->
+          <div class="lg:col-span-2 space-y-4" id="cartItems">
+            <!-- Cart items will be rendered here -->
+          </div>
+
+          <!-- Order Summary Sidebar -->
+          <div id="orderSummary">
+            <!-- Order summary will be rendered here -->
+          </div>
+        </div>
+
+        <!-- ================================================
+             PROMO CODE SECTION
+             ================================================ -->
+        <div class="lg:col-span-2 mt-8 hidden" id="promoSection">
+          <div class="bg-dark-card border border-dark-border rounded-xl p-6">
+            <h3 class="font-semibold mb-4 flex items-center gap-2">
+              <i data-lucide="ticket" class="w-5 h-5 text-orange-400"></i>
+              Have a promo code?
+            </h3>
+            <form onsubmit="handlePromoCode(event)" class="flex gap-3">
+              <input
+                type="text"
+                id="promoCodeInput"
+                placeholder="Enter promo code"
+                class="flex-1 form-input"
+              />
+              <button type="submit" class="btn btn-secondary">Apply</button>
+            </form>
+            <div class="mt-3 text-sm text-gray-500">
+              <p>
+                Try:
+                <span
+                  class="text-orange-400 cursor-pointer"
+                  onclick="document.getElementById('promoCodeInput').value='SAVE10'"
+                  >SAVE10</span
+                >,
+                <span
+                  class="text-orange-400 cursor-pointer"
+                  onclick="document.getElementById('promoCodeInput').value='FREEDEL'"
+                  >FREEDEL</span
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- ================================================
+         FOOTER
+         ================================================ -->
+    <footer class="bg-dark-secondary border-t border-dark-border">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div
+          class="flex flex-col md:flex-row items-center justify-between gap-4"
+        >
+          <a href="../index.html" class="flex items-center gap-2">
+            <div
+              class="w-8 h-8 rounded-lg bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center"
+            >
+              <i data-lucide="utensils" class="w-4 h-4 text-white"></i>
+            </div>
+            <span class="font-bold"
+              >Foodie<span class="text-orange-400">Express</span></span
+            >
+          </a>
+          <p class="text-sm text-gray-500">
+            &copy; 2026 Foodie Express. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scroll to Top Button -->
+    <button
+      id="scrollToTop"
+      onclick="scrollToTop()"
+      class="fixed bottom-8 right-8 w-12 h-12 rounded-full bg-orange-500 text-white shadow-lg opacity-0 invisible grid place-items-center hover:bg-orange-600 transition-all duration-300 z-40"
+    >
+      <i data-lucide="arrow-up" class="w-5 h-5"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="../js/products.js"></script>
+    <script src="../js/cart.js"></script>
+    <script src="../js/main.js"></script>
+
+    <script>
+      // ================================================
+      // CART PAGE SPECIFIC FUNCTIONS
+      // ================================================
+
+      /**
+       * Handle promo code form submission
+       * @param {Event} e - Form submit event
+       */
+      function handlePromoCode(e) {
+        e.preventDefault();
+        const input = document.getElementById("promoCodeInput");
+        if (input && input.value.trim()) {
+          applyPromoCode(input.value);
+          renderCartPage();
+        }
+      }
+
+      /**
+       * Update the cart item count display
+       */
+      function updateCartItemCount() {
+        const countEl = document.getElementById("cartItemCount");
+        const count = getCartCount();
+        if (countEl) {
+          countEl.textContent = `${count} ${
+            count === 1 ? "item" : "items"
+          } in your cart`;
+        }
+      }
+
+      /**
+       * Show/hide promo section based on cart state
+       */
+      function updatePromoSection() {
+        const promoSection = document.getElementById("promoSection");
+        if (promoSection) {
+          if (isCartEmpty()) {
+            promoSection.classList.add("hidden");
+          } else {
+            promoSection.classList.remove("hidden");
+          }
+        }
+      }
+
+      // ================================================
+      // PAGE INITIALIZATION
+      // ================================================
+      document.addEventListener("DOMContentLoaded", () => {
+        // Render cart content
+        renderCartPage();
+
+        // Update cart item count
+        updateCartItemCount();
+
+        // Update promo section visibility
+        updatePromoSection();
+
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Animate cart items on load
+        if (typeof gsap !== "undefined") {
+          setTimeout(() => {
+            const items = document.querySelectorAll(".cart-item");
+            if (items.length > 0) {
+              gsap.fromTo(
+                items,
+                { opacity: 0, x: -20 },
+                {
+                  opacity: 1,
+                  x: 0,
+                  duration: 0.4,
+                  stagger: 0.1,
+                  ease: "power2.out",
+                }
+              );
+            }
+          }, 100);
+        }
+      });
+
+      // Override renderCartPage to include our custom updates
+      const originalRenderCartPage = renderCartPage;
+      renderCartPage = function () {
+        originalRenderCartPage();
+        updateCartItemCount();
+        updatePromoSection();
+      };
+    </script>
+  </body>
+</html>

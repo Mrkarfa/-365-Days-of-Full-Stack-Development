@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page Not Found - Foodie Express</title>
+    <meta
+      name="description"
+      content="Oops! The page you're looking for doesn't exist."
+    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="../css/styles.css" />
+
+    <!-- Tailwind Config -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: [
+                "system-ui",
+                "-apple-system",
+                "BlinkMacSystemFont",
+                "Segoe UI",
+                "sans-serif",
+              ],
+            },
+            colors: {
+              dark: {
+                primary: "#0a0a0a",
+                secondary: "#141414",
+                card: "#1a1a1a",
+                hover: "#222222",
+                border: "#2a2a2a",
+              },
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      /* Custom 404 Animations */
+      .float-slow {
+        animation: floatSlow 4s ease-in-out infinite;
+      }
+
+      .float-fast {
+        animation: floatFast 3s ease-in-out infinite;
+      }
+
+      @keyframes floatSlow {
+        0%,
+        100% {
+          transform: translateY(0) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-20px) rotate(5deg);
+        }
+      }
+
+      @keyframes floatFast {
+        0%,
+        100% {
+          transform: translateY(0) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-15px) rotate(-5deg);
+        }
+      }
+
+      .wiggle {
+        animation: wiggle 2s ease-in-out infinite;
+      }
+
+      @keyframes wiggle {
+        0%,
+        100% {
+          transform: rotate(-3deg);
+        }
+        50% {
+          transform: rotate(3deg);
+        }
+      }
+
+      .scale-pulse {
+        animation: scalePulse 2s ease-in-out infinite;
+      }
+
+      @keyframes scalePulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-dark-primary text-white min-h-screen">
+    <!-- ================================================
+         HEADER
+         ================================================ -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <!-- Logo -->
+          <a href="../index.html" class="flex items-center gap-2">
+            <div
+              class="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center"
+            >
+              <i data-lucide="utensils" class="w-5 h-5 text-white"></i>
+            </div>
+            <span class="text-xl font-bold">
+              Foodie<span class="text-orange-400">Express</span>
+            </span>
+          </a>
+
+          <!-- Navigation -->
+          <nav class="hidden md:flex items-center gap-8">
+            <a href="../index.html" class="nav-link">Home</a>
+            <a href="../index.html?category=burgers" class="nav-link"
+              >Burgers</a
+            >
+            <a href="../index.html?category=pizza" class="nav-link">Pizza</a>
+            <a href="../index.html?category=sushi" class="nav-link">Sushi</a>
+          </nav>
+
+          <!-- Cart -->
+          <a
+            href="cart.html"
+            class="relative p-2 hover:bg-dark-hover rounded-lg transition-colors"
+          >
+            <i data-lucide="shopping-cart" class="w-6 h-6"></i>
+            <span
+              class="cart-badge absolute -top-1 -right-1 badge badge-primary hidden"
+              >0</span
+            >
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main
+      class="pt-16 min-h-screen flex items-center justify-center relative overflow-hidden"
+    >
+      <!-- Background Decorations -->
+      <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <!-- Floating Food Items -->
+        <div class="absolute top-20 left-10 text-6xl float-slow opacity-20">
+          🍔
+        </div>
+        <div class="absolute top-40 right-20 text-5xl float-fast opacity-20">
+          🍕
+        </div>
+        <div class="absolute bottom-40 left-1/4 text-4xl float-slow opacity-20">
+          🍟
+        </div>
+        <div
+          class="absolute bottom-20 right-1/4 text-5xl float-fast opacity-20"
+        >
+          🍩
+        </div>
+        <div class="absolute top-1/3 left-20 text-4xl float-fast opacity-20">
+          🌮
+        </div>
+        <div class="absolute top-1/4 right-1/3 text-4xl float-slow opacity-20">
+          🍣
+        </div>
+
+        <!-- Gradient Orbs -->
+        <div
+          class="absolute top-1/4 left-1/4 w-96 h-96 bg-orange-500/5 rounded-full blur-3xl"
+        ></div>
+        <div
+          class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-red-500/5 rounded-full blur-3xl"
+        ></div>
+      </div>
+
+      <div
+        class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10"
+      >
+        <!-- 404 Number -->
+        <div class="mb-8">
+          <h1
+            class="text-[150px] md:text-[200px] font-black leading-none gradient-text wiggle"
+          >
+            404
+          </h1>
+        </div>
+
+        <!-- Illustration -->
+        <div class="mb-8 scale-pulse">
+          <div class="relative inline-block">
+            <div
+              class="w-32 h-32 mx-auto bg-dark-card border-2 border-dark-border rounded-full flex items-center justify-center"
+            >
+              <span class="text-7xl">🍽️</span>
+            </div>
+            <!-- Crossed Out -->
+            <div class="absolute inset-0 flex items-center justify-center">
+              <div class="w-40 h-1 bg-red-500 rounded-full rotate-45"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Message -->
+        <h2 class="text-3xl md:text-4xl font-bold mb-4 error-title">
+          Oops! This dish is off the menu
+        </h2>
+        <p class="text-lg text-gray-400 mb-8 max-w-md mx-auto error-subtitle">
+          Looks like the page you're looking for has been eaten... or it never
+          existed in the first place!
+        </p>
+
+        <!-- Search Suggestion -->
+        <div class="mb-8 max-w-md mx-auto">
+          <form onsubmit="handleSearch(event)" class="relative">
+            <input
+              type="text"
+              id="searchInput"
+              placeholder="Search for food..."
+              class="w-full px-6 py-4 pl-14 bg-dark-card border border-dark-border rounded-xl text-lg focus:outline-none focus:border-orange-500 transition-colors"
+            />
+            <i
+              data-lucide="search"
+              class="w-6 h-6 absolute left-5 top-1/2 -translate-y-1/2 text-gray-500"
+            ></i>
+            <button
+              type="submit"
+              class="absolute right-2 top-1/2 -translate-y-1/2 btn btn-primary"
+            >
+              Search
+            </button>
+          </form>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+          <a href="../index.html" class="btn btn-primary btn-lg">
+            <i data-lucide="home" class="w-5 h-5"></i>
+            Go to Home
+          </a>
+          <a href="cart.html" class="btn btn-secondary btn-lg">
+            <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+            View Cart
+          </a>
+        </div>
+
+        <!-- Popular Links -->
+        <div
+          class="bg-dark-card border border-dark-border rounded-2xl p-6 max-w-lg mx-auto"
+        >
+          <h3 class="font-semibold mb-4 flex items-center justify-center gap-2">
+            <i data-lucide="flame" class="w-5 h-5 text-orange-400"></i>
+            Popular Categories
+          </h3>
+          <div class="flex flex-wrap gap-3 justify-center">
+            <a
+              href="../index.html?category=burgers"
+              class="px-4 py-2 bg-dark-secondary border border-dark-border rounded-full hover:border-orange-500 hover:text-orange-400 transition-colors"
+            >
+              🍔 Burgers
+            </a>
+            <a
+              href="../index.html?category=pizza"
+              class="px-4 py-2 bg-dark-secondary border border-dark-border rounded-full hover:border-orange-500 hover:text-orange-400 transition-colors"
+            >
+              🍕 Pizza
+            </a>
+            <a
+              href="../index.html?category=sushi"
+              class="px-4 py-2 bg-dark-secondary border border-dark-border rounded-full hover:border-orange-500 hover:text-orange-400 transition-colors"
+            >
+              🍣 Sushi
+            </a>
+            <a
+              href="../index.html?category=desserts"
+              class="px-4 py-2 bg-dark-secondary border border-dark-border rounded-full hover:border-orange-500 hover:text-orange-400 transition-colors"
+            >
+              🍰 Desserts
+            </a>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- ================================================
+         FOOTER
+         ================================================ -->
+    <footer class="bg-dark-secondary border-t border-dark-border relative z-10">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div
+          class="flex flex-col md:flex-row items-center justify-between gap-4"
+        >
+          <a href="../index.html" class="flex items-center gap-2">
+            <div
+              class="w-8 h-8 rounded-lg bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center"
+            >
+              <i data-lucide="utensils" class="w-4 h-4 text-white"></i>
+            </div>
+            <span class="font-bold"
+              >Foodie<span class="text-orange-400">Express</span></span
+            >
+          </a>
+          <p class="text-sm text-gray-500">
+            &copy; 2026 Foodie Express. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../js/products.js"></script>
+    <script src="../js/cart.js"></script>
+    <script src="../js/main.js"></script>
+
+    <script>
+      // ================================================
+      // 404 PAGE ANIMATIONS
+      // ================================================
+
+      /**
+       * Handle search form submission
+       * @param {Event} event - Form submit event
+       */
+      function handleSearch(event) {
+        event.preventDefault();
+        const searchInput = document.getElementById("searchInput");
+        if (searchInput && searchInput.value.trim()) {
+          window.location.href = `../index.html?search=${encodeURIComponent(
+            searchInput.value.trim()
+          )}`;
+        }
+      }
+
+      /**
+       * Animate 404 page elements
+       */
+      function animate404() {
+        if (typeof gsap === "undefined") return;
+
+        const tl = gsap.timeline({ defaults: { ease: "power2.out" } });
+
+        // 404 number
+        tl.fromTo(
+          "h1.gradient-text",
+          { opacity: 0, scale: 0.5, y: 50 },
+          {
+            opacity: 1,
+            scale: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "elastic.out(1, 0.5)",
+          }
+        );
+
+        // Illustration
+        tl.fromTo(
+          ".scale-pulse",
+          { opacity: 0, scale: 0 },
+          { opacity: 1, scale: 1, duration: 0.5 },
+          "-=0.3"
+        );
+
+        // Title
+        tl.fromTo(
+          ".error-title",
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.4 },
+          "-=0.2"
+        );
+
+        // Subtitle
+        tl.fromTo(
+          ".error-subtitle",
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.4 },
+          "-=0.2"
+        );
+
+        // Search form
+        tl.fromTo(
+          "form",
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.4 },
+          "-=0.2"
+        );
+
+        // Buttons
+        tl.fromTo(
+          ".btn",
+          { opacity: 0, scale: 0.9 },
+          { opacity: 1, scale: 1, duration: 0.3, stagger: 0.1 },
+          "-=0.2"
+        );
+
+        // Popular categories card
+        tl.fromTo(
+          ".bg-dark-card.border",
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.4 },
+          "-=0.1"
+        );
+      }
+
+      // ================================================
+      // PAGE INITIALIZATION
+      // ================================================
+      document.addEventListener("DOMContentLoaded", () => {
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Animate page
+        animate404();
+
+        // Add some fun interactivity
+        document
+          .querySelector("h1.gradient-text")
+          .addEventListener("click", () => {
+            if (typeof gsap !== "undefined") {
+              gsap.to("h1.gradient-text", {
+                rotation: 360,
+                duration: 1,
+                ease: "elastic.out(1, 0.5)",
+              });
+            }
+          });
+      });
+    </script>
+  </body>
+</html>
