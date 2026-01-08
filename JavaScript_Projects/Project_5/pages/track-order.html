@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Track Your Order - Foodie Express</title>
+    <meta
+      name="description"
+      content="Track your food delivery order in real-time"
+    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="../css/styles.css" />
+
+    <!-- Tailwind Config -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: [
+                "system-ui",
+                "-apple-system",
+                "BlinkMacSystemFont",
+                "Segoe UI",
+                "sans-serif",
+              ],
+            },
+            colors: {
+              dark: {
+                primary: "#0a0a0a",
+                secondary: "#141414",
+                card: "#1a1a1a",
+                hover: "#222222",
+                border: "#2a2a2a",
+              },
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      /* Order Status Timeline */
+      .status-step {
+        position: relative;
+      }
+
+      .status-step::before {
+        content: "";
+        position: absolute;
+        left: 23px;
+        top: 48px;
+        width: 2px;
+        height: calc(100% - 48px);
+        background: var(--color-dark-border);
+      }
+
+      .status-step:last-child::before {
+        display: none;
+      }
+
+      .status-step.completed::before {
+        background: var(--color-success);
+      }
+
+      .status-step.active::before {
+        background: linear-gradient(
+          to bottom,
+          var(--color-success) 0%,
+          var(--color-dark-border) 50%
+        );
+      }
+
+      .status-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        z-index: 1;
+        transition: all 0.3s ease;
+      }
+
+      .status-step.pending .status-icon {
+        background: var(--color-dark-secondary);
+        border: 2px solid var(--color-dark-border);
+        color: var(--color-text-muted);
+      }
+
+      .status-step.active .status-icon {
+        background: var(--color-primary);
+        border: 2px solid var(--color-primary);
+        color: white;
+        animation: pulse-ring 2s ease-in-out infinite;
+      }
+
+      .status-step.completed .status-icon {
+        background: var(--color-success);
+        border: 2px solid var(--color-success);
+        color: white;
+      }
+
+      @keyframes pulse-ring {
+        0%,
+        100% {
+          box-shadow: 0 0 0 0 rgba(249, 115, 22, 0.4);
+        }
+        50% {
+          box-shadow: 0 0 0 15px rgba(249, 115, 22, 0);
+        }
+      }
+
+      /* Delivery animation */
+      .delivery-icon {
+        animation: drive 2s ease-in-out infinite;
+      }
+
+      @keyframes drive {
+        0%,
+        100% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(5px) rotate(2deg);
+        }
+        75% {
+          transform: translateX(-5px) rotate(-2deg);
+        }
+      }
+
+      /* Map placeholder animation */
+      .map-pulse {
+        animation: mapPulse 2s ease-in-out infinite;
+      }
+
+      @keyframes mapPulse {
+        0%,
+        100% {
+          opacity: 0.5;
+        }
+        50% {
+          opacity: 0.8;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-dark-primary text-white min-h-screen">
+    <!-- ================================================
+         HEADER
+         ================================================ -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <!-- Logo -->
+          <a href="../index.html" class="flex items-center gap-2">
+            <div
+              class="w-10 h-10 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center"
+            >
+              <i data-lucide="utensils" class="w-5 h-5 text-white"></i>
+            </div>
+            <span class="text-xl font-bold">
+              Foodie<span class="text-orange-400">Express</span>
+            </span>
+          </a>
+
+          <!-- Home Link -->
+          <a
+            href="../index.html"
+            class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
+          >
+            <i data-lucide="home" class="w-5 h-5"></i>
+            <span class="hidden sm:inline">Back to Home</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="pt-24 pb-20 min-h-screen">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- ================================================
+             PAGE HEADER
+             ================================================ -->
+        <div class="text-center mb-8">
+          <h1 class="text-3xl md:text-4xl font-bold mb-2">Track Your Order</h1>
+          <p class="text-gray-400">
+            Follow your delicious food's journey to you
+          </p>
+        </div>
+
+        <!-- ================================================
+             ORDER LOOKUP (When no active order)
+             ================================================ -->
+        <div id="orderLookup" class="hidden max-w-lg mx-auto mb-8">
+          <div class="bg-dark-card border border-dark-border rounded-2xl p-6">
+            <h2 class="text-xl font-semibold mb-4 text-center">
+              <i
+                data-lucide="search"
+                class="w-6 h-6 inline-block mr-2 text-orange-400"
+              ></i>
+              Find Your Order
+            </h2>
+            <form onsubmit="lookupOrder(event)" class="space-y-4">
+              <div>
+                <label for="orderIdInput" class="form-label">Order ID</label>
+                <input
+                  type="text"
+                  id="orderIdInput"
+                  placeholder="e.g., FE-ABC123"
+                  class="form-input"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-primary w-full">
+                <i data-lucide="search" class="w-5 h-5"></i>
+                Track Order
+              </button>
+            </form>
+            <p class="text-sm text-gray-500 text-center mt-4">
+              Enter your order ID from the confirmation email
+            </p>
+          </div>
+        </div>
+
+        <!-- ================================================
+             ORDER TRACKING CONTENT
+             ================================================ -->
+        <div id="trackingContent" class="grid lg:grid-cols-5 gap-8">
+          <!-- Left Column: Status Timeline -->
+          <div class="lg:col-span-3 space-y-6">
+            <!-- Order Info Card -->
+            <div class="bg-dark-card border border-dark-border rounded-2xl p-6">
+              <div
+                class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6"
+              >
+                <div>
+                  <p class="text-sm text-gray-500">Order ID</p>
+                  <p
+                    class="text-2xl font-bold text-orange-400"
+                    id="trackOrderId"
+                  >
+                    FE-XXXXXX
+                  </p>
+                </div>
+                <div class="text-left sm:text-right">
+                  <p class="text-sm text-gray-500">Placed on</p>
+                  <p class="font-medium" id="orderDate">-</p>
+                </div>
+              </div>
+
+              <!-- Estimated Time -->
+              <div
+                class="flex items-center gap-4 p-4 bg-gradient-to-r from-orange-500/10 to-transparent rounded-xl border border-orange-500/20"
+              >
+                <div
+                  class="w-14 h-14 rounded-full bg-orange-500/20 flex items-center justify-center"
+                >
+                  <i
+                    data-lucide="clock"
+                    class="w-7 h-7 text-orange-400 delivery-icon"
+                  ></i>
+                </div>
+                <div>
+                  <p class="text-sm text-gray-400">Estimated Arrival</p>
+                  <p class="text-2xl font-bold" id="estimatedArrival">--:--</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Status Timeline -->
+            <div class="bg-dark-card border border-dark-border rounded-2xl p-6">
+              <h2 class="text-xl font-semibold mb-6">Order Status</h2>
+
+              <div class="space-y-6" id="statusTimeline">
+                <!-- Order Confirmed -->
+                <div class="status-step completed" data-status="confirmed">
+                  <div class="flex gap-4">
+                    <div class="status-icon">
+                      <i data-lucide="check" class="w-6 h-6"></i>
+                    </div>
+                    <div class="flex-1 pb-6">
+                      <div class="flex items-center justify-between mb-1">
+                        <h3 class="font-semibold">Order Confirmed</h3>
+                        <span class="text-sm text-gray-500 status-time"
+                          >--:--</span
+                        >
+                      </div>
+                      <p class="text-sm text-gray-400">
+                        Your order has been received and confirmed
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Preparing -->
+                <div class="status-step active" data-status="preparing">
+                  <div class="flex gap-4">
+                    <div class="status-icon">
+                      <i data-lucide="chef-hat" class="w-6 h-6"></i>
+                    </div>
+                    <div class="flex-1 pb-6">
+                      <div class="flex items-center justify-between mb-1">
+                        <h3 class="font-semibold">Preparing Your Food</h3>
+                        <span class="text-sm text-gray-500 status-time"
+                          >--:--</span
+                        >
+                      </div>
+                      <p class="text-sm text-gray-400">
+                        Our chefs are crafting your delicious meal
+                      </p>
+                      <div class="mt-3 bg-dark-secondary rounded-lg p-3">
+                        <div
+                          class="flex items-center justify-between text-sm mb-2"
+                        >
+                          <span class="text-gray-400"
+                            >Preparation Progress</span
+                          >
+                          <span
+                            class="text-orange-400 font-medium"
+                            id="prepProgress"
+                            >0%</span
+                          >
+                        </div>
+                        <div
+                          class="h-2 bg-dark-border rounded-full overflow-hidden"
+                        >
+                          <div
+                            id="prepProgressBar"
+                            class="h-full bg-gradient-to-r from-orange-500 to-orange-400 rounded-full transition-all duration-500"
+                            style="width: 0%"
+                          ></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Ready for Pickup -->
+                <div class="status-step pending" data-status="ready">
+                  <div class="flex gap-4">
+                    <div class="status-icon">
+                      <i data-lucide="package-check" class="w-6 h-6"></i>
+                    </div>
+                    <div class="flex-1 pb-6">
+                      <div class="flex items-center justify-between mb-1">
+                        <h3 class="font-semibold">Ready for Pickup</h3>
+                        <span class="text-sm text-gray-500 status-time"
+                          >--:--</span
+                        >
+                      </div>
+                      <p class="text-sm text-gray-400">
+                        Your order is packed and ready for delivery
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Out for Delivery -->
+                <div class="status-step pending" data-status="delivery">
+                  <div class="flex gap-4">
+                    <div class="status-icon">
+                      <i data-lucide="bike" class="w-6 h-6"></i>
+                    </div>
+                    <div class="flex-1 pb-6">
+                      <div class="flex items-center justify-between mb-1">
+                        <h3 class="font-semibold">Out for Delivery</h3>
+                        <span class="text-sm text-gray-500 status-time"
+                          >--:--</span
+                        >
+                      </div>
+                      <p class="text-sm text-gray-400">
+                        Your delivery partner is on the way
+                      </p>
+                      <div class="mt-3 hidden" id="driverInfo">
+                        <div
+                          class="flex items-center gap-3 bg-dark-secondary rounded-lg p-3"
+                        >
+                          <div
+                            class="w-10 h-10 rounded-full bg-orange-500/20 flex items-center justify-center"
+                          >
+                            <i
+                              data-lucide="user"
+                              class="w-5 h-5 text-orange-400"
+                            ></i>
+                          </div>
+                          <div>
+                            <p class="font-medium text-sm">Ravi Kumar</p>
+                            <p class="text-xs text-gray-500">
+                              Delivery Partner
+                            </p>
+                          </div>
+                          <a
+                            href="tel:+919876543210"
+                            class="ml-auto btn btn-sm btn-secondary"
+                          >
+                            <i data-lucide="phone" class="w-4 h-4"></i>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Delivered -->
+                <div class="status-step pending" data-status="delivered">
+                  <div class="flex gap-4">
+                    <div class="status-icon">
+                      <i data-lucide="package-open" class="w-6 h-6"></i>
+                    </div>
+                    <div class="flex-1">
+                      <div class="flex items-center justify-between mb-1">
+                        <h3 class="font-semibold">Delivered</h3>
+                        <span class="text-sm text-gray-500 status-time"
+                          >--:--</span
+                        >
+                      </div>
+                      <p class="text-sm text-gray-400">Enjoy your meal! 🎉</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Order Details & Map -->
+          <div class="lg:col-span-2 space-y-6">
+            <!-- Live Map Placeholder -->
+            <div
+              class="bg-dark-card border border-dark-border rounded-2xl overflow-hidden"
+            >
+              <div class="relative h-48 bg-dark-secondary">
+                <!-- Map placeholder with animation -->
+                <div
+                  class="absolute inset-0 flex items-center justify-center map-pulse"
+                >
+                  <div class="text-center">
+                    <i
+                      data-lucide="map-pin"
+                      class="w-12 h-12 mx-auto mb-2 text-orange-400"
+                    ></i>
+                    <p class="text-sm text-gray-400">Live tracking available</p>
+                    <p class="text-xs text-gray-500">
+                      when order is out for delivery
+                    </p>
+                  </div>
+                </div>
+                <!-- Decorative elements -->
+                <div
+                  class="absolute top-4 left-4 w-3 h-3 rounded-full bg-green-500"
+                ></div>
+                <div
+                  class="absolute bottom-4 right-4 w-3 h-3 rounded-full bg-orange-500"
+                ></div>
+                <svg
+                  class="absolute inset-0 w-full h-full opacity-10"
+                  viewBox="0 0 100 100"
+                >
+                  <path
+                    d="M10,50 Q30,20 50,50 T90,50"
+                    stroke="currentColor"
+                    fill="none"
+                    stroke-width="0.5"
+                    class="text-gray-600"
+                  />
+                  <path
+                    d="M10,70 Q40,40 60,70 T90,70"
+                    stroke="currentColor"
+                    fill="none"
+                    stroke-width="0.5"
+                    class="text-gray-600"
+                  />
+                </svg>
+              </div>
+              <div class="p-4">
+                <h3 class="font-semibold mb-2 flex items-center gap-2">
+                  <i data-lucide="map-pin" class="w-5 h-5 text-orange-400"></i>
+                  Delivery Address
+                </h3>
+                <div id="deliveryAddressDisplay" class="text-sm text-gray-400">
+                  Loading...
+                </div>
+              </div>
+            </div>
+
+            <!-- Order Items Summary -->
+            <div class="bg-dark-card border border-dark-border rounded-2xl p-6">
+              <h3 class="font-semibold mb-4 flex items-center gap-2">
+                <i
+                  data-lucide="shopping-bag"
+                  class="w-5 h-5 text-orange-400"
+                ></i>
+                Order Items
+              </h3>
+              <div
+                id="orderItemsList"
+                class="space-y-3 max-h-64 overflow-y-auto"
+              >
+                <!-- Items will be rendered here -->
+              </div>
+              <div class="border-t border-dark-border mt-4 pt-4">
+                <div class="flex justify-between text-sm text-gray-400 mb-1">
+                  <span>Subtotal</span>
+                  <span id="trackSubtotal">$0.00</span>
+                </div>
+                <div class="flex justify-between text-sm text-gray-400 mb-2">
+                  <span>Delivery</span>
+                  <span id="trackDelivery">$0.00</span>
+                </div>
+                <div class="flex justify-between font-semibold text-lg">
+                  <span>Total</span>
+                  <span class="text-orange-400" id="trackTotal">$0.00</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Help Section -->
+            <div class="bg-dark-card border border-dark-border rounded-2xl p-6">
+              <h3 class="font-semibold mb-4">Need Help?</h3>
+              <div class="space-y-3">
+                <a
+                  href="#"
+                  onclick="contactSupport()"
+                  class="flex items-center gap-3 p-3 bg-dark-secondary rounded-lg hover:bg-dark-hover transition-colors"
+                >
+                  <div
+                    class="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center"
+                  >
+                    <i
+                      data-lucide="headphones"
+                      class="w-5 h-5 text-blue-400"
+                    ></i>
+                  </div>
+                  <div>
+                    <p class="font-medium text-sm">Contact Support</p>
+                    <p class="text-xs text-gray-500">24/7 help available</p>
+                  </div>
+                </a>
+                <a
+                  href="#"
+                  onclick="reportIssue()"
+                  class="flex items-center gap-3 p-3 bg-dark-secondary rounded-lg hover:bg-dark-hover transition-colors"
+                >
+                  <div
+                    class="w-10 h-10 rounded-full bg-red-500/10 flex items-center justify-center"
+                  >
+                    <i
+                      data-lucide="alert-circle"
+                      class="w-5 h-5 text-red-400"
+                    ></i>
+                  </div>
+                  <div>
+                    <p class="font-medium text-sm">Report an Issue</p>
+                    <p class="text-xs text-gray-500">
+                      Missing item, wrong order, etc.
+                    </p>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================================================
+             NO ORDER FOUND STATE
+             ================================================ -->
+        <div id="noOrderState" class="hidden text-center py-12">
+          <div
+            class="w-24 h-24 mx-auto mb-6 rounded-full bg-dark-card border border-dark-border flex items-center justify-center"
+          >
+            <i data-lucide="search-x" class="w-12 h-12 text-gray-500"></i>
+          </div>
+          <h2 class="text-2xl font-bold mb-2">No Active Order</h2>
+          <p class="text-gray-400 mb-6 max-w-md mx-auto">
+            You don't have any active orders to track. Start ordering delicious
+            food!
+          </p>
+          <a href="../index.html" class="btn btn-primary btn-lg">
+            <i data-lucide="utensils" class="w-5 h-5"></i>
+            Browse Menu
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <!-- ================================================
+         FOOTER
+         ================================================ -->
+    <footer class="bg-dark-secondary border-t border-dark-border">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div
+          class="flex flex-col md:flex-row items-center justify-between gap-4"
+        >
+          <a href="../index.html" class="flex items-center gap-2">
+            <div
+              class="w-8 h-8 rounded-lg bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center"
+            >
+              <i data-lucide="utensils" class="w-4 h-4 text-white"></i>
+            </div>
+            <span class="font-bold"
+              >Foodie<span class="text-orange-400">Express</span></span
+            >
+          </a>
+          <p class="text-sm text-gray-500">
+            &copy; 2026 Foodie Express. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../js/products.js"></script>
+    <script src="../js/cart.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/animations.js"></script>
+    <script src="../js/checkout.js"></script>
+
+    <script>
+      // ================================================
+      // TRACK ORDER PAGE LOGIC
+      // ================================================
+
+      let trackingInterval = null;
+      let currentProgress = 0;
+      let currentStatus = "preparing";
+
+      /**
+       * Initialize tracking page
+       */
+      function initTrackingPage() {
+        const order = getOrderDetails();
+
+        if (!order) {
+          // Check URL for order ID
+          const urlOrderId = getUrlParam("orderId");
+          if (urlOrderId) {
+            // Show lookup with prefilled ID
+            document.getElementById("orderLookup").classList.remove("hidden");
+            document.getElementById("trackingContent").classList.add("hidden");
+            document.getElementById("orderIdInput").value = urlOrderId;
+          } else {
+            showNoOrderState();
+          }
+          return;
+        }
+
+        // Show tracking content
+        renderOrderTracking(order);
+        startTrackingSimulation();
+      }
+
+      /**
+       * Lookup order by ID
+       */
+      function lookupOrder(event) {
+        event.preventDefault();
+        const orderId = document
+          .getElementById("orderIdInput")
+          .value.trim()
+          .toUpperCase();
+
+        if (!orderId) {
+          showToast("Please enter an order ID", "error");
+          return;
+        }
+
+        // Check session storage for matching order
+        const order = getOrderDetails();
+
+        if (order && order.orderId === orderId) {
+          document.getElementById("orderLookup").classList.add("hidden");
+          document.getElementById("trackingContent").classList.remove("hidden");
+          renderOrderTracking(order);
+          startTrackingSimulation();
+        } else {
+          showToast("Order not found. Please check the order ID.", "error");
+        }
+      }
+
+      /**
+       * Show no order state
+       */
+      function showNoOrderState() {
+        document.getElementById("orderLookup").classList.remove("hidden");
+        document.getElementById("trackingContent").classList.add("hidden");
+        document.getElementById("noOrderState").classList.remove("hidden");
+      }
+
+      /**
+       * Render order tracking details
+       */
+      function renderOrderTracking(order) {
+        // Order ID
+        document.getElementById("trackOrderId").textContent = order.orderId;
+
+        // Order date
+        const orderDate = new Date(order.orderDate);
+        document.getElementById("orderDate").textContent =
+          orderDate.toLocaleString("en-US", {
+            weekday: "short",
+            month: "short",
+            day: "numeric",
+            hour: "numeric",
+            minute: "2-digit",
+          });
+
+        // Estimated arrival
+        document.getElementById("estimatedArrival").textContent =
+          order.estimatedDelivery || "30-45 min";
+
+        // Delivery address
+        if (order.deliveryDetails) {
+          const d = order.deliveryDetails;
+          document.getElementById("deliveryAddressDisplay").innerHTML = `
+            <p class="font-medium text-white">${d.fullName}</p>
+            <p>${d.address}</p>
+            <p>${d.city} - ${d.pincode}</p>
+            <p class="text-orange-400 mt-1">${d.phone}</p>
+          `;
+        }
+
+        // Order items
+        if (order.items) {
+          const itemsHtml = order.items
+            .map(
+              (item) => `
+            <div class="flex items-center gap-3">
+              <div class="w-12 h-12 rounded-lg overflow-hidden flex-shrink-0">
+                <img 
+                  src="../${item.image}" 
+                  alt="${item.name}" 
+                  class="w-full h-full object-cover"
+                  onerror="this.src='https://placehold.co/48x48/1a1a1a/f97316?text=Food'"
+                />
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="font-medium text-sm truncate">${item.name}</p>
+                <p class="text-xs text-gray-500">Qty: ${item.quantity}</p>
+              </div>
+              <span class="text-sm font-medium">$${item.itemTotal.toFixed(
+                2
+              )}</span>
+            </div>
+          `
+            )
+            .join("");
+          document.getElementById("orderItemsList").innerHTML = itemsHtml;
+        }
+
+        // Pricing
+        document.getElementById(
+          "trackSubtotal"
+        ).textContent = `$${order.subtotal.toFixed(2)}`;
+        document.getElementById("trackDelivery").textContent =
+          order.deliveryFee === 0 ? "FREE" : `$${order.deliveryFee.toFixed(2)}`;
+        document.getElementById(
+          "trackTotal"
+        ).textContent = `$${order.total.toFixed(2)}`;
+
+        // Set confirmed time
+        const confirmedStep = document.querySelector(
+          '[data-status="confirmed"] .status-time'
+        );
+        if (confirmedStep) {
+          confirmedStep.textContent = orderDate.toLocaleTimeString("en-US", {
+            hour: "numeric",
+            minute: "2-digit",
+          });
+        }
+      }
+
+      /**
+       * Start tracking simulation
+       */
+      function startTrackingSimulation() {
+        const order = getOrderDetails();
+        if (!order) return;
+
+        const orderTime = new Date(order.orderDate).getTime();
+        const now = Date.now();
+        const elapsed = (now - orderTime) / 1000 / 60; // minutes elapsed
+
+        // Calculate current status based on elapsed time
+        if (elapsed < 1) {
+          updateStatus("confirmed");
+          currentProgress = 0;
+        } else if (elapsed < 12) {
+          updateStatus("preparing");
+          currentProgress = Math.min(100, ((elapsed - 1) / 11) * 100);
+        } else if (elapsed < 15) {
+          updateStatus("ready");
+          currentProgress = 100;
+        } else if (elapsed < 30) {
+          updateStatus("delivery");
+          currentProgress = 100;
+        } else {
+          updateStatus("delivered");
+          currentProgress = 100;
+          return; // Stop simulation
+        }
+
+        // Update progress bar
+        updateProgressBar(currentProgress);
+
+        // Continue simulation
+        trackingInterval = setInterval(() => {
+          const newElapsed = (Date.now() - orderTime) / 1000 / 60;
+
+          if (
+            newElapsed >= 1 &&
+            newElapsed < 12 &&
+            currentStatus === "preparing"
+          ) {
+            currentProgress = Math.min(100, ((newElapsed - 1) / 11) * 100);
+            updateProgressBar(currentProgress);
+          } else if (
+            newElapsed >= 12 &&
+            newElapsed < 15 &&
+            currentStatus !== "ready"
+          ) {
+            updateStatus("ready");
+          } else if (
+            newElapsed >= 15 &&
+            newElapsed < 30 &&
+            currentStatus !== "delivery"
+          ) {
+            updateStatus("delivery");
+            document.getElementById("driverInfo").classList.remove("hidden");
+          } else if (newElapsed >= 30 && currentStatus !== "delivered") {
+            updateStatus("delivered");
+            clearInterval(trackingInterval);
+            showToast("Your order has been delivered! Enjoy! 🎉", "success");
+          }
+        }, 5000);
+      }
+
+      /**
+       * Update order status in timeline
+       */
+      function updateStatus(status) {
+        currentStatus = status;
+        const statuses = [
+          "confirmed",
+          "preparing",
+          "ready",
+          "delivery",
+          "delivered",
+        ];
+        const statusIndex = statuses.indexOf(status);
+
+        statuses.forEach((s, i) => {
+          const step = document.querySelector(`[data-status="${s}"]`);
+          if (!step) return;
+
+          step.classList.remove("completed", "active", "pending");
+
+          if (i < statusIndex) {
+            step.classList.add("completed");
+          } else if (i === statusIndex) {
+            step.classList.add("active");
+            // Set time for active step
+            const timeEl = step.querySelector(".status-time");
+            if (timeEl && timeEl.textContent === "--:--") {
+              timeEl.textContent = new Date().toLocaleTimeString("en-US", {
+                hour: "numeric",
+                minute: "2-digit",
+              });
+            }
+          } else {
+            step.classList.add("pending");
+          }
+        });
+
+        // Refresh icons
+        lucide.createIcons();
+      }
+
+      /**
+       * Update progress bar
+       */
+      function updateProgressBar(progress) {
+        const bar = document.getElementById("prepProgressBar");
+        const text = document.getElementById("prepProgress");
+        if (bar) bar.style.width = `${progress}%`;
+        if (text) text.textContent = `${Math.round(progress)}%`;
+      }
+
+      /**
+       * Contact support
+       */
+      function contactSupport() {
+        showToast(
+          "Connecting to support... A representative will assist you shortly.",
+          "info"
+        );
+      }
+
+      /**
+       * Report an issue
+       */
+      function reportIssue() {
+        showToast("Issue reporting feature coming soon!", "info");
+      }
+
+      // ================================================
+      // PAGE INITIALIZATION
+      // ================================================
+      document.addEventListener("DOMContentLoaded", () => {
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Initialize tracking
+        initTrackingPage();
+
+        // Animate entrance
+        if (typeof gsap !== "undefined") {
+          gsap.from(".bg-dark-card", {
+            opacity: 0,
+            y: 30,
+            duration: 0.6,
+            stagger: 0.1,
+            ease: "power2.out",
+          });
+        }
+      });
+
+      // Cleanup on page unload
+      window.addEventListener("beforeunload", () => {
+        if (trackingInterval) {
+          clearInterval(trackingInterval);
+        }
+      });
+    </script>
+  </body>
+</html>
