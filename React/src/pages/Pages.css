@@ -1,0 +1,324 @@
+/* ========================================
+   DOCUMENTATION PAGE STYLES
+======================================== */
+
+/* Doc Header */
+.doc-header {
+  margin-bottom: var(--space-12);
+  padding-bottom: var(--space-8);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.doc-header h1 {
+  margin-top: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.doc-intro {
+  font-size: var(--text-lg);
+  color: var(--text-secondary);
+  max-width: 700px;
+}
+
+/* Doc Section */
+.doc-section {
+  margin-bottom: var(--space-16);
+  scroll-margin-top: 100px;
+}
+
+.doc-section h2 {
+  margin-bottom: var(--space-6);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.doc-section h3 {
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-4);
+  font-size: var(--text-xl);
+}
+
+.doc-section p {
+  margin-bottom: var(--space-4);
+  line-height: var(--leading-relaxed);
+}
+
+.doc-section ul,
+.doc-section ol {
+  margin-bottom: var(--space-4);
+}
+
+.doc-section li {
+  margin-bottom: var(--space-2);
+}
+
+/* Info Box */
+.info-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  margin: var(--space-6) 0;
+}
+
+.info-box h4 {
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  margin-bottom: var(--space-4);
+  color: var(--text-primary);
+}
+
+.info-box ul {
+  margin: 0;
+  padding-left: var(--space-6);
+}
+
+.info-box li {
+  margin-bottom: var(--space-2);
+  color: var(--text-secondary);
+}
+
+.info-box.warning {
+  border-color: rgba(245, 158, 11, 0.3);
+  background: rgba(245, 158, 11, 0.05);
+}
+
+.info-box.warning h4 {
+  color: var(--warning);
+}
+
+/* Doc Navigation */
+.doc-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--space-16);
+  padding-top: var(--space-8);
+  border-top: 1px solid var(--border-color);
+}
+
+.nav-prev,
+.nav-next {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--text-secondary);
+  text-decoration: none;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-fast);
+}
+
+.nav-prev:hover,
+.nav-next:hover {
+  color: var(--accent-cyan);
+  border-color: var(--accent-cyan);
+}
+
+/* ========================================
+   CHEATSHEET PAGE STYLES
+======================================== */
+
+.cheatsheet-page {
+  padding: var(--space-24) 0;
+  min-height: 100vh;
+}
+
+.cheatsheet-header {
+  margin-bottom: var(--space-10);
+}
+
+.cheatsheet-header h1 {
+  margin-top: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.cheatsheet-intro {
+  font-size: var(--text-lg);
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.cheatsheet-controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  margin-bottom: var(--space-10);
+}
+
+/* Search Box */
+.search-box {
+  position: relative;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.search-icon {
+  position: absolute;
+  left: var(--space-4);
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: var(--text-lg);
+}
+
+.search-input {
+  width: 100%;
+  padding: var(--space-4) var(--space-12);
+  font-size: var(--text-base);
+  font-family: var(--font-primary);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  color: var(--text-primary);
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+.search-input::placeholder {
+  color: var(--text-secondary);
+}
+
+.search-input:focus {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
+}
+
+.search-clear {
+  position: absolute;
+  right: var(--space-4);
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--bg-elevated);
+  border: none;
+  border-radius: var(--radius-full);
+  width: 24px;
+  height: 24px;
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.search-clear:hover {
+  background: var(--accent-cyan);
+  color: var(--text-primary);
+}
+
+/* Category Tabs */
+.category-tabs {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.category-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  font-family: var(--font-primary);
+  color: var(--text-primary);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-hover);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.category-tab:hover {
+  color: var(--accent-cyan);
+  border-color: var(--accent-cyan);
+  background: rgba(6, 182, 212, 0.1);
+}
+
+.category-tab.active {
+  color: var(--text-primary);
+  background: var(--accent-gradient);
+  border-color: transparent;
+  box-shadow: var(--shadow-glow-cyan);
+}
+
+.tab-icon {
+  font-size: var(--text-base);
+}
+
+/* Cheatsheet Grid */
+.cheatsheet-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-6);
+}
+
+.cheatsheet-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  transition: all var(--transition-base);
+}
+
+.cheatsheet-item:hover {
+  border-color: var(--border-hover);
+}
+
+.item-title {
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  margin-bottom: var(--space-4);
+  color: var(--accent-cyan);
+}
+
+.cheatsheet-item .code-block {
+  margin: 0;
+}
+
+/* No Results */
+.no-results {
+  text-align: center;
+  padding: var(--space-16);
+  color: var(--text-muted);
+}
+
+.no-results button {
+  margin-top: var(--space-4);
+  padding: var(--space-2) var(--space-4);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.no-results button:hover {
+  color: var(--accent-cyan);
+  border-color: var(--accent-cyan);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .cheatsheet-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .cheatsheet-page {
+    padding: var(--space-16) 0;
+  }
+
+  .category-tabs {
+    gap: var(--space-2);
+  }
+
+  .category-tab {
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--text-xs);
+  }
+}

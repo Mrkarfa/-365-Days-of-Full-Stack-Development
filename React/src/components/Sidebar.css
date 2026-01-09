@@ -1,0 +1,113 @@
+/* ========================================
+   SIDEBAR STYLES
+======================================== */
+
+.sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 100px;
+  height: fit-content;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+}
+
+.sidebar-nav {
+  padding: var(--space-4);
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-xl);
+}
+
+.sidebar-section {
+  margin-bottom: var(--space-2);
+}
+
+.sidebar-section:last-child {
+  margin-bottom: 0;
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border-color);
+  margin-top: var(--space-4);
+}
+
+.sidebar-section-title {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+}
+
+.sidebar-section-title:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.sidebar-section-title.active {
+  color: var(--accent-cyan);
+  background: rgba(6, 182, 212, 0.1);
+}
+
+.sidebar-items {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-1) 0 var(--space-4) var(--space-4);
+  border-left: 1px solid var(--border-color);
+}
+
+.sidebar-item {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  padding: var(--space-2) var(--space-4);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  position: relative;
+}
+
+.sidebar-item:hover {
+  color: var(--text-primary);
+}
+
+.sidebar-item.active {
+  color: var(--accent-cyan);
+}
+
+.sidebar-item.active::before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: var(--space-2);
+  bottom: var(--space-2);
+  width: 2px;
+  background: var(--accent-cyan);
+  border-radius: var(--radius-full);
+}
+
+/* Mobile sidebar */
+@media (max-width: 1024px) {
+  .sidebar {
+    display: none;
+  }
+}
+
+/* Scrollbar */
+.sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: var(--radius-full);
+}
